@@ -17,6 +17,8 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import py4j.GatewayServer;
+
 public class Kuromoji {
 //	private static final Logger log = LoggerFactory.getLogger(Kuromoji.class);
 	
@@ -63,6 +65,11 @@ public class Kuromoji {
 //		}
 //		System.out.println(surfaceStr);
 //	}
+	public static void main(String[] args) {
+		GatewayServer gatewayServer = new GatewayServer(new Kuromoji());
+		gatewayServer.start();
+		System.out.println("Gateway Server Started");
+	}
 	public static String kuromoji(String str) throws IOException{
 		ArrayList<String> surfaceForms = new ArrayList<>();
 		Tokenizer tokenizer = Tokenizer.builder().build();

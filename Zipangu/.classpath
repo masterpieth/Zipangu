@@ -55,5 +55,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/kuromoji-0.7.7.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jython-standalone-2.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/AppData/Local/Programs/Python/Python36/share/py4j/py4j0.10.9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
