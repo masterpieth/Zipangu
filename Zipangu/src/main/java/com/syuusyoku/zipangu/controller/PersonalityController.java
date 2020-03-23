@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,13 +27,13 @@ public class PersonalityController {
 	@Autowired
 	private PersonalityDAO dao;
 	
-	@RequestMapping(value = "personalityInsight", method = RequestMethod.GET)
+	@RequestMapping(value = "personality/personalityInsight", method = RequestMethod.GET)
 	public String personalityInsight() {
 		
-		return "personalityInsight";
+		return "personality/personalityInsight";
 	}
 
-	@RequestMapping(value = "sendKakao", method = RequestMethod.POST)
+	@RequestMapping(value = "personality/sendKakao", method = RequestMethod.POST)
 	public String sendKakao(@RequestParam String kakaoContent, String kakaoName, RedirectAttributes rttr) {
 		
 		String text = dao.textList(kakaoContent, kakaoName);
@@ -52,12 +53,12 @@ public class PersonalityController {
 		
 		rttr.addFlashAttribute("revisedContent", text);
 		
-		return "redirect:/personalityInsight";
+		return "redirect:/personality/personalityInsight";
 	}
 	
 	
 	
-	@RequestMapping(value="insertPersonality", method = RequestMethod.POST)
+	@RequestMapping(value="personality/insertPersonality", method = RequestMethod.POST)
 	@ResponseBody
 	public void insertPersonality(String[] trait, Double[] rate) {
 		
@@ -76,6 +77,16 @@ public class PersonalityController {
 		map.put("list11", list);
 		
 		dao.insertPersonality(map);	
+	}
+	
+	
+	@RequestMapping(value = "personality/keywordTimeline", method = RequestMethod.GET)
+	public String keywordTimeline(Model model) {
+
+		ArrayList<PersonalityVO> list = dao.keywordList();
+		model.addAttribute("keywordList", list);
+		
+		return "personality/keywordTimeline";
 	}
 
 }

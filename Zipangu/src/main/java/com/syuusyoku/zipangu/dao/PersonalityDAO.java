@@ -1,5 +1,6 @@
 package com.syuusyoku.zipangu.dao;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7,6 +8,8 @@ import java.util.regex.Pattern;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.syuusyoku.zipangu.vo.PersonalityVO;
 
 @Repository
 public class PersonalityDAO {
@@ -44,5 +47,16 @@ public class PersonalityDAO {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public ArrayList<PersonalityVO> keywordList() {
+		String userid="test";
+		ArrayList<PersonalityVO> list = null;
+		try {
+			PersonalityMapper mapper = sqlSession.getMapper(PersonalityMapper.class);
+			list = mapper.keywordList(userid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return list;
 	}
 }

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="resources/js/jquery-3.4.1.js"></script>
+<script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script>	
 <script type="text/javascript">
 
 $(function(){
@@ -52,8 +52,8 @@ $(function(){
 				str += '<tr><th>항목</th><th>퍼센트</th></tr>';
 				
 				$.each(resultPersonality,function(j){
-					str += '<tr><td>'+resultPersonality[j].name+'</td><td>'+resultPersonality[j].percentile+'</td></tr>';
 					
+					str += '<tr><td>'+resultPersonality[j].name+'</td><td>'+resultPersonality[j].percentile+'</td></tr>';
 					str += '<tr><td>'+resultPersonality[j].children[0].name+'</td><td>'+resultPersonality[j].children[0].percentile+'</td></tr>';
 					
 					$.each(resultPersonality,function(i){
@@ -111,7 +111,6 @@ $(function(){
 	});
 });
 
-	
 </script>
 <title>텍스트 파일을 읽어오는 거</title>
 </head>
@@ -119,13 +118,14 @@ $(function(){
 	
 	<form action="sendKakao" method="post">
 		<input type="file" id="kakaoFile" required="required">
-		<textarea id="kakaoContent" name="kakaoContent" cols="10" rows="10" ></textarea>
-		<input type="text" name="kakaoName" id="contentInput" required="required">
+		<textarea id="kakaoContent" name="kakaoContent" cols="10" rows="10" hidden="hidden"></textarea>
+		<br>
+		이름 입력 : <input type="text" name="kakaoName" id="contentInput" required="required">
 		<input type="submit" value="파일등록">
 		
 	</form>
 	
-	<textarea id="revisedContent" >
+	<textarea id="revisedContent" hidden="hidden">
 		${requestScope.revisedContent}
 	</textarea>	
 	
@@ -133,8 +133,25 @@ $(function(){
 	
 
 	<table id="insightList">
+		<tr>
+			<th>성향키워드test</th><th>퍼센트test</th>
+		</tr>
+		<tr>
+			<td>aa</td><td>0.1</td>
+		</tr>
+		<tr>
+			<td>bb</td><td>0.2</td>
+		</tr>
+		<tr>
+			<td>cc</td><td>0.3</td>
+		</tr>
+		<tr>
+			<td>dd</td><td>0.4</td>
+		</tr>
 	</table>
 
+	<input type="button" value="db에 저장" id="db">
+	
 	
 </body>
 </html>

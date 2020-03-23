@@ -3,11 +3,15 @@
 
 <mapper namespace="com.syuusyoku.zipangu.dao.PersonalityMapper"> 
 
-<insert id="insertPersonality" parameterType="java.util.Map">
-	<foreach collection="list11" item="item" index="index" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL" > 
-		into personality2(userid,trait,rate) 
-		values(#{item.userid},#{item.trait},#{item.rate})
-	</foreach>
-</insert>
+	<insert id="insertPersonality" parameterType="java.util.Map">
+		<foreach collection="list11" item="item" index="index" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL" > 
+			into personality2(userid,trait,rate) 
+			values(#{item.userid},#{item.trait},#{item.rate})
+		</foreach>
+	</insert>
+
+	<select id="keywordList" parameterType="String" resultType="PersonalityVO">
+		select * from personality2 where userid=#{userid} order by rate desc
+	</select>
 
 </mapper>
