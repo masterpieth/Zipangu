@@ -6,19 +6,14 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
+	
 	<typeAliases>
-<<<<<<< HEAD
-<!-- 		<typeAlias type="" alias=""/> -->
-			<typeAlias type="com.syuusyoku.zipangu.vo.PersonalityVO" alias="PersonalityVO"/>
-	</typeAliases>
-	<mappers>
-<!-- 		<mapper resource="mapper/memberMapper.xml" /> -->
-		<mapper resource="mapper/personalityMapper.xml" />
-=======
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.PersonalityVO" alias="PersonalityVO"/>
 	</typeAliases>
+	
 	<mappers>
+		<mapper resource="mapper/personalityMapper.xml" />
 		<mapper resource="mapper/memberMapper.xml" />
->>>>>>> origin/LeeChangJu
 	</mappers>
 </configuration>
