@@ -1,5 +1,16 @@
 package com.syuusyoku.zipangu.vo;
 
-public class PersonalityVO {
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
+public class PersonalityVO {
+	private String userid;
+	private String trait;
+	private double rate;
+	public PersonalityVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -46,10 +46,14 @@ $(function(){
 				var resultPersonality = data.personality;
 				var resultNeeds = data.needs;
 				var resultValues = data.values;
+				
 				var str = '';
 
+				str += '<tr><th>항목</th><th>퍼센트</th></tr>';
+				
 				$.each(resultPersonality,function(j){
 					str += '<tr><td>'+resultPersonality[j].name+'</td><td>'+resultPersonality[j].percentile+'</td></tr>';
+					
 					str += '<tr><td>'+resultPersonality[j].children[0].name+'</td><td>'+resultPersonality[j].children[0].percentile+'</td></tr>';
 					
 					$.each(resultPersonality,function(i){
@@ -76,7 +80,35 @@ $(function(){
 		});
 		
 	});
-	
+
+
+	$("#db").on("click",function(){
+		var traitAry = new Array();
+		var rateAry = new Array();
+		var length = $("tr").length;
+
+		for(var i=0; i<length; i++) {
+			traitAry[i] = $("tr:eq("+(i+1)+")>td:eq(0)").html();
+			rateAry[i] = $("tr:eq("+(i+1)+")>td:eq(1)").html();
+		}
+
+		$.ajax({
+			type:"post",
+			url:"insertPersonality",
+			data: {
+				'trait' : traitAry,
+				'rate' : rateAry
+			},
+			traditional: true,
+			success: function(){
+				console.log("성공");
+			},
+			error: function(request,status,error){
+				console.log("실패");
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+	});
 });
 
 	
@@ -87,24 +119,22 @@ $(function(){
 	
 	<form action="sendKakao" method="post">
 		<input type="file" id="kakaoFile" required="required">
-		<textarea id="kakaoContent" name="kakaoContent" cols="10" rows="10" hidden="hidden"></textarea>
+		<textarea id="kakaoContent" name="kakaoContent" cols="10" rows="10" ></textarea>
 		<input type="text" name="kakaoName" id="contentInput" required="required">
 		<input type="submit" value="파일등록">
 		
 	</form>
 	
-	<textarea id="revisedContent" hidden="hidden">
+	<textarea id="revisedContent" >
 		${requestScope.revisedContent}
 	</textarea>	
 	
-	<input type="button" value="분석" id="search">
+	<input type="button" value="성향분석" id="search">
 	
-	<form action="insertPersonality" method="post">
-	
-		<table id="insightList"></table>
-		
-	</form>
-	
+
+	<table id="insightList">
+	</table>
+
 	
 </body>
 </html>

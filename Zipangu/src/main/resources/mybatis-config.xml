@@ -5,8 +5,10 @@
 <configuration>
 	<typeAliases>
 <!-- 		<typeAlias type="" alias=""/> -->
+			<typeAlias type="com.syuusyoku.zipangu.vo.PersonalityVO" alias="PersonalityVO"/>
 	</typeAliases>
 	<mappers>
 <!-- 		<mapper resource="mapper/memberMapper.xml" /> -->
+		<mapper resource="mapper/personalityMapper.xml" />
 	</mappers>
 </configuration>

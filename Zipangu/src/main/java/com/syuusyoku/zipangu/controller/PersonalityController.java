@@ -1,16 +1,23 @@
 package com.syuusyoku.zipangu.controller;
 
+
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.PersonalityDAO;
+import com.syuusyoku.zipangu.vo.PersonalityVO;
 
 
 @Controller
@@ -46,6 +53,29 @@ public class PersonalityController {
 		rttr.addFlashAttribute("revisedContent", text);
 		
 		return "redirect:/personalityInsight";
+	}
+	
+	
+	
+	@RequestMapping(value="insertPersonality", method = RequestMethod.POST)
+	@ResponseBody
+	public void insertPersonality(String[] trait, Double[] rate) {
+		
+		List<PersonalityVO> list = new ArrayList<>();
+	
+		for(int i=0; i<trait.length; i++) {
+			PersonalityVO vo = new PersonalityVO();
+			
+			vo.setUserid("test");
+			vo.setTrait(trait[i]);
+			vo.setRate(rate[i]);
+			list.add(vo);
+		} 
+	
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list11", list);
+		
+		dao.insertPersonality(map);	
 	}
 
 }
