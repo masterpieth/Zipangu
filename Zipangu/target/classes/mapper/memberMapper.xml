@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- <mapper namespace=""> -->
-<!-- </mapper> -->
+<mapper namespace="com.syuusyoku.zipangu.dao.MemberMapper">
+	<select id="checkID" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			member
+		WHERE
+			userid = #{userID}
+	</select>
+
+	<insert id="signup" parameterType="member">
+		INSERT INTO
+			member
+		VALUES (
+			#{userID},
+			#{userPwd},
+			#{eMail},
+			#{userName},
+			#{birth},
+			#{address},
+			#{phone},
+			#{sex},
+			DEFAULT,
+			#{textFileName},
+			DEFAULT
+		)
+	</insert>
+
+	<select id="login" parameterType="member" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			member
+		WHERE
+			userid = #{userID}
+		AND
+			userpwd = #{userPwd}
+	</select>
+</mapper>
