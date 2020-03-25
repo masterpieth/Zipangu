@@ -8,8 +8,10 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.QuestionVO" alias="qvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/questionMapper.xml" />
 	</mappers>
 </configuration>
