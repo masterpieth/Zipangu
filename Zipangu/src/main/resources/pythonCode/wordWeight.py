@@ -73,15 +73,39 @@ while num <= 125:
     data = total_features[num]
     feature_list = data[1]
     countDict = dict()
+    titleDict = dict()
+    temp = []
     for feature in feature_list:
+        sql = "select count(*) from company where type = :typeparam"
+        cursor.execute(sql,typeparam=data[0])
+        cursor.rowfactory = makeDictFactory(cursor)
+        result = cursor.fetchall()
+        result = result[0]
+        countDict[data[0]] = result['COUNT(*)']
         sql = "select count(*) from company where type = :typeparam and instr(text,:param)>0"
         cursor.execute(sql,typeparam=data[0],param=feature)
         cursor.rowfactory = makeDictFactory(cursor)
         result = cursor.fetchall()
         result = result[0]
-        countDict[feature] = result['COUNT(*)']
-    count_result = []
-    count_result.append(data[0])
-    count_result.append(countDict)
-    total_result.append(count_result)
+        titleDict[feature] = result['COUNT(*)']
+    temp.append(titleDict)
+    temp.append(countDict)
+    total_result.append(temp)
+    num += 1
+
+def insert_weight_tbl(weight_arr):
+    sql = "insert into weight_tbl(type_no, type, key, value) values(:type_no, :type, :key, :value)"
+    cursor.executemany(sql,weight_arr)
+    conn.commit()
+
+num = 0
+weight_arr = []
+while num <= 125:
+    idx = num + 1
+    type_no = idx
+    type = list(total_result[num][1].keys())[0]
+    totalCount = list(total_result[num][1].values())[0]
+    for key, value in total_result[num][0].items():
+        weight_tuple = (type_no, type, key, value/totalCount)
+        weight_arr.append(weight_tuple)
     num += 1

@@ -7,6 +7,6 @@
 <!-- 		<typeAlias type="" alias=""/> -->
 	</typeAliases>
 	<mappers>
-<!-- 		<mapper resource="mapper/memberMapper.xml" /> -->
+		<mapper resource="mapper/companyMapper.xml" />
 	</mappers>
 </configuration>
