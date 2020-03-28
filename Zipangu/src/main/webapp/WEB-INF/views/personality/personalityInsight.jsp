@@ -41,6 +41,9 @@ $(function(){
 	        },
 			data : revisedContent,
 			success: function(data){
+
+				$("#db").attr("disabled",false);
+				
 				console.log(data);
 				
 				var resultPersonality = data.personality;
@@ -102,6 +105,7 @@ $(function(){
 			traditional: true,
 			success: function(){
 				console.log("성공");
+				$("#db").attr("disabled",true);
 			},
 			error: function(request,status,error){
 				console.log("실패");
@@ -115,10 +119,11 @@ $(function(){
 <title>텍스트 파일을 읽어오는 거</title>
 </head>
 <body>
-	
+	<h3><a href="<c:url value="/"/>">메인으로 돌아가기</a></h3> 
+	<h2>api 돌리면 과금되서 성향분석 버튼 disabled하고, 임시로 테이블을 만듬,,</h2>
 	<form action="sendKakao" method="post">
 		<input type="file" id="kakaoFile" required="required">
-		<textarea id="kakaoContent" name="kakaoContent" cols="10" rows="10" hidden="hidden"></textarea>
+		<textarea id="kakaoContent" name="kakaoContent" hidden="hidden"></textarea>
 		<br>
 		이름 입력 : <input type="text" name="kakaoName" id="contentInput" required="required">
 		<input type="submit" value="파일등록">
@@ -129,7 +134,7 @@ $(function(){
 		${requestScope.revisedContent}
 	</textarea>	
 	
-	<input type="button" value="성향분석" id="search">
+	<input type="button" value="성향분석" id="search" disabled="disabled">
 	
 
 	<table id="insightList">
@@ -146,11 +151,11 @@ $(function(){
 			<td>cc</td><td>0.3</td>
 		</tr>
 		<tr>
-			<td>dd</td><td>0.4</td>
+			<td>dd</td><td>0.1</td>
 		</tr>
 	</table>
 
-	<input type="button" value="db에 저장" id="db">
+	<input type="button" value="db에 저장" id="db"> <!-- disabled="disabled" -->
 	
 	
 </body>

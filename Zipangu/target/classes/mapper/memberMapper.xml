@@ -35,8 +35,17 @@
 		FROM
 			member
 		WHERE
-			userid = #{userID}
+			userID = #{userID}
 		AND
 			userpwd = #{userPwd}
+	</select>
+	
+	
+	<update id="uploadKakaoText" parameterType="member">
+		update member set textFileName=#{textFileName} where userID=#{userID}
+	</update>
+	
+	<select id="findTextFileName" parameterType="String" resultType="String">
+		select textFileName from member where userID=#{userID}
 	</select>
 </mapper>

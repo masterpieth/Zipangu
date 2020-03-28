@@ -59,4 +59,27 @@ public class MemberDAO {
 		}
 		return false;
 	}
+	
+	public void uploadKakaoText(String userID,String textFileName) {
+		MemberVO vo = new MemberVO();
+		vo.setUserID(userID);
+		vo.setTextFileName(textFileName);
+		try {
+			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			mapper.uploadKakaoText(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String findTextFileName(String userID) {
+		String textFileName="";
+		try {
+			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			textFileName = mapper.findTextFileName(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return textFileName;
+	}
+
 }

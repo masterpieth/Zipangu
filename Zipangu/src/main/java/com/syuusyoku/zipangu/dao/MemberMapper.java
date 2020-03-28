@@ -9,4 +9,9 @@ public interface MemberMapper {
 	int signup(MemberVO member);
 
 	int login(MemberVO member);
+	
+	public void uploadKakaoText(MemberVO vo);
+	
+	public String findTextFileName(String userID);
+
 }

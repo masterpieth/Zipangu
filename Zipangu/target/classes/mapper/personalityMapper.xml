@@ -5,13 +5,57 @@
 
 	<insert id="insertPersonality" parameterType="java.util.Map">
 		<foreach collection="list11" item="item" index="index" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL" > 
-			into personality2(userid,trait,rate) 
-			values(#{item.userid},#{item.trait},#{item.rate})
+			into personality(userID,trait,rate) 
+			values(#{item.userID},#{item.trait},#{item.rate})
 		</foreach>
 	</insert>
+	
+	<update id="updatePersonality" parameterType="java.util.Map">
+		<foreach collection="list11" item="item" index="index"  separator=";" open="DECLARE BEGIN" close="; END;" >
+		update personality set rate= #{item.rate} 
+		where userID=#{item.userID} and trait=#{item.trait}
+		</foreach>
+	</update>
 
 	<select id="keywordList" parameterType="String" resultType="PersonalityVO">
-		select * from personality2 where userid=#{userid} order by rate desc
+		select * from personality where userID=#{userID} order by rate desc
 	</select>
-
+	
+	<insert id="timelineWrite" parameterType="TimelineVO">
+		insert into timeline(TIMELINE_NUM, USERID, TRAITS_SELECTED, EPISODE_TITLE, EPISODE_CONTENT, START_DATE, FINISH_DATE)
+		values(TIMELINE_SEQ.nextval, #{userID}, #{traits_Selected}, #{episode_Title}, #{episode_Content}, TO_DATE(#{start_Date},'YYYY-MM-DD'), TO_DATE(#{finish_Date},'YYYY-MM-DD'))
+	</insert>
+	
+	<select id="timelineList" resultType="TimelineVO">
+		select * from timeline order by start_date desc
+	</select>
+	
+	<select id="timelineRead" parameterType="int" resultType="TimelineVO">
+		select * from timeline where timeline_Num=#{timeline_Num}
+	</select>
+	
+	<update id="timelineUpdate" parameterType="TimelineVO">
+		update timeline set TRAITS_SELECTED=#{traits_Selected}, EPISODE_TITLE=#{episode_Title},EPISODE_CONTENT=#{episode_Content}, START_DATE=TO_DATE(#{start_Date},'YYYY-MM-DD'), FINISH_DATE=TO_DATE(#{finish_Date},'YYYY-MM-DD') 
+		where userID=#{userID} and TIMELINE_NUM=#{timeline_Num}
+	</update>
+	
+	<delete id="timelineDelete" parameterType="TimelineVO">
+		delete from timeline where userID=#{userID} and TIMELINE_NUM=#{timeline_Num}
+	</delete>
+	
+	<select id="timelineSearch" parameterType="map" resultType="TimelineVO">
+		select * from timeline where 
+			<choose>
+				<when test="searchItem=='byKeyword'">
+					TRAITS_SELECTED like '%'||#{searchKeyword}||'%'
+				</when>
+				<when test="searchItem=='byDate'">
+					<![CDATA[
+					finish_Date >= #{searchKeyword} and start_Date <= #{searchKeyword}
+					]]>
+				</when>
+			</choose>
+			order by start_date desc
+	</select>
+	
 </mapper>

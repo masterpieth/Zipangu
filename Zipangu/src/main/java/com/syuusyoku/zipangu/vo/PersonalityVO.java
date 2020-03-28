@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class PersonalityVO {
-	private String userid;
+	private String userID;
 	private String trait;
 	private double rate;
 	public PersonalityVO() {
