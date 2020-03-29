@@ -1,17 +1,13 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from konlpy.tag import Kkma
-from konlpy.utils import pprint
-import codecs
 import cx_Oracle
 import os
-import re
 import pandas as pd
 from pandas import DataFrame as df
 from datetime import datetime
 import numpy as np
 from sklearn.metrics.pairwise import linear_kernel
-import getpass
 
 os.environ['NLS_LANG'] = '.UTF8'
 
