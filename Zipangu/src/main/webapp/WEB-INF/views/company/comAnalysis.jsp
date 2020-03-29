@@ -8,9 +8,11 @@
 <script>
 $(function(){
 	$('#testBtn2').on('click', function(){
-		var value = $('#testText').val();
+		var value = $('#inputText').val();
+		var selValue = $('#listnumSel').val();
 		var data = {
-			text : value
+			inputText : value,
+			listnum : selValue
 		}
 		var jsonData = JSON.stringify(data);
         $.ajax({
@@ -41,11 +43,16 @@ $(function(){
 <span>여기서 돌아야되는 작업 -> <br>
 텍스트 보내기 -> 파이썬 서버에서 값 받기(까지 함)
 그 다음 할 일: 각 목록별 추천 기업 리스트
-분야별 자기소개서 추천
+분야별 자기소개서 추천 -> 자기소개서 자동완성
 </span>
 <br>
 <div id="result"></div>
-<textarea rows="4" cols="40" id="testText" placeholder="텍스트 입력"></textarea>
+<textarea rows="4" cols="40" id="inputText" placeholder="텍스트 입력"></textarea>
+<select id="listnumSel">
+<option value="10">10</option>
+<option value="20">20</option>
+<option value="30">30</option>
+</select>
 <input type="button" value="클릭2" id="testBtn2">
 </body>
 </html>

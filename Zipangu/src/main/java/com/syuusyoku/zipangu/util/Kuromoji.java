@@ -1,11 +1,5 @@
 package com.syuusyoku.zipangu.util;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.atilika.kuromoji.Token;
-import org.atilika.kuromoji.Tokenizer;
-
 public class Kuromoji {
 	
 //	public static void main(String[] args) {
