@@ -163,5 +163,4 @@ public class PersonalityController {
 		return "redirect:/personality/keywordTimeline";
 	}
 	
-
 }
