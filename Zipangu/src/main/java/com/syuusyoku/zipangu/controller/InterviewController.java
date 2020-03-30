@@ -1,6 +1,8 @@
 package com.syuusyoku.zipangu.controller;
 
 import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,8 @@ public class InterviewController {
 	@RequestMapping(value = "interview/getinterview", method = RequestMethod.GET)
 	public String getinterview(Model model) {
 		ArrayList<QuestionVO> list = dao.selectList();
-		model.addAttribute("list", list);
+		JSONArray json = new JSONArray(list);
+		model.addAttribute("list", json);
 		return "interview/interview";
 	}
 	

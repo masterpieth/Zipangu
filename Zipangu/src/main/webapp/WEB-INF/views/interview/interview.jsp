@@ -1,17 +1,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList" %>
 <html>
 <head>
 	<title>voice</title>
-</head>
-
-	<script src="<c:url value="/resources/js/jquery-3.4.1.js"/>"></script>
+	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <%--     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css' />"> --%>
+</head>
 
 <script>
+
 window.onload = function(){
 	URL = window.URL || window.webkitURL;
 
@@ -35,7 +35,7 @@ window.onload = function(){
 			//카운트 다운
 			leftTime = setInterval(function() {
 
-			 	document.getElementById("counting").innerHTML = "시간 : " + sec + "초";
+			 	document.getElementById("counting").innerHTML = "남은시간 : " + sec + "초";
 			 	sec--;
 
 			 	if (sec < 0) {
@@ -82,7 +82,6 @@ window.onload = function(){
 	function stopRecording() {
 		stopButton.disabled = true;
 		recordButton.disabled = false;
-    	nextQuestion.disabled = false;
 		
 		rec.stop();
 
@@ -91,6 +90,7 @@ window.onload = function(){
 		rec.exportWAV(createDownloadLink);
 		
 		clearInterval(leftTime);
+		document.getElementById("counting").innerHTML = "남은시간 : " + sec + "초";
 	}
 
 	function createDownloadLink(blob) {
@@ -106,7 +106,7 @@ window.onload = function(){
 
 		link.href = url;
 		link.download = filename+".wav";
-		link.innerHTML = "다음 질문";
+		link.innerHTML = "선택 하기";
 
 		li.appendChild(au);
 		li.appendChild(document.createTextNode(filename+".wav "))
@@ -115,21 +115,34 @@ window.onload = function(){
 	}
 }
 
+// 	질문 1개씩 표시
+	var arr = ${requestScope.list};
+	document.getElementById("demo").innerHTML = arr[0].question_text;
+	console.log(arr[1].question_text);
 </script>
 
 <body>
+<p id="demo"></p>
 
-<!-- 랜덤 숫자 생성(중복이 생김) -->
 <p align="center"> 다음 질문에 답해주세요</p>
 
-<div align="center">
-	<c:forEach items="${requestScope.list}" var="question" begin="0" end="4">
-			<tr>
-				<td>${question.question_num}</td>
-				<td>${question.question_text}</td></br>
-			</tr>
-	</c:forEach>
-</div>
+<!-- 테스트용 -->
+<!-- <div align="center"> -->
+<!-- 테스트용 -->
+<%-- 	<c:forEach items="${requestScope.list}" var="question" begin="0" end="4"> --%>
+<!-- 			<tr> -->
+<%-- 				<td>${question.question_num}</td> --%>
+<%-- 				<td>${question.question_text}</td> --%>
+<!-- 				<br /> -->
+<!-- 			</tr> -->
+<%-- 	</c:forEach> --%>
+<!-- </div> -->
+
+<!-- <button class='button'>다음 질문</button> -->
+<%-- <div ${requestScope.list} align="center"> --%>
+<%-- <h1 class='question' align="center">${list[0].question_text}</h1> --%>
+<!-- </div> -->
+<!-- 테스트용 끝 -->
 
 <!-- 타이머 -->
 <p id="counting" align="center"></p>
@@ -138,7 +151,6 @@ window.onload = function(){
 	<div id="controls" align="center">
 		<button id="recordButton">답변 시작</button>
 		<button id="stopButton" disabled>답변 완료</button>
-		<button id="nextQuestion" disabled>다음 질문 시작하기</button>
 	</div>
 		<ol id="recordingsList" ></ol>
 </body>
