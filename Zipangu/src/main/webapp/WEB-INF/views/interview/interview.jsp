@@ -11,11 +11,14 @@
 </head>
 
 <script>
+	var mouseClick = 0;
 
 window.onload = function(){
 	URL = window.URL || window.webkitURL;
-
+	
+	
 	var sec = 60;	//카운트
+	var leftTime = null;
 	
 	var gumStream;
 	var rec;
@@ -29,7 +32,7 @@ window.onload = function(){
 
 	recordButton.addEventListener("click", startRecording);
 	stopButton.addEventListener("click", stopRecording);
-	var leftTime = null;
+	
 	
 	function startRecording() {
 			//카운트 다운
@@ -115,16 +118,55 @@ window.onload = function(){
 	}
 }
 
-// 	질문 1개씩 표시
+//		이건 전체적으로 실행이 되어버림(틀림)
+// function nextQuestionButton(){
+// 	var question_Doc = document.getElementById("question");
+
+// 		질문
+// 	var arr = ${requestScope.list};
+
+// 		질문 1개씩 노출
+// 	for(var i=0; i<=5; i++){
+// 	question_Doc.innerHTML = arr[i].question_text;
+// 	console.log(arr[i].question_text);
+// 	}
+// }
+
+function nextQuestionButton(){
+
+
 	var arr = ${requestScope.list};
-	document.getElementById("demo").innerHTML = arr[0].question_text;
-	console.log(arr[1].question_text);
+	var question_Doc = document.getElementById("question");
+
+	if(mouseClick === 0){
+		question_Doc.innerHTML = arr[mouseClick].question_text;
+		mouseClick++;
+		console.log(mouseClick);
+		console.log(arr[mouseClick].question_text);
+	} else if(mouseClick === 1) {
+		question_Doc.innerHTML = arr[mouseClick].question_text;
+		mouseClick++;
+	} else if(mouseClick === 2) {
+		question_Doc.innerHTML = arr[mouseClick].question_text;
+		mouseClick++;
+	} else if(mouseClick === 3) {
+		question_Doc.innerHTML = arr[mouseClick].question_text;
+		mouseClick++;
+	} else if(mouseClick === 4) {
+		question_Doc.innerHTML = arr[mouseClick].question_text;
+	}
+	
+}
+
 </script>
 
 <body>
-<p id="demo"></p>
 
 <p align="center"> 다음 질문에 답해주세요</p>
+
+<div id="question"></div>
+
+<button onclick='nextQuestionButton()'>다음 질문</button>
 
 <!-- 테스트용 -->
 <!-- <div align="center"> -->
@@ -138,7 +180,7 @@ window.onload = function(){
 <%-- 	</c:forEach> --%>
 <!-- </div> -->
 
-<!-- <button class='button'>다음 질문</button> -->
+
 <%-- <div ${requestScope.list} align="center"> --%>
 <%-- <h1 class='question' align="center">${list[0].question_text}</h1> --%>
 <!-- </div> -->
