@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.vo.MemberVO;
@@ -35,4 +36,26 @@ public class MemberController {
 		}
 		return "member/signupResult";
 	}
+	
+	//임시 로그인
+	@RequestMapping(value = "member/loginTemp", method = RequestMethod.GET)
+	public String loginTemp() {
+		return "member/loginTemp";
+	}
+
+	//임시 로그인
+	@RequestMapping(value = "member/login", method = RequestMethod.POST)
+	public String login(MemberVO member, HttpSession session, RedirectAttributes rttr) {
+		boolean result = dao.login(member, session);
+		rttr.addFlashAttribute("loginResultTemp", result);
+		return "redirect:/";
+	}
+	
+	//임시 로그아웃,, dao안만듬
+	@RequestMapping(value = "member/logoutTemp", method = RequestMethod.GET)
+	public String logoutTemp(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+
 }

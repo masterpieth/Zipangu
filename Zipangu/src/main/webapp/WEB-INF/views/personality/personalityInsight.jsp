@@ -123,18 +123,18 @@ $(function(){
 	<h2>api 돌리면 과금되서 성향분석 버튼 disabled하고, 임시로 테이블을 만듬,,</h2>
 	<form action="sendKakao" method="post">
 		<input type="file" id="kakaoFile" required="required">
-		<textarea id="kakaoContent" name="kakaoContent" hidden="hidden"></textarea>
+		hidden할거<textarea id="kakaoContent" name="kakaoContent"></textarea>
 		<br>
 		이름 입력 : <input type="text" name="kakaoName" id="contentInput" required="required">
 		<input type="submit" value="파일등록">
 		
 	</form>
 	
-	<textarea id="revisedContent" hidden="hidden">
+	hidden할 거<textarea id="revisedContent">
 		${requestScope.revisedContent}
 	</textarea>	
 	
-	<input type="button" value="성향분석" id="search" disabled="disabled">
+	<input type="button" value="성향분석" id="search"  disabled="disabled"> 
 	
 
 	<table id="insightList">

@@ -53,10 +53,9 @@ public class PersonalityController {
 		if(file.exists()) file.delete();
 		
 		textFileName = UUID.randomUUID().toString();
-		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
-		
 		daoMe.uploadKakaoText(userID, textFileName);	
 		
+		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
 		try {
 			
 			FileWriter fileWriter = new FileWriter(filePath);

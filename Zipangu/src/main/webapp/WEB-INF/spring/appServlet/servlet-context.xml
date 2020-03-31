@@ -33,6 +33,8 @@
 	
 		<websocket:handlers>
 		 <websocket:mapping handler="msgHandler" path="/msg" />
+		 
+		 <!-- httpsession 값 가져오기 위해서 -->
 		 <websocket:handshake-interceptors>
 		      <beans:bean
 		          class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
