@@ -118,22 +118,8 @@ window.onload = function(){
 	}
 }
 
-//		이건 전체적으로 실행이 되어버림(틀림)
-// function nextQuestionButton(){
-// 	var question_Doc = document.getElementById("question");
-
-// 		질문
-// 	var arr = ${requestScope.list};
-
-// 		질문 1개씩 노출
-// 	for(var i=0; i<=5; i++){
-// 	question_Doc.innerHTML = arr[i].question_text;
-// 	console.log(arr[i].question_text);
-// 	}
-// }
 
 function nextQuestionButton(){
-
 
 	var arr = ${requestScope.list};
 	var question_Doc = document.getElementById("question");
@@ -145,18 +131,52 @@ function nextQuestionButton(){
 		console.log(arr[mouseClick].question_text);
 	} else if(mouseClick === 1) {
 		question_Doc.innerHTML = arr[mouseClick].question_text;
+		console.log(mouseClick);
+		console.log(arr[mouseClick].question_text);
 		mouseClick++;
 	} else if(mouseClick === 2) {
 		question_Doc.innerHTML = arr[mouseClick].question_text;
+		console.log(mouseClick);
+		console.log(arr[mouseClick].question_text);
 		mouseClick++;
 	} else if(mouseClick === 3) {
 		question_Doc.innerHTML = arr[mouseClick].question_text;
+		console.log(mouseClick);
+		console.log(arr[mouseClick].question_text);
 		mouseClick++;
 	} else if(mouseClick === 4) {
 		question_Doc.innerHTML = arr[mouseClick].question_text;
+		console.log(mouseClick);
+		console.log(arr[mouseClick].question_text);
 	}
-	
 }
+
+// }
+
+// 	//음성 파일 텍스트 변환
+// 	$('#testBtn2').on('click', function(){
+// 		var form = $('#testForm')[0];
+// 		var data = new FormData(form);
+// 		console.log(data);
+// 		$.ajax({
+//             url : "https://api.kr-seo.speech-to-text.watson.cloud.ibm.com/instances/11a86b43-4a67-4691-bd6c-64c1d352ef3f/v1/recognize",
+//             data : data, 
+//             enctype: 'multipart/form-data',
+//             processData : false,
+//             contentType : false,
+//             type : "post",
+//             headers: {
+//                 'Authorization': 'Basic ' + btoa('apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD'),
+//                 'Content-Type' : 'audio/wav'
+//             },
+//             success: function(data){
+//                 console.log(data)
+//             },
+//             error: function(data){
+//             }
+//         })
+//     })
+// }
 
 </script>
 
