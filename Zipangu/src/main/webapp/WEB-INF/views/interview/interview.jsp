@@ -96,44 +96,49 @@ window.onload = function(){
 		document.getElementById("counting").innerHTML = "남은시간 : " + sec + "초";
 	}
 
+	// 	다운로드
 	function createDownloadLink(blob) {
 		var url = URL.createObjectURL(blob);
 		var au = document.createElement('audio');
 		var li = document.createElement('li');
-		var link = document.createElement('a');
+		var link = document.createElement('button');
 
 		var filename = new Date().toISOString();
 		au.controls = true;
 		au.src = url;
 		link.href = url;
 		link.download = filename+".wav";
-		link.innerHTML = "선택 하기";
+		link.innerHTML = "다운로드";
 		li.appendChild(au);
 		li.appendChild(document.createTextNode(filename+".wav "))
 		li.appendChild(link);
 		recordingsList.appendChild(li);
-// 	}
-// }
-	var filename = new Date().toISOString();
-	//filename to send to server without extension 
-	//upload link 
-	var upload = document.createElement('a');
-	upload.href = "#";
-	upload.innerHTML = "Upload";
-	upload.addEventListener("click", function(event) {
+
+		//업로드
+		var filename = new Date().toISOString();
+
+		var upload = document.createElement('button');
+			upload.href = "#";
+			upload.innerHTML = "선택하기";
+			upload.addEventListener("click", function(event) {
+
 	    var xhr = new XMLHttpRequest();
-	    xhr.onload = function(e) {
-	        if (this.readyState === 4) {
-	            console.log("Server returned: ", e.target.responseText);
-	        }
-	    };
+	  		xhr.onload = function(e) {
+        if (this.readyState === 4) {
+            console.log("Server returned: ", e.target.responseText);
+      	}
+	    	};
 	    var fd = new FormData();
 	    fd.append("audio_data", blob, filename);
 	    xhr.open("POST", "upload.json", true);
-
-	    console.log(fd);
+	    console.log(upload.json); //unfined
+	    console.log(xhr);
+	    console.log(blob);
+	    console.log(filename);
+	    console.log(url);
 	    
-	    xhr.send(fd);
+	    
+// 	    xhr.send(fd);
 	})
 	li.appendChild(document.createTextNode(" ")) //add a space in between 
 	li.appendChild(upload) //add the upload link to li
