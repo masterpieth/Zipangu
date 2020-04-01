@@ -103,22 +103,43 @@ window.onload = function(){
 		var link = document.createElement('a');
 
 		var filename = new Date().toISOString();
-
 		au.controls = true;
 		au.src = url;
-
 		link.href = url;
 		link.download = filename+".wav";
 		link.innerHTML = "선택 하기";
-
 		li.appendChild(au);
 		li.appendChild(document.createTextNode(filename+".wav "))
 		li.appendChild(link);
 		recordingsList.appendChild(li);
+// 	}
+// }
+	var filename = new Date().toISOString();
+	//filename to send to server without extension 
+	//upload link 
+	var upload = document.createElement('a');
+	upload.href = "#";
+	upload.innerHTML = "Upload";
+	upload.addEventListener("click", function(event) {
+	    var xhr = new XMLHttpRequest();
+	    xhr.onload = function(e) {
+	        if (this.readyState === 4) {
+	            console.log("Server returned: ", e.target.responseText);
+	        }
+	    };
+	    var fd = new FormData();
+	    fd.append("audio_data", blob, filename);
+	    xhr.open("POST", "upload.json", true);
+
+	    console.log(fd);
+	    
+	    xhr.send(fd);
+	})
+	li.appendChild(document.createTextNode(" ")) //add a space in between 
+	li.appendChild(upload) //add the upload link to li
 	}
 }
-
-
+	
 function nextQuestionButton(){
 
 	var arr = ${requestScope.list};
@@ -151,6 +172,8 @@ function nextQuestionButton(){
 	}
 }
 
+
+
 // }
 
 // 	//음성 파일 텍스트 변환
@@ -177,6 +200,9 @@ function nextQuestionButton(){
 //         })
 //     })
 // }
+
+
+
 
 </script>
 
