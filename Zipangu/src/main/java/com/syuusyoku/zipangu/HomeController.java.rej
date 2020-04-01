@@ -1,0 +1,11 @@
+diff a/Zipangu/src/main/java/com/syuusyoku/zipangu/HomeController.java b/Zipangu/src/main/java/com/syuusyoku/zipangu/HomeController.java	(rejected hunks)
+@@ -9,6 +9,9 @@
+ 	
+ 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+ 	
++=======
++
++>>>>>>> master
+ 	@RequestMapping(value = "/", method = RequestMethod.GET)
+ 	public String home() {
+ 		return "home";

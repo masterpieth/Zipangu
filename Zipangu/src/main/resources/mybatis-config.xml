@@ -3,8 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
 	<typeAliases>
+<<<<<<< HEAD
 	</typeAliases>
 	<mappers>
+=======
+		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
+	</typeAliases>
+	<mappers>
+		<mapper resource="mapper/memberMapper.xml" />
+>>>>>>> master
 	</mappers>
 </configuration>
