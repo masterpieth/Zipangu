@@ -11,4 +11,8 @@ public class CompanyController {
 	public String comAnalysisPage() {
 		return "company/comAnalysis";
 	}
+	@RequestMapping(value="analysis/companyTemp", method = RequestMethod.GET)
+	public String companyTemp() {
+		return "company/comAnalysisTemp";
+	}
 }

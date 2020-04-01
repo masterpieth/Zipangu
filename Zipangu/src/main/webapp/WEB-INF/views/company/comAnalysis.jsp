@@ -8,6 +8,7 @@
 <title>기업 분석</title>
 <script>
 $(function(){
+
 	$('#testBtn2').on('click', function(){
 		var value = $('#inputText').val();
 		var selValue = $('#listnumSel').val();

@@ -44,7 +44,7 @@
                                  aria-expanded="false">자기분석</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="blog.html">성향 분석</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">기업 분석</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value="/analysis/company"/>">기업 분석</a></li>
                                     <li class="nav-item"><a class="nav-link" href="blog.html">분석 결과 조회</a></li>
                                 </ul>
                             </li>
