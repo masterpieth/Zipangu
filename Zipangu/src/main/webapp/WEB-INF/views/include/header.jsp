@@ -10,16 +10,16 @@
     <link rel="icon" href="${pageContext.request.contextPath}/resources/template_img/favicon.png" type="image/png">
     <title>Zipangu</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/bootstrap.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/linericon/style.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/font-awesome.min.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/magnific-popup.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/owl-carousel/owl.carousel.min.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/nice-select/css/nice-select.css?v=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/animate-css/animate.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/linericon/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/magnific-popup.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/animate-css/animate.css">
     <!-- main css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/style.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/style.css">
 </head>
 <body>
 <!--================ Start Header Menu Area =================-->

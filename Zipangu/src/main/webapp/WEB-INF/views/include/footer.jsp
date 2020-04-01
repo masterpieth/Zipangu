@@ -11,6 +11,10 @@
                             <p class="about-text">여기에 장황한 설명이 있는데 굳이 넣어야 하는 걸까요? 여러분의 생각은 어떠신가요? 귀찮네요 ㅎㅎ 그냥 뺄까 싶은데 일단 둡니다</p>
                         </div>
                     </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                     </div>
+                     <div class="col-lg-3 col-md-6 col-sm-6">
+                     </div>
                     <div class="col-lg-2 col-md-6 col-sm-6">
                         <div class="single-footer-widget">
                             <h5 class="footer_title">Navigation Links</h5>
@@ -31,28 +35,6 @@
                                         <li><a href="#">Contact</a></li>
                                     </ul>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div class="col-lg-3 col-md-6 col-sm-6">
-                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h5>Q&A</h5>
-                            <p>뭔가 관리자한테 메일보내라거나 하는 용도로 쓸 수 있을 것 같아서 임시로 남겨둡니다(안해도됨)</p>
-                            <div class="footer-newsletter" id="mc_embed_signup">    
-                                <form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                 method="get" class="form-inline">
-                                    <div class="d-flex flex-row">
-                                        <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-                                         required="" type="email">
-                                        <button class="click-btn btn btn-default"><span class="lnr lnr-location" aria-hidden="true"></span></button>
-                                        <div style="position: absolute; left: -5000px;">
-                                            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-                                        </div>
-                                    </div>
-                                    <div class="info"></div>
-                                </form>
                             </div>
                         </div>
                     </div>
