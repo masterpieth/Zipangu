@@ -6,12 +6,10 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
-	<typeAliases>
-	</typeAliases>
-	<mappers>
+    <typeAliases>
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
 	</typeAliases>
 	<mappers>
-		<mapper resource="mapper/memberMapper.xml" />
-	</mappers>
+       <mapper resource="mapper/memberMapper.xml" />
+    </mappers>
 </configuration>
