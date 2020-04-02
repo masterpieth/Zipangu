@@ -1,7 +1,10 @@
 package com.syuusyoku.zipangu.dao;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -38,7 +41,6 @@ public class InterviewDAO {
 		int result = 0;
 		
 		if(!blob.isEmpty()) {
-//			String blob = UUID.randomUUID().toString();
 			try {
 				blob.transferTo(new File("C:/PJT/"+blob));
 			} catch (IllegalStateException | IOException e) {
@@ -52,6 +54,15 @@ public class InterviewDAO {
 			e.printStackTrace();
 		}
 		return result;
+		
+	//multipart File converter
+	public void convert(MultipartFile blob) {
+		Path filepath = Paths.get("C:/PJT/",blob.getOriginalFilename());
+		try(OutputStream os = Files.newOutputStream(filepath)){
+			os.write(blob.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 //	public class UtilFile {

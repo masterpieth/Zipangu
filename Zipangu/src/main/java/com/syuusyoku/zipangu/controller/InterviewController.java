@@ -1,10 +1,7 @@
 package com.syuusyoku.zipangu.controller;
 
 import java.io.IOException;
-import java.sql.Blob;
 import java.util.ArrayList;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ import com.syuusyoku.zipangu.vo.QuestionVO;
 @Controller
 public class InterviewController {
 	
-//	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);
 	
 	@Autowired
 	private InterviewDAO dao;
@@ -44,6 +40,7 @@ public class InterviewController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		dao.convert(blob);
 		return "data";
 	}
 }
