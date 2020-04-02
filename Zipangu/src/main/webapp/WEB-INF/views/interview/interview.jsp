@@ -114,34 +114,30 @@ window.onload = function(){
 		li.appendChild(link);
 		recordingsList.appendChild(li);
 
-		//업로드
-		var filename = new Date().toISOString();
-
+		//컨트롤러로 파일 전달
 		var upload = document.createElement('button');
 			upload.href = "#";
 			upload.innerHTML = "선택하기";
 			upload.addEventListener("click", function(event) {
-
-	    var xhr = new XMLHttpRequest();
-	  		xhr.onload = function(e) {
-        if (this.readyState === 4) {
-            console.log("Server returned: ", e.target.responseText);
-      	}
-	    	};
-	    var fd = new FormData();
-	    fd.append("audio_data", blob, filename);
-	    xhr.open("POST", "upload.json", true);
-	    console.log(upload.json); //unfined
-	    console.log(xhr);
-	    console.log(blob);
-	    console.log(filename);
-	    console.log(url);
-	    
-	    
-// 	    xhr.send(fd);
-	})
-	li.appendChild(document.createTextNode(" ")) //add a space in between 
-	li.appendChild(upload) //add the upload link to li
+				
+				var fd = new FormData();
+// 				fd.append("fname", filename);
+				fd.append("blob", blob);
+				console.log(blob);
+				$.ajax({
+					url: "/zipangu/interview/test",
+					type:"post",
+					data : fd,
+					cache: false,
+					processData:false,
+					contentType: false,
+					success: function(data){
+						console.log(data);
+					}
+				});
+			})
+		li.appendChild(document.createTextNode(" ")) //add a space in between 
+		li.appendChild(upload) //add the upload link to li
 	}
 }
 	
