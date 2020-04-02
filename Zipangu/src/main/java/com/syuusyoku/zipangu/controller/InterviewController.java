@@ -31,6 +31,7 @@ public class InterviewController {
 		model.addAttribute("questionList", json);
 		return "interview/interview";
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "interview/test", method = RequestMethod.POST)
 	public String test(@RequestParam MultipartFile blob) {

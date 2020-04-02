@@ -6,8 +6,10 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +60,24 @@ public class InterviewDAO {
 		
 	//multipart File converter
 	public void convert(MultipartFile blob) {
+		//파일명 시간 구하기
+		long systemTime = System.currentTimeMillis();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.KOREA);
+		String dTime = formatter.format(systemTime);
+		
+		File original = new File("C:/PJT/blob");
+		File change = new File("C:/PJT/"+dTime+".wav");
+		
 		Path filepath = Paths.get("C:/PJT/",blob.getOriginalFilename());
-		try(OutputStream os = Files.newOutputStream(filepath)){
-			os.write(blob.getBytes());
+		try(
+			OutputStream os = Files.newOutputStream(filepath)){
+				os.write(blob.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(blob.getOriginalFilename());
+	    if (!original.renameTo(change)) {
+	        System.err.println("이름 변경 에러 : " + original);
+	      }
 	}
 	
 //	public class UtilFile {

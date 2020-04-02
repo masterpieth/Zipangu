@@ -10,6 +10,5 @@ public interface InterviewMapper {
 
 	public ArrayList<QuestionVO> selectList();
 	public int test(MultipartFile blob);
-	public ArrayList<InterviewResultVO> resultList();
-//	public int uploadVoice(InterviewResultVO vo);
+//	public ArrayList<InterviewResultVO> resultList();
 }

@@ -16,7 +16,6 @@
 window.onload = function(){
 	URL = window.URL || window.webkitURL;
 	
-	
 	var sec = 60;	//카운트
 	var leftTime = null;
 	
