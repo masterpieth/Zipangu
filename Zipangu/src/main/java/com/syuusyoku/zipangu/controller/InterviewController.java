@@ -1,7 +1,9 @@
 package com.syuusyoku.zipangu.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -37,14 +39,7 @@ public class InterviewController {
 	@ResponseBody
 	@RequestMapping(value = "interview/test", method = RequestMethod.POST)
 	public String test(@RequestParam MultipartFile blob) {
-		try {
-			byte[] bytes = blob.getBytes();
-			Blob blobt = new SerialBlob(bytes);
-			System.out.println(bytes.length);
-			dao.test(blobt);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		dao.convert(blob);
 		return "data";
 	}
 }

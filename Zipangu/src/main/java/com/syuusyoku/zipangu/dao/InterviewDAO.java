@@ -1,14 +1,17 @@
 package com.syuusyoku.zipangu.dao;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Blob;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.syuusyoku.zipangu.vo.QuestionVO;
 
@@ -33,26 +36,14 @@ public class InterviewDAO {
 		}
 		return list;
 	}
-	
-	public int test(Blob blobt) {
-		int result = 0;
-		
-		if(blobt.length()!=0) {
-//			String blob = UUID.randomUUID().toString();
-			try {
-				blobt.transferTo(new File("C:/PJT/"+blobt));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-			result = mapper.test(blobt);
-		}catch(Exception e) {
+	//multipart File converter
+	public void convert(MultipartFile blob) {
+		Path filepath = Paths.get("C:\\test",blob.getOriginalFilename());
+		try(OutputStream os = Files.newOutputStream(filepath)){
+			os.write(blob.getBytes());
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(result);
-		return result;
 	}
 	
 //	public class UtilFile {
