@@ -113,9 +113,7 @@ window.onload = function(){
 		li.appendChild(link);
 		recordingsList.appendChild(li);
 
-		//컨트롤러로 파일 전달
-		
-		//업로드
+		//컨트롤러로 파일 전달 > 업로드
 		var filename = new Date().toISOString();
 
 		var upload = document.createElement('button');
@@ -124,7 +122,6 @@ window.onload = function(){
 			upload.addEventListener("click", function(event) {
 				
 				var fd = new FormData();
-// 				fd.append("fname", filename);
 				fd.append("blob", blob);
 				console.log(blob);
 				$.ajax({
@@ -141,36 +138,6 @@ window.onload = function(){
 			})
 		li.appendChild(document.createTextNode(" ")) //add a space in between 
 		li.appendChild(upload) //add the upload link to li
-
-
-// 			var fd = new FormData();
-// 			fd.append('fname', 'test.wav');
-// 			fd.append('data', blob);
-// 			$.ajax({
-// 			    type: 'POST',
-// 			    url: '/upload.json',
-// 			    data: fd,
-// 			    processData: false,
-// 			    contentType: false
-// 			}).done(function(data) {
-// 			       console.log(data);
-// 			});
-// 			}
-// 		}
-// 	}
-// 	    var fd = new FormData();
-// 	    fd.append("audio_data", blob, filename);
-// 	    xhr.open("POST", "/upload.json", true);
-// 	    console.log(xhr);
-// 	    console.log(blob);
-// 	    console.log(filename);
-// 	    console.log(url);
-// 	    console.log(upload.json);
-// 	    console.log(upload);
-// 	    xhr.send(fd);
-// 	})
-	li.appendChild(document.createTextNode(" ")) //add a space in between 
-	li.appendChild(upload) //add the upload link to li
 	}
 }
 	
@@ -205,10 +172,6 @@ function nextQuestionButton(){
 		console.log(arr[mouseClick].question_text);
 	}
 }
-
-
-
-// }
 
 // 	//음성 파일 텍스트 변환
 // 	$('#testBtn2').on('click', function(){

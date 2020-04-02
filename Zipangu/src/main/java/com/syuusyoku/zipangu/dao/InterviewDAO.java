@@ -1,24 +1,15 @@
 package com.syuusyoku.zipangu.dao;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.UUID;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.syuusyoku.zipangu.vo.InterviewResultVO;
 import com.syuusyoku.zipangu.vo.QuestionVO;
 
 @Controller
@@ -43,28 +34,25 @@ public class InterviewDAO {
 		return list;
 	}
 	
-	public int insertInterview(InterviewResultVO vo, HttpSession session, MultipartFile uploadFile) {
-		String interview_num = (String)session.getAttribute("interview_num");
-//		vo.setInterview_num(interview_num);
+	public int test(Blob blobt) {
 		int result = 0;
 		
-		if(!uploadFile.isEmpty()) {
-			String viocefilename = UUID.randomUUID().toString();
-			vo.setVoiceFileName(viocefilename);
-						
+		if(blobt.length()!=0) {
+//			String blob = UUID.randomUUID().toString();
 			try {
-				uploadFile.transferTo(new File("C:/PJT/"+viocefilename));
+				blobt.transferTo(new File("C:/PJT/"+blobt));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 		}
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-			result = mapper.insertInterviewResult(vo);
+			result = mapper.test(blobt);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return result; 
+		System.out.println(result);
+		return result;
 	}
 	
 //	public class UtilFile {
