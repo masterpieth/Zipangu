@@ -8,8 +8,12 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.ResumeVO" alias="resume" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.CareerVO" alias="career" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.QualifiedVO" alias="qualified" />
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/resumeMapper.xml" />
 	</mappers>
 </configuration>

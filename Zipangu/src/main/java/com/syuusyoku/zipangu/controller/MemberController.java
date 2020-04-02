@@ -35,4 +35,10 @@ public class MemberController {
 		}
 		return "member/signupResult";
 	}
+
+	@RequestMapping(value = "member/login", method = RequestMethod.POST)
+	public String login(MemberVO member, HttpSession session) {
+		dao.login(member, session);
+		return "home";
+	}
 }
