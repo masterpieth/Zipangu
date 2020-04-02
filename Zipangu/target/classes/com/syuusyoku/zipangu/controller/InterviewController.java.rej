@@ -1,9 +1,9 @@
 diff a/Zipangu/src/main/java/com/syuusyoku/zipangu/controller/InterviewController.java b/Zipangu/src/main/java/com/syuusyoku/zipangu/controller/InterviewController.java	(rejected hunks)
-@@ -53,6 +53,7 @@
-  		model.addAttribute("questionList", json);
-  		return "interview/interview";
-  	}
-++<<<<<<< Updated upstream
- +	@ResponseBody
- +	@RequestMapping(value = "interview/test", method = RequestMethod.POST)
- +	public String test(@RequestParam MultipartFile blob) {
+@@ -19,7 +19,6 @@
+ @Controller
+ public class InterviewController {
+ 	
+-//	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);
+ 	
+ 	@Autowired
+ 	private InterviewDAO dao;

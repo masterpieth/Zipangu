@@ -1,5 +1,6 @@
 package com.syuusyoku.zipangu.dao;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -39,7 +40,6 @@ public class InterviewDAO {
 	
 	public int test(MultipartFile blob) {
 		int result = 0;
-		
 		if(!blob.isEmpty()) {
 			try {
 				blob.transferTo(new File("C:/PJT/"+blob));
@@ -54,6 +54,7 @@ public class InterviewDAO {
 			e.printStackTrace();
 		}
 		return result;
+	}
 		
 	//multipart File converter
 	public void convert(MultipartFile blob) {
@@ -63,6 +64,7 @@ public class InterviewDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(blob.getOriginalFilename());
 	}
 	
 //	public class UtilFile {

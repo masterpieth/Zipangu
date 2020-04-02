@@ -19,6 +19,7 @@ import com.syuusyoku.zipangu.vo.QuestionVO;
 @Controller
 public class InterviewController {
 	
+//	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);
 	
 	@Autowired
 	private InterviewDAO dao;
