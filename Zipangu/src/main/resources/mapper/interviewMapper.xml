@@ -11,4 +11,19 @@
 			question
 	</select>
 	
+	<insert id="insertResult" parameterType="ivo">
+		INSERT INTO
+			insertview_result(
+			interview_num
+			, question_num
+			, voicefilename
+			, result
+			) VALUES (
+			interview_num
+			, question_num
+			, voicefilename
+			, result
+			);
+	</insert>
+	
 </mapper>

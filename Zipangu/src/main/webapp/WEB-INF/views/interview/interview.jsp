@@ -80,7 +80,6 @@ window.onload = function(){
 	    	nextQuestion.disabled = true;
 		});
 	}
-
 		
 	function stopRecording() {
 		stopButton.disabled = true;
@@ -104,8 +103,8 @@ window.onload = function(){
 		var link = document.createElement('button');
 
 		var filename = new Date().toISOString();
-		au.controls = true;
-		au.src = url;
+		au.controls = true; //오디오 컨트롤 바
+		au.src = url; //
 		link.href = url;
 		link.download = filename+".wav";
 		link.innerHTML = "다운로드";
@@ -115,6 +114,10 @@ window.onload = function(){
 		recordingsList.appendChild(li);
 
 		//컨트롤러로 파일 전달
+		
+		//업로드
+		var filename = new Date().toISOString();
+
 		var upload = document.createElement('button');
 			upload.href = "#";
 			upload.innerHTML = "선택하기";
@@ -138,12 +141,42 @@ window.onload = function(){
 			})
 		li.appendChild(document.createTextNode(" ")) //add a space in between 
 		li.appendChild(upload) //add the upload link to li
+
+
+// 			var fd = new FormData();
+// 			fd.append('fname', 'test.wav');
+// 			fd.append('data', blob);
+// 			$.ajax({
+// 			    type: 'POST',
+// 			    url: '/upload.json',
+// 			    data: fd,
+// 			    processData: false,
+// 			    contentType: false
+// 			}).done(function(data) {
+// 			       console.log(data);
+// 			});
+// 			}
+// 		}
+// 	}
+// 	    var fd = new FormData();
+// 	    fd.append("audio_data", blob, filename);
+// 	    xhr.open("POST", "/upload.json", true);
+// 	    console.log(xhr);
+// 	    console.log(blob);
+// 	    console.log(filename);
+// 	    console.log(url);
+// 	    console.log(upload.json);
+// 	    console.log(upload);
+// 	    xhr.send(fd);
+// 	})
+	li.appendChild(document.createTextNode(" ")) //add a space in between 
+	li.appendChild(upload) //add the upload link to li
 	}
 }
 	
 function nextQuestionButton(){
 
-	var arr = ${requestScope.list};
+	var arr = ${requestScope.questionList};
 	var question_Doc = document.getElementById("question");
 
 	if(mouseClick === 0){
@@ -202,9 +235,6 @@ function nextQuestionButton(){
 //     })
 // }
 
-
-
-
 </script>
 
 <body>
@@ -214,24 +244,6 @@ function nextQuestionButton(){
 <div id="question"></div>
 
 <button onclick='nextQuestionButton()'>다음 질문</button>
-
-<!-- 테스트용 -->
-<!-- <div align="center"> -->
-<!-- 테스트용 -->
-<%-- 	<c:forEach items="${requestScope.list}" var="question" begin="0" end="4"> --%>
-<!-- 			<tr> -->
-<%-- 				<td>${question.question_num}</td> --%>
-<%-- 				<td>${question.question_text}</td> --%>
-<!-- 				<br /> -->
-<!-- 			</tr> -->
-<%-- 	</c:forEach> --%>
-<!-- </div> -->
-
-
-<%-- <div ${requestScope.list} align="center"> --%>
-<%-- <h1 class='question' align="center">${list[0].question_text}</h1> --%>
-<!-- </div> -->
-<!-- 테스트용 끝 -->
 
 <!-- 타이머 -->
 <p id="counting" align="center"></p>
