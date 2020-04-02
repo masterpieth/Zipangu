@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.syuusyoku.zipangu.dao.ResumeMapper">
+	<select id="resumeList" resultType="resume">
+		SELECT
+			*
+		FROM
+			resume
+		WHERE
+			userid = #{userID}
+		ORDER BY
+			resume_num DESC
+	</select>
+
+	<insert id="saveResume" parameterType="resume">
+		<selectKey keyProperty="resume_num" resultType="int" order="BEFORE">
+			SELECT resume_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO
+			resume
+		VALUES (
+			#{resume_num},
+			#{userID},
+			#{hobbyNSkill},
+			#{introduce},
+			#{resume_num} || '_' || #{picFileName},
+			#{title},
+			DEFAULT,
+			DEFAULT
+		)
+	</insert>
+
+	<insert id="saveCareer" parameterType="career">
+		INSERT INTO
+			career
+		VALUES (
+			#{resume_num},
+			#{start_period},
+			#{end_period},
+			#{content}
+		)
+	</insert>
+
+	<insert id="saveQualified" parameterType="qualified">
+		INSERT INTO
+			qualified
+		VALUES (
+			#{resume_num},
+			#{period},
+			#{content}
+		)
+	</insert>
+</mapper>

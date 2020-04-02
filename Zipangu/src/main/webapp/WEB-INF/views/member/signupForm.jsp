@@ -71,8 +71,8 @@
 				<label for="sex">성별:</label>
 				<select class="form-control" id="sex" name="sex" required>
 					<option></option>
-					<option value="male">남성</option>
-					<option value="female">여성</option>
+					<option value="남성">남성</option>
+					<option value="여성">여성</option>
 				</select>
 				<div class="valid-message" id="sexMessage">성별을 골라 주세요.</div>
 			</div>
