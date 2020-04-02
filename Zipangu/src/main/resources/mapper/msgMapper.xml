@@ -2,5 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.syuusyoku.zipangu.dao.MsgMapper">
+	<insert id="insert_list_msg" parameterType="List_MsgVO">
+		insert into list_msg(mentor_id,mentee_id,msg_num) 
+		values(#{mentor_id},#{mentee_id},list_msg_seq.nextval)
+	</insert>
 	
+	<select id="select_list_msg" parameterType="List_MsgVO" resultType="int">
+		select msg_num from list_msg 
+		where mentor_id=#{mentor_id} and mentee_id=#{mentee_id}
+	</select>
+	
+	<select id="count_list_msg" parameterType="List_MsgVO" resultType="int">
+		select count(*) from list_msg 
+		where mentor_id=#{mentor_id} and mentee_id=#{mentee_id}
+	</select>
+	
+	<select id=""></select>
 </mapper>

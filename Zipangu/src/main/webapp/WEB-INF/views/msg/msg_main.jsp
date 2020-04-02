@@ -14,7 +14,14 @@
 		<tr>
 			<th>멘토이름</th><td>${mentor.userName}</td>
 			<th>멘토 아이디</th><td>${mentor.userID}</td>
-			<td><input type="button" value="연락하기"></td>
+			<td>
+				<form action="msg_start" method="post">
+					<input type="hidden" value="${sessonScope.userID}" name="mentee_id"> 
+					<input type="hidden" value="${mentor.userID}" name="mentor_id">
+					
+					<input type="submit" value="연락하기">
+				</form>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>

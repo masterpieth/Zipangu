@@ -11,10 +11,13 @@
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.PersonalityVO" alias="PersonalityVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.TimelineVO" alias="TimelineVO"/>
+		<typeAlias type="com.syuusyoku.zipangu.vo.List_MsgVO" alias="List_MsgVO"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mapper/personalityMapper.xml" />
 		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/msgMapper.xml" />
+		
 	</mappers>
 </configuration>
