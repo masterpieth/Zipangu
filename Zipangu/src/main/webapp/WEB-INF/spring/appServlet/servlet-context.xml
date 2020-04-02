@@ -29,16 +29,6 @@
 	
 	
 	 <!-- 웹소켓 핸들라 -->
-	<beans:bean id="msgHandler" class="com.syuusyoku.zipangu.handler.MsgHandler" />
-	
-		<websocket:handlers>
-		 <websocket:mapping handler="msgHandler" path="/msg" />
-		 
-		 <!-- httpsession 값 가져오기 위해서 -->
-		 <websocket:handshake-interceptors>
-		      <beans:bean
-		          class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-		 </websocket:handshake-interceptors>
-		</websocket:handlers>
+
 		
 	</beans:beans>

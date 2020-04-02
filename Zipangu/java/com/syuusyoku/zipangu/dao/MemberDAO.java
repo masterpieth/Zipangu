@@ -76,15 +76,17 @@ public class MemberDAO {
 		}
 	}
 	
-	public String findTextFileName(String userID) {
-		String textFileName="";
+	public MemberVO memberInfo(String userID) {
+		MemberVO result = null;
 		try {
 			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
-			textFileName = mapper.findTextFileName(userID);
+			result = mapper.memberInfo(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} return textFileName;
+		} return result;
 	}
+
+	
 	
 	public ArrayList<MemberVO> mentorList() {
 		ArrayList<MemberVO> list = null;

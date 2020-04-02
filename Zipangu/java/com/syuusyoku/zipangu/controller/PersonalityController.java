@@ -47,7 +47,7 @@ public class PersonalityController {
 		
 		String text = dao.textList(kakaoContent, kakaoName);
 		
-		String textFileName = daoMe.findTextFileName(userID);
+		String textFileName = daoMe.memberInfo(userID).getTextFileName();
 		
 		File file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 		if(file.exists()) file.delete();
