@@ -39,9 +39,8 @@ public class InterviewController {
 	public String test(@RequestParam MultipartFile blob) {
 		try {
 			byte[] bytes = blob.getBytes();
-			Blob blobt = new SerialBlob(bytes);
 			System.out.println(bytes.length);
-			dao.test(blobt);
+			dao.test(blob);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

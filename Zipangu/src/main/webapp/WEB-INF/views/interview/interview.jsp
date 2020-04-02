@@ -114,8 +114,6 @@ window.onload = function(){
 		recordingsList.appendChild(li);
 
 		//컨트롤러로 파일 전달 > 업로드
-		var filename = new Date().toISOString();
-
 		var upload = document.createElement('button');
 			upload.href = "#";
 			upload.innerHTML = "선택하기";
@@ -124,6 +122,7 @@ window.onload = function(){
 				var fd = new FormData();
 				fd.append("blob", blob);
 				console.log(blob);
+				console.log(url);
 				$.ajax({
 					url: "/zipangu/interview/test",
 					type:"post",

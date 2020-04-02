@@ -2,13 +2,13 @@ package com.syuusyoku.zipangu.dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.syuusyoku.zipangu.vo.QuestionVO;
 
@@ -34,24 +34,23 @@ public class InterviewDAO {
 		return list;
 	}
 	
-	public int test(Blob blobt) {
+	public int test(MultipartFile blob) {
 		int result = 0;
 		
-		if(blobt.length()!=0) {
+		if(!blob.isEmpty()) {
 //			String blob = UUID.randomUUID().toString();
 			try {
-				blobt.transferTo(new File("C:/PJT/"+blobt));
+				blob.transferTo(new File("C:/PJT/"+blob));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 		}
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-			result = mapper.test(blobt);
+			result = mapper.test(blob);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(result);
 		return result;
 	}
 	
