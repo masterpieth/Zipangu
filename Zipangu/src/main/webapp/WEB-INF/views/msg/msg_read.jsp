@@ -46,9 +46,9 @@
 				// 메세지 구독
 				// WebsocketMessageBrokerConfigurer의 configureMessageBroker() 메소드에서 설정한 subscribe prefix("/subscribe")를 사용해야 함
 				// 멀티 채팅방
-				stompClient.subscribe('/subscribe/chat/${msg_num}', function(message){
+				stompClient.subscribe('/subscribe/chat/'+${requestScope.msg_num}, function(message){
 					var data = JSON.parse(message.body);
-					$("#chatroom").append(data);		//data.userName+" 님 -> "+data.content+"<br />");
+					$("#chatroom").append(data.userName+" 님 -> "+data.content+"<br />");
 				});	
 				
 			});
@@ -62,8 +62,8 @@
 			if(str.length > 0){
 				// WebsocketMessageBrokerConfigurer의 configureMessageBroker() 메소드에서 설정한 send prefix("/")를 사용해야 함
 				// 멀티 채팅방
-				stompClient.send("/chat/${msg_num}", {}, JSON.stringify({
-					message : str
+				stompClient.send("/chat/"+${requestScope.msg_num}, {}, JSON.stringify({
+					content : str
 				}));
 				
 			}
@@ -86,6 +86,7 @@
 <title>일반 채팅 방</title>
 </head>
 <body>
+${requestScope.msg_num}
 	<input type="text" id="chatbox"><input type="button" id="send" value="전송"><br><br>
 	<div id="chatroom">
 	</div>

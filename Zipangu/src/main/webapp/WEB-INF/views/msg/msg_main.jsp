@@ -16,7 +16,7 @@
 			<th>멘토 아이디</th><td>${mentor.userID}</td>
 			<td>
 				<form action="msg_start" method="post">
-					<input type="hidden" value="${sessonScope.userID}" name="mentee_id"> 
+					<input type="hidden" value="${sessionScope.userID}" name="mentee_id"> 
 					<input type="hidden" value="${mentor.userID}" name="mentor_id">
 					
 					<input type="submit" value="연락하기">

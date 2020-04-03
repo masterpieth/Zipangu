@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.dao.MsgDAO;
@@ -40,7 +41,7 @@ public class MsgController {
 	
 	//대화창 열기
 	@RequestMapping(value = "msg/msg_start", method = RequestMethod.POST)
-	public String msg_start(String mentee_id, String mentor_id) {
+	public String msg_start(String mentee_id, String mentor_id, RedirectAttributes rttr) {
 		List_MsgVO vo = new List_MsgVO();
 		vo.setMentee_id(mentee_id);
 		vo.setMentor_id(mentor_id);
@@ -52,7 +53,7 @@ public class MsgController {
 		
 		//select 해서 msg_num에 해당하는 화면으로 이동
 		int msg_num = dao.select_list_msg(vo);
-
+		rttr.addFlashAttribute("msg_num", msg_num);
 		return "redirect:/msg/msg_read?msg_num="+msg_num;
 	}
 }
