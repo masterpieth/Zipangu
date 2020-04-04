@@ -55,11 +55,11 @@ public class MsgController {
 		}
 		
 		//select 해서 msg_num에 해당하는 화면으로 이동
-		int msg_num = dao.select_list_msg(vo);
+		List_MsgVO result = dao.select_list_msg(vo);
 		
-		rttr.addFlashAttribute("msg_num", msg_num);
+		rttr.addFlashAttribute("List_MsgVO", result);
 		
-		return "redirect:/msg/msg_read?msg_num="+msg_num;
+		return "redirect:/msg/msg_read?msg_num="+result.getMsg_num();
 	}
 	
 	//멘토가 보는 화면

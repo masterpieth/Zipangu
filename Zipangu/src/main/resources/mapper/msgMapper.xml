@@ -7,8 +7,8 @@
 		values(#{mentor_id},#{mentee_id},list_msg_seq.nextval)
 	</insert>
 	
-	<select id="select_list_msg" parameterType="List_MsgVO" resultType="int">
-		select msg_num from list_msg 
+	<select id="select_list_msg" parameterType="List_MsgVO" resultType="List_MsgVO">
+		select * from list_msg 
 		where mentor_id=#{mentor_id} and mentee_id=#{mentee_id}
 	</select>
 	

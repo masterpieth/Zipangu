@@ -24,14 +24,14 @@ public class MsgDAO {
 	}
 	
 	
-	public int select_list_msg(List_MsgVO vo) {
-		int msg_num = 0;
+	public List_MsgVO select_list_msg(List_MsgVO vo) {
+		List_MsgVO result = null;
 		try {
 			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
-			msg_num = mapper.select_list_msg(vo);
+			result = mapper.select_list_msg(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} return msg_num;
+		} return result;
 	}
 	
 	public int count_list_msg(List_MsgVO vo) {
