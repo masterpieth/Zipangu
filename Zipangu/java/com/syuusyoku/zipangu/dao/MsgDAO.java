@@ -1,5 +1,7 @@
 package com.syuusyoku.zipangu.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,5 +43,16 @@ public class MsgDAO {
 			e.printStackTrace();
 		} return result;
 	}
+	
+	public ArrayList<List_MsgVO> select_mentee_list(String mentor_id) {
+		ArrayList<List_MsgVO> list = null;
+		try {
+			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
+			list = mapper.select_mentee_list(mentor_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return list;
+	}
+
 }
 

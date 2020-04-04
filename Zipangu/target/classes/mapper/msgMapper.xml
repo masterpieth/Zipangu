@@ -17,5 +17,9 @@
 		where mentor_id=#{mentor_id} and mentee_id=#{mentee_id}
 	</select>
 	
-	<select id=""></select>
+	<select id="select_mentee_list" parameterType="String" resultType="List_MsgVO">
+		select * from list_msg
+		where mentor_id=#{mentor_id}
+	</select>
+	
 </mapper>
