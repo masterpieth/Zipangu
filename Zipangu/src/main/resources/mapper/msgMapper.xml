@@ -2,24 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.syuusyoku.zipangu.dao.MsgMapper">
+	
+	<!-- 채팅방 리스트 추가 -->
 	<insert id="insert_list_msg" parameterType="List_MsgVO">
 		insert into list_msg(mentor_id,mentee_id,msg_num) 
-		values(#{mentor_id},#{mentee_id},list_msg_seq.nextval)
+		values(#{mentor_id},#{mentee_id},#{msg_num})
 	</insert>
 	
+	<!-- 채팅방 리스트 찾기 -->
 	<select id="select_list_msg" parameterType="List_MsgVO" resultType="List_MsgVO">
 		select * from list_msg 
 		where mentor_id=#{mentor_id} and mentee_id=#{mentee_id}
 	</select>
 	
+	<!-- 채팅방 리스트 개수 세기 -->
 	<select id="count_list_msg" parameterType="List_MsgVO" resultType="int">
 		select count(*) from list_msg 
 		where mentor_id=#{mentor_id} and mentee_id=#{mentee_id}
 	</select>
 	
+	<!-- 메세지를 보낸 멘티가 누구인지 멘토가 확인할 수 있게 나중에 시간되면 위에 채팅방 리스트 찾기랑 합쳐버리는게 나을듯,,-->
 	<select id="select_mentee_list" parameterType="String" resultType="List_MsgVO">
-		select * from list_msg
+		select * from list_msg 
 		where mentor_id=#{mentor_id}
+	</select>
+	
+	<!-- 메세지를 주고받는 상대가 누구인지 확인할 수 있게 -->
+	<select id="who_user_msg_to" parameterType="String" resultType="List_MsgVO">
+		select * from list_msg 
+		where mentor_id=#{userID} or mentee_id=#{userID}
 	</select>
 	
 </mapper>

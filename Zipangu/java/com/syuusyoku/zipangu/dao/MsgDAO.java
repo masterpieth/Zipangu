@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.syuusyoku.zipangu.vo.List_MsgVO;
+import com.syuusyoku.zipangu.vo.Sender_MsgVO;
 
 @Repository
 public class MsgDAO {
@@ -49,6 +50,16 @@ public class MsgDAO {
 		try {
 			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
 			list = mapper.select_mentee_list(mentor_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return list;
+	}
+	
+	public ArrayList<List_MsgVO> who_user_msg_to(String userID) {
+		ArrayList<List_MsgVO> list = null;
+		try {
+			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
+			list = mapper.who_user_msg_to(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} return list;

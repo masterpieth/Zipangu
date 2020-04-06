@@ -13,6 +13,73 @@
 	<script src="<c:url value="/resources/js/sockjs.js" />"></script>
 	<script src="<c:url value="/resources/js/stomp.js" />"></script>
 	
+<script type="text/javascript">
+	$(function(){
+		connect();
+
+		$("#send").on("click",function(){
+			sendMessage();
+		})
+		
+		document.onkeydown = function ( event ) {
+		    if ( event.keyCode == 116 || event.ctrlKey == true && (event.keyCode == 82)) { // f5 && ctrl + r
+		        //접속 강제 종료
+		        disconnect();
+		        // keyevent
+		        event.cancelBubble = true; 
+		        event.returnValue = false; 
+		        setTimeout(function() {window.location.reload();}, 100);
+		        return false;
+		    }
+		}
+	})
+	
+	var stompClient = null;
+	
+	function connect() {
+		var socket = new SockJS('/zipangu/endpoint');
+		stompClient = Stomp.over(socket);
+		stompClient.connect({}, function(frame) {
+			
+			stompClient.subscribe('/subscribe/chat/${requestScope.List_MsgVO.msg_num}', function(message){
+				var data = JSON.parse(message.body);
+				var str="";
+				if("${sessionScope.userID}"==data.userID) {
+					str += '<div class="bubble me">';
+					str += data.userName+" 님 -> "+data.content;
+					str += '</div>';
+				} else if("${sessionScope.userID}"!=data.userID) {
+					str += '<div class="bubble you">';
+					str += data.userName+" 님 -> "+data.content;
+					str += '</div>';
+				}
+
+				$(".chat").append(str);
+				
+			});	
+				
+		});
+	}
+		
+	function sendMessage() {
+		var str = $("#chatbox").val();
+		str = str.replace(/ /gi, '&nbsp;')
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+		if(str.length > 0){
+			stompClient.send("/chat/${requestScope.List_MsgVO.msg_num}", {}, JSON.stringify({
+				msg_num : "${requestScope.List_MsgVO.msg_num}",
+				content : str
+			}));
+		}
+			
+		$("#chatbox").val("");
+	}
+	
+	function disconnect() {
+		stompClient.disconnect();
+	}
+</script>
+	
 	<title>대화 화면</title>
 </head>
 
@@ -26,54 +93,41 @@ ${requestScope.List_MsgVO.msg_num}
                 <a href="javascript:;" class="search"></a>
             </div>
             <ul class="people">
-                <li class="person" data-chat="person1">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/thomas.jpg" alt="" />
-                    <span class="name">Thomas Bangalter</span>
-                    <span class="time">2:09 PM</span>
-                    <span class="preview">I was wondering...</span>
-                </li>
-                <li class="person" data-chat="person2">
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/dog.png" alt="" />
-                    <span class="name">Dog Woofson</span>
-                    <span class="time">1:44 PM</span>
-                    <span class="preview">I've forgotten how it felt before</span>
-                </li>
+            	<c:forEach items="${who_user_msg_to_list}" var="list">         	
+            		<a href="/zipangu/msg/msg_start?mentee_id=${list.mentee_id}&mentor_id=${list.mentor_id}">
+	            		<c:if test="${sessionScope.userID==list.mentor_id}">
+			                <li class="person" data-chat="person${list.msg_num}">	
+			                     <span class="name">${list.mentee_id}</span>
+			                    <span class="time">2:09 PM</span>
+			                    <span class="preview">I was wondering...</span>
+			                </li>
+		                </c:if>
+		                <c:if test="${sessionScope.userID==list.mentee_id}">
+		                	<li class="person" data-chat="person${list.msg_num}">	
+			                     <span class="name">${list.mentor_id}</span>
+			                    <span class="time">2:09 PM</span>
+			                    <span class="preview">I was wondering...</span>
+			                </li>			
+		                </c:if>
+	                </a>
+	            </c:forEach>
             </ul>
         </div>
         <div class="right">
-            <div class="top"><span>To: <span class="name">Dog Woofson</span></span></div>
-            <div class="chat" data-chat="person1">
-                <div class="conversation-start">
-                    <span>Today, 6:48 AM</span>
-                </div>
-                <div class="bubble you">
-                    Hello,
-                </div>
-                <div class="bubble me">
-                    it's me.
-                </div>
-            </div>
-            <div class="chat" data-chat="person2">
-                <div class="conversation-start">
-                    <span>Today, 5:38 PM</span>
-                </div>
-                <div class="bubble you">
-                    Hello, can you hear me?
-                </div>
-                <div class="bubble me">
-                    ... about who we used to be.
-                </div>
-            </div>
-            <div class="write">
-                <a href="javascript:;" class="write-link attach"></a>
-                <input type="text" />
-                <a href="javascript:;" class="write-link smiley"></a>
-                <a href="javascript:;" class="write-link send"></a>
-            </div>
-        </div>
+	        <div class="chat" data-chat="person${requestScope.List_MsgVO.msg_num}">
+	            <div id="chatroom"></div>
+        	</div>
+          	<div class="write">
+               	<input type="text" id="chatbox">
+               	<input type="button" id="send" value="전송">
+           	</div>
+	   	</div>
     </div>
 </div>
-
+	<script type="text/javascript">
+		document.querySelector('.chat[data-chat=person${requestScope.List_MsgVO.msg_num}]').classList.add('active-chat');
+		document.querySelector('.person[data-chat=person${requestScope.List_MsgVO.msg_num}]').classList.add('active');
+	</script>
 	<script src="<c:url value="/resources/js/msg_read.js" />"></script>
 
 </body>

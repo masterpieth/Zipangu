@@ -280,37 +280,6 @@ li{
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
 }
-.container .right .write .write-link.attach:before {
-  display: inline-block;
-  float: left;
-  width: 20px;
-  height: 42px;
-  content: '';
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/attachment.png");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.container .right .write .write-link.smiley:before {
-  display: inline-block;
-  float: left;
-  width: 20px;
-  height: 42px;
-  content: '';
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/smiley.png");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-.container .right .write .write-link.send:before {
-  display: inline-block;
-  float: left;
-  width: 20px;
-  height: 42px;
-  margin-left: 11px;
-  content: '';
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/send.png");
-  background-repeat: no-repeat;
-  background-position: center;
-}
 .container .right .bubble {
   font-size: 16px;
   position: relative;

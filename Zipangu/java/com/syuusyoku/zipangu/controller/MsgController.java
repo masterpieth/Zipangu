@@ -1,6 +1,7 @@
 package com.syuusyoku.zipangu.controller;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,26 +38,37 @@ public class MsgController {
 	
 	//대화창
 	@RequestMapping(value = "msg/msg_read", method = RequestMethod.GET)
-	public String msg_read(Model model) {
+	public String msg_read(Model model, HttpSession session) {
+		//대화 상대 목로 가져오기
+		String userID = (String)session.getAttribute("userID");
+		ArrayList<List_MsgVO> list = dao.who_user_msg_to(userID);
+		model.addAttribute("who_user_msg_to_list", list);
 				
 		return "msg/msg_read";
 	}
 	
 	//대화창 열기
-	@RequestMapping(value = "msg/msg_start", method = RequestMethod.POST)
-	public String msg_start(String mentee_id, String mentor_id, RedirectAttributes rttr) {
+	@RequestMapping(value = "msg/msg_start", method = RequestMethod.GET)
+	public String msg_start(String mentee_id, String mentor_id, HttpSession session, RedirectAttributes rttr) {
 		List_MsgVO vo = new List_MsgVO();
 		vo.setMentee_id(mentee_id);
 		vo.setMentor_id(mentor_id);
 		
 		//mentee_id, mentor_id에 해당하는게 list_msg 테이블에 없으면 insert 해서 새로 만듬
 		if(dao.count_list_msg(vo)==0) {
+			String msg_num = (String)UUID.randomUUID().toString();
+			vo.setMsg_num(msg_num);
 			dao.insert_list_msg(vo);
 		}
 		
+		//대화 상대 목로 가져오기
+		String userID = (String)session.getAttribute("userID");
+		
+		ArrayList<List_MsgVO> list = dao.who_user_msg_to(userID);
+		rttr.addFlashAttribute("who_user_msg_to_list", list);
+		
 		//select 해서 msg_num에 해당하는 화면으로 이동
 		List_MsgVO result = dao.select_list_msg(vo);
-		
 		rttr.addFlashAttribute("List_MsgVO", result);
 		
 		return "redirect:/msg/msg_read?msg_num="+result.getMsg_num();

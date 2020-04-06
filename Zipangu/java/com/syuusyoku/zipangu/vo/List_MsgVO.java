@@ -8,7 +8,7 @@ import lombok.Data;
 public class List_MsgVO {
 	private String mentor_id;
 	private String mentee_id;
-	private int msg_num;
+	private String msg_num;
 	public List_MsgVO() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -14,7 +14,7 @@
 		<tr>
 			<th>멘티 아이디</th><td>${mentee.mentee_id}</td>
 			<td>
-				<form action="msg_start" method="post">
+				<form action="msg_start" method="get">
 					<input type="hidden" value="${sessionScope.userID}" name="mentor_id"> 
 					<input type="hidden" value="${mentee.mentee_id}" name="mentee_id">
 					

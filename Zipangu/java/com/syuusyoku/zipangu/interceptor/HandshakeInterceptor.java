@@ -32,8 +32,7 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 		if(request instanceof ServletServerHttpRequest){
 			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
 			HttpSession session = servletRequest.getServletRequest().getSession();
-			attributes.put("user", dao.memberInfo((String)session.getAttribute("userID")));
-					
+			attributes.put("user", dao.memberInfo((String)session.getAttribute("userID")));	
 		}
 		
 		logger.info("attr : {}" , attributes);
