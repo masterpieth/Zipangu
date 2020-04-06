@@ -9,6 +9,5 @@ import com.syuusyoku.zipangu.vo.QuestionVO;
 public interface InterviewMapper {
 
 	public ArrayList<QuestionVO> selectList();
-	public int test(MultipartFile blob);
 //	public ArrayList<InterviewResultVO> resultList();
 }

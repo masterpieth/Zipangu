@@ -40,26 +40,10 @@ public class InterviewDAO {
 		return list;
 	}
 	
-	public int test(MultipartFile blob) {
-		int result = 0;
-		if(!blob.isEmpty()) {
-			try {
-				blob.transferTo(new File("C:/PJT/"+blob));
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-			result = mapper.test(blob);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+
 		
 	//multipart File converter
-	public void convert(MultipartFile blob) {
+	public MultipartFile convert(MultipartFile blob) {
 		//파일명 시간 구하기
 		long systemTime = System.currentTimeMillis();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.KOREA);
@@ -67,63 +51,27 @@ public class InterviewDAO {
 		
 		File original = new File("C:/PJT/blob");
 		File change = new File("C:/PJT/"+dTime+".wav");
-		
 		Path filepath = Paths.get("C:/PJT/",blob.getOriginalFilename());
+		
 		try(
 			OutputStream os = Files.newOutputStream(filepath)){
 				os.write(blob.getBytes());
+			    System.out.println(dTime+".wav DAO.파일명");//파일명
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	    if (!original.renameTo(change)) {
 	        System.err.println("이름 변경 에러 : " + original);
 	      }
+	    System.out.println(blob + "DAO");
+	    return blob;
 	}
-	
-//	public class UtilFile {
-//	    String fileName = "";
-//
-//	    //  fileUpload() 메소드에서 전체 경로를 DB에 경로 그대로 저장 한다.  
-//	    public String fileUpload(MultipartHttpServletRequest request,
-//	    MultipartFile uploadFile, Object obj) {
-//	        String path = "";
-//	        String fileName = "";
-//
-//	        OutputStream out = null;
-//	        PrintWriter printWriter = null;
-//
-//	        try {
-//	            fileName = uploadFile.getOriginalFilename();
-//	            byte[] bytes = uploadFile.getBytes();
-//	            path  = getServletContext().getRealPath("/") + "C:\\PJT";
-//
-//	            File file = new File(path);
-//
-//	            // 파일명이 중복체크
-//	            if (fileName != null && !fileName.equals("")) {
-//	                if (file.exists()) {
-//	            // 파일명 앞에 구분(예)업로드 시간 초 단위)을 주어 파일명 중복을 방지한다.
-//	                fileName = System.currentTimeMillis() + "_" + fileName;
-//	                file = new File(path + fileName);
-//	                }
-//	            }
-//	            out = new FileOutputStream(file);
-//
-//	            out.write(bytes);
-//	        } catch (Exception e) {
-//	            e.printStackTrace();
-//	        } finally {
-//	            try {
-//	                if (out != null) {
-//	                    out.close();
-//	                }
-//	                if (printWriter != null) {
-//	                    printWriter.close();
-//	                }
-//	            } catch (IOException e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	        return path + fileName;
-//	    }
+
+//	public void speechToText(MultipartFile blob) {
+//		long systemTime = System.currentTimeMillis();
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.KOREA);
+//		String dTime = formatter.format(systemTime);
+//		
+//		File voiceFilename = new File("C:/PJT/"+dTime+".wav");
+//	}
 }
