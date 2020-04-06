@@ -55,10 +55,11 @@ $(function(){
                 contentType : "application/json; charset=UTF-8",
                 data: jsonData,
                 success: function(data){
-                    var data_arr = data;
-                    var str = modalOutput(data_arr);
-                    $('#modalTbody').html(str);
-                    $('#myModal').modal('show');
+                    console.log(data);
+//                     var data_arr = data;
+//                     var str = modalOutput(data_arr);
+//                     $('#modalTbody').html(str);
+//                     $('#myModal').modal('show');
                 },
                 error: function(){}
             })
