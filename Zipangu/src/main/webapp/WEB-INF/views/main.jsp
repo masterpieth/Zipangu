@@ -18,6 +18,7 @@
                         <a class="primary-btn text-uppercase" href="#">시작하기</a>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>

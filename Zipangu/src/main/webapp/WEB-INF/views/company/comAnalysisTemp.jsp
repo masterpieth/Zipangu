@@ -20,8 +20,7 @@ $(function(){
             contentType : "application/json; charset=UTF-8",
             data: jsonData,
             success: function(data){
-                var data_arr = data['type'];
-                var str = output(data_arr);
+                var str = output(data);
                 $('#tbody').html(str);
                 $('#resultContainer').removeAttr('hidden');
                 comList(value);
@@ -31,12 +30,13 @@ $(function(){
         })
     })
     
-    function output(data_arr){
+    function output(data){
         var str = '';
-        $.each(data_arr, function(index,item){
+        $.each(data, function(index,item){
             str += '<tr><td style="text-align: center;">' + (index+1) + '</td>';
-            str += '<td class="typename">' + item + '</td>';
-            str += '<td><input type="button" value="詳細" class="detailBtn genric-btn danger e-large" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
+            str += '<td class="typename">' + item['type'] + '</td>';
+            str += '<td style="text-align: center;">' + (item['score'].toFixed(2)*100) + '%</td>';
+            str += '<td><input type="button" value="상세" class="detailBtn genric-btn danger e-large" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
         })
         return str
     }
@@ -83,11 +83,11 @@ $(function(){
             <div class="container">
                 <div class="banner_content text-center">
                     <div class="page_link">
-                        <a href="<c:url value="/"/>">ホーム
+                        <a href="<c:url value="/"/>">메인페이지
                         </a>
-                        <a href="<c:url value="/analysis/company"/>">企業分析</a>
+                        <a href="<c:url value="/analysis/company"/>">기업분석</a>
                     </div>
-                    <h2>企業分析</h2>
+                    <h2>기업분석</h2>
                     <br>
                     <p style="color: white;"></p>
                 </div>
@@ -101,9 +101,9 @@ $(function(){
 	        <div class="row justify-content-center">
 	            <div class="col-lg-7">
 	                <div class="main_title">
-	                    <h2>カスタマイズ型企業おすすめサービス</h2>
+	                    <h2>개인 맞춤형 기업 추천 서비스</h2>
 	                    <hr>
-	                    <p>アップロードされたテキストと企業情報との類似度を分析し、個人に合わせた企業リストをおすすめします。
+	                    <p>업로드한 텍스트 파일과 기업정보의 유사도를 비교하여, 개인에게 맞는 기업 리스트를 추천합니다.
 	                    사용방법에 대한 자세한 매뉴얼 들어가야 함
 	                    전체 22612개의 기업 정보를 바탕으로 분석을 제공합니다.
 	                    </p>
@@ -113,20 +113,20 @@ $(function(){
 	        <div class="container" id="inputContainer">
 	             <ul class="nav nav-tabs">
 	                <li class="nav-item">
-	                    <a class="nav-link active" data-toggle="tab" href="#qwe">テキストアップロード</a>
+	                    <a class="nav-link active" data-toggle="tab" href="#qwe">파일업로드</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" data-toggle="tab" href="#asd">直接入力</a>
+	                    <a class="nav-link" data-toggle="tab" href="#asd">직접입력</a>
 	                </li>
 	            </ul>
 	                <div class="tab-content">
 	                   <br>
 	                   <div class="col-lg-12">
 		                   <select class="form-control" id="listnumSel">
-	                            <option value="10">10位まで</option>
-	                            <option value="20">20位まで</option>
-	                            <option value="30">30位まで</option>
-	                            <option value="126">すべて</option>
+	                            <option value="10">10위까지</option>
+	                            <option value="20">20위까지</option>
+	                            <option value="30">30위까지</option>
+	                            <option value="126">전부</option>
 	                        </select>
 	                   </div>
 	                    <div class="tab-pane fade show active" id="qwe">
@@ -135,7 +135,7 @@ $(function(){
                                        <form>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input form-control-file" id="customFile">
-                                                <label class="custom-file-label" for="customFile">ファイル選択</label>
+                                                <label class="custom-file-label" for="customFile">파일선택</label>
                                             </div>
                                         </form>
 	                               </div>
@@ -144,18 +144,18 @@ $(function(){
 	                    <div class="tab-pane fade" id="asd">
 	                        <div class="section-top-border">
 	                           <div class="col-lg-12">
-	                               <textarea rows="10" cols="100%" class="form-control single-textarea" id="inputText" placeholder="ここにテキストを入力してください。"></textarea>
+	                               <textarea rows="10" cols="100%" class="form-control single-textarea" id="inputText" placeholder="여기에 텍스트를 입력해주세요."></textarea>
 	                           </div>
 	                        </div>
 	                    </div>
 	                </div>
 	                <div class="row justify-content-center">
-                        <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 20px;">始める</a>
+                        <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 20px;">시작하기</a>
                     </div>
 	        </div>
 	        <div class="container" id="resultContainer" hidden="hidden">
 	           <div class="section-gap" style="padding-top: 50px;">
-                    <h3 class="mb-30 title_color">分析結果: 推薦順位</h3>
+                    <h3 class="mb-30 title_color">분석결과 : 추천순위</h3>
                     <p>사용자와 가장 유사한 업종을 순위별로 표시하였습니다. 해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
                     </p>
                     <hr>
@@ -164,9 +164,10 @@ $(function(){
                         
                         
 	                       <tr>
-	                           <th style="width: 10%; text-align: center;">順位</th>
-	                           <th style="text-align: center;">職種</th>
-	                           <th style="width: 10%; text-align: center;">詳細順位</th>
+	                           <th style="width: 10%; text-align: center;">순위</th>
+	                           <th style="text-align: center;">분류</th>
+	                           <th style="text-align: center;">추천도</th>
+	                           <th style="width: 10%; text-align: center;">상세순위</th>
 	                       </tr>
 	                   </thead>
 	                   <tbody id="tbody">
@@ -178,7 +179,7 @@ $(function(){
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="myModalLabel">職種：詳細順位</h5>
+                            <h5 class="modal-title" id="myModalLabel">분류: 상세순위</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -187,11 +188,11 @@ $(function(){
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%;">順位</th>
-                                        <th style="width: 20%;">会社名</th>
-                                        <th style="width: 5%;">地域</th>
-                                        <th style="width: 30%;">連絡先</th>
-                                        <th style="width: 10%;">気に入り</th>
+                                        <th style="width: 5%;">순위</th>
+                                        <th style="width: 20%;">회사명</th>
+                                        <th style="width: 5%;">지역</th>
+                                        <th style="width: 30%;">연락처</th>
+                                        <th style="width: 10%;">즐겨찾기</th>
                                     </tr>
                                 </thead>
                                 <tbody id="modalTbody">
@@ -199,7 +200,7 @@ $(function(){
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="genric-btn danger e-large" data-dismiss="modal">閉じる</button>
+                            <button type="button" class="genric-btn danger e-large" data-dismiss="modal">닫기</button>
                         </div>
                     </div>
                 </div>
