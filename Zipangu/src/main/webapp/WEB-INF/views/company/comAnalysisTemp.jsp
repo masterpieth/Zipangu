@@ -55,23 +55,23 @@ $(function(){
                 contentType : "application/json; charset=UTF-8",
                 data: jsonData,
                 success: function(data){
-                    console.log(data);
-//                     var data_arr = data;
-//                     var str = modalOutput(data_arr);
-//                     $('#modalTbody').html(str);
-//                     $('#myModal').modal('show');
+                    data.splice(0,1);
+                    var str = modalOutput(data);
+                    $('#modalTbody').html(str);
+                    $('#myModal').modal('show');
                 },
                 error: function(){}
             })
         });
     }
-    function modalOutput(data_arr){
+    function modalOutput(data){
         var str = '';
-        $.each(data_arr, function(index,item){
+        $.each(data, function(index,item){
             str += '<tr><td>' + (index+1) + '</td>';
             str += '<td>' + item['coname'] + '</td>';
             str += '<td>' + item['location'] + '</td>';
             str += '<td>' + item['contact'] + '</td>';
+            str += '<td>' + (item['score'].toFixed(2)*100) + '%</td>';
             str += '<td><input type="button" value="選択" class="selectBtn genric-btn info e-large"/></td></tr>';
         });
         return str;
@@ -165,10 +165,10 @@ $(function(){
                         
                         
 	                       <tr>
-	                           <th style="width: 10%; text-align: center;">순위</th>
+	                           <th style="text-align: center; width: 50px; ">순위</th>
 	                           <th style="text-align: center;">분류</th>
-	                           <th style="text-align: center;">추천도</th>
-	                           <th style="width: 10%; text-align: center;">상세순위</th>
+	                           <th style="text-align: center; width: 50px;">추천도</th>
+	                           <th style="text-align: center; width: 50px;">상세순위</th>
 	                       </tr>
 	                   </thead>
 	                   <tbody id="tbody">
@@ -189,11 +189,12 @@ $(function(){
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%;">순위</th>
+                                        <th style="width: 12px;">순위</th>
                                         <th style="width: 20%;">회사명</th>
                                         <th style="width: 5%;">지역</th>
                                         <th style="width: 30%;">연락처</th>
-                                        <th style="width: 10%;">즐겨찾기</th>
+                                        <th style="width: 12px;">추천도</th>
+                                        <th style="width: 12px;">즐겨찾기</th>
                                     </tr>
                                 </thead>
                                 <tbody id="modalTbody">
