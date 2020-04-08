@@ -53,9 +53,7 @@
 					str += data.userName+" 님 -> "+data.content;
 					str += '</div>';
 				}
-
-				$(".chat").append(str);
-				
+				$(".chat").append(str);			
 			});	
 				
 		});
@@ -71,7 +69,6 @@
 				content : str
 			}));
 		}
-			
 		$("#chatbox").val("");
 	}
 	
@@ -98,15 +95,11 @@ ${requestScope.List_MsgVO.msg_num}
 	            		<c:if test="${sessionScope.userID==list.mentor_id}">
 			                <li class="person" data-chat="person${list.msg_num}">	
 			                     <span class="name">${list.mentee_id}</span>
-			                    <span class="time">2:09 PM</span>
-			                    <span class="preview">I was wondering...</span>
 			                </li>
 		                </c:if>
 		                <c:if test="${sessionScope.userID==list.mentee_id}">
 		                	<li class="person" data-chat="person${list.msg_num}">	
 			                     <span class="name">${list.mentor_id}</span>
-			                    <span class="time">2:09 PM</span>
-			                    <span class="preview">I was wondering...</span>
 			                </li>			
 		                </c:if>
 	                </a>
