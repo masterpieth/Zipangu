@@ -1,6 +1,5 @@
 package com.syuusyoku.zipangu.util;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.atilika.kuromoji.Token;
@@ -14,7 +13,7 @@ public class Kuromoji {
 //		gatewayServer.start();
 //		System.out.println("Gateway Server Started");
 //	}
-	public String kuromoji(String str) throws IOException{
+	public String kuromoji(String str){
 		ArrayList<String> surfaceForms = new ArrayList<>();
 		Tokenizer tokenizer = Tokenizer.builder().build();
 		String surfaceStr = "";

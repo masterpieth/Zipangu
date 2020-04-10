@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% request.setCharacterEncoding("utf-8"); %>
+<% response.setContentType("text/html; charset=utf-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,19 +21,17 @@ function test(){
 			url : "http://10.10.17.117:5000/test",
             type: "post",
             success: function(data){
-//                 var result = data;
-//                 $.each(result, function(index,item){
-//                     var str = '';
-//                     str += item['ABSORPTION'];
-//                     str += item['PR']
-//                     str += item['HOBBYNSKILL'];
-//                     str += item['STUDY'];
-//                     keyword = kuromoji(str);
-//                     item.feature = keyword;
-//                 });
-//                 console.log(result);
-                var str = data[0]['PR'];
-                console.log(kuromoji(str));
+                var result = data;
+                $.each(result, function(index,item){
+                    var str = '';
+                    str += item['ABSORPTION'];
+                    str += item['PR']
+                    str += item['HOBBYNSKILL'];
+                    str += item['STUDY'];
+                    keyword = kuromoji(str);
+                    item.feature = keyword;
+                });
+                entrysheetList(result);
             }, error : function(data){
                 console.log(data);
             }
@@ -39,16 +39,37 @@ function test(){
 	})
 }
 function kuromoji(str){
+	var result='';
 	$.ajax({
 		url:"/zipangu/analysis/kuromoji",
 		data: {
 			  str: str
 		},
+		async:false,
 		type: "post",
 		success: function(data){
-			return data;
+			var temp = JSON.parse(data);
+			result = temp.surfaceForm;
 		}, error: function(data){
 			console.log(data);
+		}
+	})
+	return result;
+}
+function entrysheetList(result){
+	var kuromoji = {
+		result : result
+	}
+	var jsonData = JSON.stringify(kuromoji);
+	$.ajax({
+		url:"http://10.10.17.117:5000/entrysheetList",
+		type:"post",
+		data: JSON.stringify(kuromoji),
+		contentType : "application/json; charset=UTF-8",
+		success: function(data){
+			console.log(data);
+		}, error: function(e){
+			console.log(e);
 		}
 	})
 }
