@@ -1,5 +1,7 @@
 package com.syuusyoku.zipangu.dao;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -52,11 +54,47 @@ public class MemberDAO {
 			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
 			if (mapper.login(member) > 0) {
 				session.setAttribute("userID", member.getUserID());
+				session.setAttribute("authority", member.getAuthority());
+				session.setAttribute("userName", member.getUserName());
 				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public void uploadKakaoText(String userID,String textFileName) {
+		MemberVO vo = new MemberVO();
+		vo.setUserID(userID);
+		vo.setTextFileName(textFileName);
+		try {
+			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			mapper.uploadKakaoText(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public MemberVO memberInfo(String userID) {
+		MemberVO result = null;
+		try {
+			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			result = mapper.memberInfo(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return result;
+	}
+
+	
+	
+	public ArrayList<MemberVO> mentorList() {
+		ArrayList<MemberVO> list = null;
+		try {
+			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			list = mapper.mentorList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return list;
 	}
 }

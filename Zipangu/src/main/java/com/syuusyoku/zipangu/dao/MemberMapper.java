@@ -1,5 +1,7 @@
 package com.syuusyoku.zipangu.dao;
 
+import java.util.ArrayList;
+
 import com.syuusyoku.zipangu.vo.MemberVO;
 
 public interface MemberMapper {
@@ -9,4 +11,11 @@ public interface MemberMapper {
 	int signup(MemberVO member);
 
 	int login(MemberVO member);
+	
+	public void uploadKakaoText(MemberVO vo);
+	
+	public MemberVO memberInfo(String userID);
+	
+	public ArrayList<MemberVO> mentorList();
+	
 }
