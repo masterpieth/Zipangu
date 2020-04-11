@@ -11,16 +11,19 @@
 
 </head>
 
-
 <script>
-	var mouseClick = 0;
-
+	var mouseClick = 1;
+	var temp;
+	var text = "";
+	var i;
+	
+window.onload = function(){
 	function nextQuestionButton(){
 
 		var arr = ${requestScope.questionList};
 		var question_Doc = document.getElementById("question");
 
-		question_Doc.innerHTML = arr[0].question_text;
+		question_Doc.innerHTML = arr[mouseClick].question_text;
 		
 		if(mouseClick === 0){
 			question_Doc.innerHTML = arr[mouseClick].question_text;
@@ -49,7 +52,7 @@
 		}
 	}
 	
-window.onload = function(){
+// 	window.onload = function(){
 	URL = window.URL || window.webkitURL;
 	
 	var sec = 60;	//카운트
@@ -82,7 +85,6 @@ window.onload = function(){
 
 					stopButton.disabled = true;
 					recordButton.disabled = false;
-					nextQuestion.disabled = false;
 					
 					rec.stop();
 					gumStream.getAudioTracks()[0].stop();
@@ -94,7 +96,7 @@ window.onload = function(){
 
 		recordButton.disabled = true;
 		stopButton.disabled = false;
-
+		
 		navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
 			audioContext = new AudioContext();
 			gumStream = stream;
@@ -123,6 +125,7 @@ window.onload = function(){
 		var url = URL.createObjectURL(blob);
 		var au = document.createElement('audio');
 		var li = document.createElement('li');
+				li.className = 'lis'; //녹음 후 생성되는 리스트에 Class 추가
 
 		var filename = new Date().toISOString();
 		au.controls = true; //오디오 컨트롤 바
@@ -130,7 +133,7 @@ window.onload = function(){
 		li.appendChild(au);
 		li.appendChild(document.createTextNode("이 녹음 파일로 결과 확인하기"))
 		recordingsList.appendChild(li);
-		
+
 		//파일저장
 		var upload = document.createElement('button');
 			upload.id = 'select';
@@ -141,7 +144,9 @@ window.onload = function(){
 				var fd = new FormData();
 				fd.append("blob", blob);
 				console.log(fd);
-				test(blob);
+				speechToText(blob); 	//STT API 실행
+				nextQuestionButton();
+				 
 				$.ajax({
 					url: "/zipangu/interview/voice",
 					type:"post",
@@ -150,40 +155,18 @@ window.onload = function(){
 					processData:false,
 					contentType: false,
 					success: function(data){
-						console.log(data);
-					}
+						console.log("saved complete"); //녹음 파일 저장 완료 확인
+						$("li").remove(".lis"); //녹음 리스트 삭제
+						}
 				});
 			});
 				li.appendChild(document.createTextNode(" ")) 
 				li.appendChild(upload)
-
-// 		 	$('#select').on('click', function(){
-// 		 		var form = blob;
-// 		 		var voice = new FormData();
-// 		 		voice.append('blob',blob);
-// 		 		$.ajax({
-// 		             url : "https://api.kr-seo.speech-to-text.watson.cloud.ibm.com/instances/11a86b43-4a67-4691-bd6c-64c1d352ef3f/v1/recognize?model=ja-JP_NarrowbandModel",
-// 		             type : "post",
-// 		             data : voice, 
-// 		             enctype: 'multipart/form-data',
-// 		             processData : false,
-// 		             contentType : false,
-// 		             headers: {
-// 		                 'Authorization': 'Basic ' + btoa('apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD'),
-// 		                 'Content-Type' : 'audio/wav'
-// 		             },
-// 		             success: function(voice){
-// 		                 console.log(voice)
-// 		             },
-// 		             error: function(voice){
-// 			             console.log("실패")
-// 		             }
-// 		         })
-// 		     })
 	}
 }
-function test(blob){
-// 	//음성 파일 텍스트 변환
+
+	//음성 파일 텍스트 변환
+function speechToText(blob){
 		$.ajax({
             url : "https://api.kr-seo.speech-to-text.watson.cloud.ibm.com/instances/11a86b43-4a67-4691-bd6c-64c1d352ef3f/v1/recognize?model=ja-JP_NarrowbandModel",
             type : "post",
@@ -196,29 +179,37 @@ function test(blob){
                 'Content-Type' : 'audio/wav'
             },
             success: function(data){
-                console.log(data)
+                console.log(data);
+                temp = data;
+               	length = temp.results.length;
+
+               	for (i = 0; i < length; i++) {
+               	  text += temp.results[i].alternatives[0].transcript + " ";
+               	}
+               	document.getElementById("demo").innerHTML = text;
             },
             error: function(data){
             }
         })
 }
+
 </script>
+
 
 <body>
 
-<!-- 파일선택 -->
-<!-- <form id="testForm" name="testForm" method="post"> -->
-<!--     <input type="file" id="file" multiple="multiple"/> -->
-<!--     <input type="button" id="selecttest" name="selecttest" value="button"> -->
-<!-- </form> -->
+
+<textarea id="demo" readonly="readonly"></textarea>
 
 <div align="center">
 <p align="center"> 다음 질문에 답해주세요</p>
-<button onclick='nextQuestionButton()' >시작하기</button>
+<!-- <button onclick='nextQuestionButton()' >시작하기</button> -->
+
 <!-- 질문 -->
 <h2 id="question"></h2>
 </div>
 
+<!-- <form> -->
 <!-- 타이머 -->
 <p id="counting" align="center"></p>
 
@@ -230,8 +221,6 @@ function test(blob){
 		<div align="center">
 			<ul id="recordingsList" ></ul>
 		</div>
-		
-		<div id='testForm'>
-		</div>
+<!-- </form> -->
 </body>
 </html>

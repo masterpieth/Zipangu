@@ -44,7 +44,7 @@ public class InterviewDAO {
 		
 	//multipart File converter
 	public MultipartFile convert(MultipartFile blob) {
-		//파일명 시간 구하기
+		//파일명
 		long systemTime = System.currentTimeMillis();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.KOREA);
 		String dTime = formatter.format(systemTime);
@@ -56,22 +56,14 @@ public class InterviewDAO {
 		try(
 			OutputStream os = Files.newOutputStream(filepath)){
 				os.write(blob.getBytes());
-			    System.out.println(dTime+".wav DAO.파일명");//파일명
+			    System.out.println("'"+dTime+".wav' 저장");//파일명
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	    if (!original.renameTo(change)) {
 	        System.err.println("이름 변경 에러 : " + original);
 	      }
-	    System.out.println(blob + "DAO");
 	    return blob;
 	}
 
-//	public void speechToText(MultipartFile blob) {
-//		long systemTime = System.currentTimeMillis();
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.KOREA);
-//		String dTime = formatter.format(systemTime);
-//		
-//		File voiceFilename = new File("C:/PJT/"+dTime+".wav");
-//	}
 }

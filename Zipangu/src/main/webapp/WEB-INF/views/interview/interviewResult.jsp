@@ -4,17 +4,48 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>모의 면접 결과 보기</title>
 </head>
 <body>
-	<!-- form enctype="multipart/form-data"를 적어줘야 한다. -->
-	<form method="post" action="<c:url value='/regFile'/>" enctype="multipart/form-data">
-	    <!-- input type="file" 이라고 꼭 저어줘야 함 -->
-	    <input type="file" class="form-control" id="uploadFile"          
-	    name="uploadFile" />
-	    <button type="submit" class="btn btn-default">저장</button>
-	    <button type="list" class="btn btn-default">목록</button>
-	</form>
+
+<div align="center">
+	<table border="1">
+	   <tr align ="center">
+			<td colspan="4">모의면접 결과</td>
+	   </tr>
+	   <tr align="center">
+			<td rowspan="6" align="center">날짜</td>
+			<td>질문</td>
+			<td>성향</td>
+			<td>다시듣기</td>
+	   </tr>
+	   <tr>
+			<td>질문</td>
+			<td>긍/중/부정</td>
+			<td>다시 듣기</td>
+	   </tr>
+	   <tr>
+			<td>질문</td>
+			<td>긍/중/부정</td>
+			<td>다시 듣기</td>
+	   </tr>
+	   <tr>
+			<td>질문</td>
+			<td>긍/중/부정</td>
+			<td>다시 듣기</td>
+	   </tr>
+	   <tr>
+			<td>질문</td>
+			<td>긍/중/부정</td>
+			<td>다시 듣기</td>
+	   </tr>
+	   <tr>
+			<td>질문</td>
+			<td>긍/중/부정</td>
+			<td>다시 듣기</td>
+	   </tr>
+	 </table>
+</div>
 
 </body>
 </html>

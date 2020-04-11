@@ -1,6 +1,5 @@
 package com.syuusyoku.zipangu.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -38,25 +37,16 @@ public class InterviewController {
 	public String voice(@RequestParam MultipartFile blob) {
 		try {
 			byte[] bytes = blob.getBytes();
-			System.out.println(bytes.length);
+			System.out.println(bytes.length+"KB");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		MultipartFile data =  dao.convert(blob);
-		System.out.println(blob+"컨트롤러 blob");
+		dao.convert(blob);
 		return "data";
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value = "https://api.kr-seo.speech-to-text.watson.cloud.ibm.com/instances/11a86b43-4a67-4691-bd6c-64c1d352ef3f/v1/recognize?model=ja-JP_NarrowbandModel", method = RequestMethod.POST)
-//	public InterviewResultVO speechToText(@RequestParam MultipartFile blob) {
-//		InterviewResultVO vo;
-//		try {
-//				blob.getOriginalFilename();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		dao.convert(blob);
-//		return vo;
-//	}
+	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
+	public String getinterviewResult() {
+		return "interview/interviewResult";
+	}
 }
