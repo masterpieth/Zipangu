@@ -5,7 +5,11 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script>
 $(function(){
-    $('#startBtn').on('click', function(){
+	analysis();
+})
+
+function analysis(){
+	$('#startBtn').on('click', function(){
         var value = $('#inputText').val();
         var selValue = $('#listnumSel').val();
         var data = {
@@ -29,54 +33,76 @@ $(function(){
             }
         })
     })
-    
-    function output(data){
-        var str = '';
-        $.each(data, function(index,item){
-            str += '<tr><td style="text-align: center;">' + (index+1) + '</td>';
-            str += '<td class="typename">' + item['type'] + '</td>';
-            str += '<td style="text-align: center;">' + (item['score'].toFixed(2)*100) + '%</td>';
-            str += '<td><input type="button" value="상세" class="detailBtn genric-btn danger e-large" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
-        })
-        return str
-    }
-    
-    function comList(inputText){
-        $('.detailBtn:button').on('click',function() {
-            var type = $(this).closest('tr').find('td').eq(1).text();
-            var data = {
-                inputText : inputText,
-                comtype : type
+}
+function output(data){
+    var str = '';
+    $.each(data, function(index,item){
+        str += '<tr><td style="text-align: center;">' + (index+1) + '</td>';
+        str += '<td class="typename">' + item['type'] + '</td>';
+        str += '<td style="text-align: center;">' + (item['score'].toFixed(2)*100) + '%</td>';
+        str += '<td><input type="button" value="상세" class="detailBtn genric-btn danger e-large" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
+    })
+    return str
+}
+
+function comList(inputText){
+    $('.detailBtn:button').on('click',function() {
+        var type = $(this).closest('tr').find('td').eq(1).text();
+        var data = {
+            inputText : inputText,
+            comtype : type
+        }
+        var jsonData = JSON.stringify(data);
+        $.ajax({
+            url : "http://10.10.17.117:5000/comlist",
+            type: "post",
+            contentType : "application/json; charset=UTF-8",
+            data: jsonData,
+            success: function(data){
+                data.splice(0,1);
+                var str = modalOutput(data);
+                $('#modalTbody').html(str);
+                bookmark();
+                $('#myModal').modal('show');
+            },
+            error: function(e){
+                console.log(e);
             }
-            var jsonData = JSON.stringify(data);
-            $.ajax({
-                url : "http://10.10.17.117:5000/comlist",
-                type: "post",
-                contentType : "application/json; charset=UTF-8",
-                data: jsonData,
-                success: function(data){
-                    data.splice(0,1);
-                    var str = modalOutput(data);
-                    $('#modalTbody').html(str);
-                    $('#myModal').modal('show');
-                },
-                error: function(){}
-            })
-        });
-    }
-    function modalOutput(data){
-        var str = '';
-        $.each(data, function(index,item){
-            str += '<tr><td>' + (index+1) + '</td>';
-            str += '<td>' + item['coname'] + '</td>';
-            str += '<td>' + item['location'] + '</td>';
-            str += '<td>' + item['contact'] + '</td>';
-            str += '<td>' + (item['score'].toFixed(2)*100) + '%</td>';
-            str += '<td><input type="button" value="選択" class="selectBtn genric-btn info e-large"/></td></tr>';
-        });
-        return str;
-    }
-})
+        })
+    });
+}
+
+function modalOutput(data){
+    var str = '';
+    $.each(data, function(index,item){
+        str += '<tr><td>' + (index+1) + '</td>';
+        str += '<td>' + item['coname'] + '</td>';
+        str += '<td>' + item['location'] + '</td>';
+        str += '<td>' + item['contact'] + '</td>';
+        str += '<td>' + (item['score'].toFixed(2)*100) + '%</td>';
+        str += '<td><input type="button" value="선택" class="selectBtn genric-btn info e-large"/>';
+        str += '<input type="hidden" class="company_num" value="'+item['company_num'] + '"/></td></tr>';
+    });
+    return str;
+}
+function bookmark(){
+	$('.selectBtn:button').on('click',function() {
+		var company_num = $(this).next().val();
+		$.ajax({
+			url : "/zipangu/analysis/bookmark",
+            type: "post",
+            data: {
+                company_num : company_num
+            },
+            success: function(data){
+                if(data) alert("성공");
+            },
+            error: function(e){
+                console.log(e);
+            }
+		});
+	})
+}
 </script>
     <!--================Home Banner Area =================-->
     <section class="banner_area">

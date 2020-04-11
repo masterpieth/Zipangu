@@ -8,8 +8,10 @@
 	</settings>
     <typeAliases>
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.CompanyVO" alias="companyVO" />
 	</typeAliases>
 	<mappers>
        <mapper resource="mapper/memberMapper.xml" />
+       <mapper resource="mapper/companyMapper.xml" />
     </mappers>
 </configuration>
