@@ -1,5 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.ArrayList" %>
 <html>
 <head>
@@ -7,12 +7,12 @@
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<%--     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css' />"> --%>
-
+    <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css' />">
+	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 
 <script>
-	var mouseClick = 1;
+	var mouseClick = 0;
 	var temp;
 	var text = "";
 	var i;
@@ -117,6 +117,7 @@ window.onload = function(){
 		gumStream.getAudioTracks()[0].stop();
 		rec.exportWAV(createDownloadLink);
 		clearInterval(leftTime);
+		sec = 60;
 		document.getElementById("counting").innerHTML = "남은시간 : " + sec + "초";
 	}
 
@@ -199,28 +200,33 @@ function speechToText(blob){
 <body>
 
 
-<textarea id="demo" readonly="readonly"></textarea>
 
 <div align="center">
-<p align="center"> 다음 질문에 답해주세요</p>
+<p><h3>다음 질문에 답해주세요</h3></p>
+
 <!-- <button onclick='nextQuestionButton()' >시작하기</button> -->
 
 <!-- 질문 -->
-<h2 id="question"></h2>
+<h1 id="question"></h1>
 </div>
 
-<!-- <form> -->
 <!-- 타이머 -->
 <p id="counting" align="center"></p>
 
 <!-- 음성녹음(답변) -->
+<div align="center">
 	<div id="controls" align="center">
 		<button id="recordButton">답변 시작</button>
 		<button id="stopButton" disabled>답변 완료</button>
 	</div>
-		<div align="center">
-			<ul id="recordingsList" ></ul>
-		</div>
-<!-- </form> -->
+</div>
+
+<div align="center">
+	<ul id="recordingsList" ></ul>
+</div>
+
+<div align="center">
+	<textarea id="demo" readonly="readonly" ></textarea>
+</div>
 </body>
 </html>

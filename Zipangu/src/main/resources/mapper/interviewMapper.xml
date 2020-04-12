@@ -11,21 +11,53 @@
 			question
 	</select>
 	
-<!-- 	<insert id="insertResult" parameterType="ivo"> -->
-<!-- 		INSERT INTO -->
-<!-- 			insertview_result( -->
-<!-- 			interview_num -->
-<!-- 			, question_num -->
-<!-- 			, voicefilename -->
-<!-- 			, result -->
-<!-- 			) VALUES ( -->
-<!-- 			interview_num -->
-<!-- 			, question_num -->
-<!-- 			, voicefilename -->
-<!-- 			, result -->
-<!-- 			); -->
-<!-- 	</insert> -->
+<!-- 			아이디에 면접 결과 저장 -->
+	<insert id="insertinterview" parameterType="ivo">
+		INSERT INTO
+			interview
+			(INTERVIEW_NUM
+			,USERID
+			,INPUTDATE
+		) VALUES (
+			interview_seq.nextval
+			,#{userid}
+			,to_char(sysdate,'yyyy.mm.dd hh24:mi'));
+	</insert>
+	
+<!-- 	면접 완료 결과 저장 -->
+	<insert id="insertResult" parameterType="ivo">
+		INSERT INTO
+			insertview_result
+			(interview_num
+			, question_num
+			, voicefilename
+			, result
+		) VALUES (
+			interview_num
+			, question_num
+			, voicefilename
+			, result
+			);
+	</insert>
 
-
+<!-- 	interview_num에서 중복된 값이 5개인 경우 테이블 출력 -->
+	<select id="select_result" parameterType="ivo" resultType="rvo">
+		select
+			(interview_num
+			,question_num
+			,voicefilename
+			,result
+		)from 
+			interview_result 
+		where 
+			interview_num 
+		like(SELECT 
+			interview_num
+		FROM 
+			interview_result 
+		GROUP BY 
+			interview_num 
+		HAVING COUNT(*)=5)
+	</select>
 	
 </mapper>

@@ -10,6 +10,7 @@
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.QuestionVO" alias="qvo"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.InterviewVO" alias="ivo"/>
+		<typeAlias type="com.syuusyoku.zipangu.vo.InterviewResultVO" alias="rvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
