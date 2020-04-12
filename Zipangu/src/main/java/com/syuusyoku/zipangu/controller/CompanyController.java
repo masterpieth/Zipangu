@@ -45,9 +45,10 @@ public class CompanyController {
 		return bookmarkList;
 	}
 	@ResponseBody
-	@RequestMapping(value="analysis/kuromoji", method = RequestMethod.POST)
+	@RequestMapping(value="analysis/kuromoji", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String kuromoji(String type) {
 		String result = kuromoji.kuromoji(type);
+		result = result.trim();
 		return result;
 	}
 }
