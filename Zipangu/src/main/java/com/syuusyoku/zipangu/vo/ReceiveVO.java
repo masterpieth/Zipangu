@@ -13,6 +13,5 @@ public class ReceiveVO {
 	private String text;
 	public ReceiveVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 }

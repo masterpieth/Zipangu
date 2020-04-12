@@ -1,5 +1,7 @@
 package com.syuusyoku.zipangu.dao;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -25,5 +27,16 @@ public class CompanyDAO {
 			e.printStackTrace();
 		}
 		return result > 0;
+	}
+	public ArrayList<CompanyVO> getBookmark(HttpSession httpSession) {
+		String userID = (String)httpSession.getAttribute("userID");
+		ArrayList<CompanyVO> result = null;
+		try {
+			CompanyMapper mapper = session.getMapper(CompanyMapper.class);
+			result = mapper.getBookmark(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

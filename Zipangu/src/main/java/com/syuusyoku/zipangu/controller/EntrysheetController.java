@@ -1,31 +1,28 @@
 package com.syuusyoku.zipangu.controller;
 
-import org.json.simple.JSONObject;
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.syuusyoku.zipangu.util.Kuromoji;
+import com.syuusyoku.zipangu.dao.CompanyDAO;
+import com.syuusyoku.zipangu.vo.CompanyVO;
 
 @Controller
 public class EntrysheetController {
-
+	
 	@Autowired
-	private Kuromoji kuromoji;
+	CompanyDAO dao;
 	
 	@RequestMapping(value="analysis/entrysheet", method = RequestMethod.GET)
-	public String entrysheetHelper() {
+	public String entrysheetHelper(HttpSession httpSession, Model model) {
+		ArrayList<CompanyVO> bookmarkList = dao.getBookmark(httpSession);
+		model.addAttribute("bookmarkList", bookmarkList);
 		return "company/entrysheetHelper";
-	}
-	@ResponseBody
-	@RequestMapping(value="analysis/kuromoji", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	public String kuromoji(String str) {
-		String surfaceForm = kuromoji.kuromoji(str);
-		JSONObject data = new JSONObject();
-		data.put("surfaceForm", surfaceForm);
-		String jsonData = data.toJSONString();
-		return jsonData;
 	}
 }

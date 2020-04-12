@@ -28,7 +28,6 @@ public class CompanyController {
 	@ResponseBody
 	@RequestMapping(value="analysis/bookmark", method = RequestMethod.POST)
 	public boolean bookmark(CompanyVO vo, HttpSession httpSession) {
-		System.out.println(vo);
 		Boolean result = dao.insertBookmark(vo, httpSession);
 		if(result) return true;
 		return false;

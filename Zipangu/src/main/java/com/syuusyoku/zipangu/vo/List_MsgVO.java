@@ -11,6 +11,5 @@ public class List_MsgVO {
 	private String msg_num;
 	public List_MsgVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	} 
 }

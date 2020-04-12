@@ -81,26 +81,38 @@ function modalOutput(data){
         str += '<td>' + item['contact'] + '</td>';
         str += '<td>' + (item['score'].toFixed(2)*100) + '%</td>';
         str += '<td><input type="button" value="선택" class="selectBtn genric-btn info e-large"/>';
+        str += '<input type="hidden" class="type" value="'+item['type'] + '"/>';
         str += '<input type="hidden" class="company_num" value="'+item['company_num'] + '"/></td></tr>';
     });
     return str;
 }
+
 function bookmark(){
 	$('.selectBtn:button').on('click',function() {
-		var company_num = $(this).next().val();
+		var company_num = $(this).siblings('input.company_num').val();
+		var type = $(this).siblings('input.type').val();
+		var coname = $(this).closest('tr').find('td').eq(1).text();
+		var location = $(this).closest('tr').find('td').eq(2).text();
+		var contact = $(this).closest('tr').find('td').eq(3).text();
 		$.ajax({
 			url : "/zipangu/analysis/bookmark",
             type: "post",
             data: {
-                company_num : company_num
+                company_num : company_num,
+                type : type,
+                coname : coname,
+                location : location,
+                contact : contact
             },
             success: function(data){
-                if(data) alert("성공");
+                if(data) alert("즐겨찾기에 등록되었습니다.");
             },
             error: function(e){
                 console.log(e);
             }
 		});
+		$(this).attr('disabled','disabled');
+		$(this).attr('value','등록됨');
 	})
 }
 </script>
@@ -186,15 +198,13 @@ function bookmark(){
                     <p>사용자와 가장 유사한 업종을 순위별로 표시하였습니다. 해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
                     </p>
                     <hr>
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover table-responsive">
                         <thead>
-                        
-                        
 	                       <tr>
-	                           <th style="text-align: center; width: 50px; ">순위</th>
-	                           <th style="text-align: center;">분류</th>
-	                           <th style="text-align: center; width: 50px;">추천도</th>
-	                           <th style="text-align: center; width: 50px;">상세순위</th>
+	                           <th>순위</th>
+	                           <th>분류</th>
+	                           <th>추천도</th>
+	                           <th>상세순위</th>
 	                       </tr>
 	                   </thead>
 	                   <tbody id="tbody">
@@ -212,20 +222,20 @@ function bookmark(){
                             </button>
                         </div>
                         <div class="modal-body">
-                            <table class="table table-bordered table-hover">
+                            <table class="table-bordered table-hover table-responsive">
                                 <thead>
                                     <tr>
-                                        <th style="width: 12px;">순위</th>
-                                        <th style="width: 20%;">회사명</th>
-                                        <th style="width: 5%;">지역</th>
-                                        <th style="width: 30%;">연락처</th>
-                                        <th style="width: 12px;">추천도</th>
-                                        <th style="width: 12px;">즐겨찾기</th>
+	                                    <th>순위</th>
+	                                    <th>회사명</th>
+	                                    <th>지역</th>
+	                                    <th style="width:100px;">연락처</th>
+	                                    <th>추천도</th>
+	                                    <th>즐겨찾기</th>
                                     </tr>
-                                </thead>
-                                <tbody id="modalTbody">
-                                </tbody>
-                            </table>
+	                           </thead>
+	                           <tbody id="modalTbody">
+	                           </tbody>
+	                       </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="genric-btn danger e-large" data-dismiss="modal">닫기</button>

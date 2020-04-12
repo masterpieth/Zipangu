@@ -13,8 +13,9 @@
 
 $(function(){
     test();
+    var bookmarkList = ${bookmarkList}
+    console.log(bookmarkList);
 })
-
 function test(){
 	$('#testBtn').on('click',function(){
 		$.ajax({
@@ -28,49 +29,11 @@ function test(){
                     str += item['PR']
                     str += item['HOBBYNSKILL'];
                     str += item['STUDY'];
-                    keyword = kuromoji(str);
-                    item.feature = keyword;
                 });
-                entrysheetList(result);
             }, error : function(data){
                 console.log(data);
             }
 		})
-	})
-}
-function kuromoji(str){
-	var result='';
-	$.ajax({
-		url:"/zipangu/analysis/kuromoji",
-		data: {
-			  str: str
-		},
-		async:false,
-		type: "post",
-		success: function(data){
-			var temp = JSON.parse(data);
-			result = temp.surfaceForm;
-		}, error: function(data){
-			console.log(data);
-		}
-	})
-	return result;
-}
-function entrysheetList(result){
-	var kuromoji = {
-		result : result
-	}
-	var jsonData = JSON.stringify(kuromoji);
-	$.ajax({
-		url:"http://10.10.17.117:5000/entrysheetList",
-		type:"post",
-		data: JSON.stringify(kuromoji),
-		contentType : "application/json; charset=UTF-8",
-		success: function(data){
-			console.log(data);
-		}, error: function(e){
-			console.log(e);
-		}
 	})
 }
 </script>
@@ -80,6 +43,5 @@ function entrysheetList(result){
 <h1>자소서 작업중</h1>
 
 <input type="button" value="테스트" id="testBtn">
-
 </body>
 </html>

@@ -19,6 +19,5 @@ public class TimelineVO {
 	
 	public TimelineVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 }

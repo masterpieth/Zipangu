@@ -8,14 +8,17 @@
 	</settings>
     <typeAliases>
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
+		<typeAlias type="com.syuusyoku.zipangu.vo.CompanyVO" alias="companyVO" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.PersonalityVO" alias="PersonalityVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.TimelineVO" alias="TimelineVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.List_MsgVO" alias="List_MsgVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.Sender_MsgVO" alias="Sender_MsgVO"/>
 	</typeAliases>
+	
 	<mappers>
        <mapper resource="mapper/memberMapper.xml" />
+       <mapper resource="mapper/companyMapper.xml" />
+       <mapper resource="mapper/personalityMapper.xml" />
+       <mapper resource="mapper/msgMapper.xml" />
     </mappers>
-		<mapper resource="mapper/personalityMapper.xml" />
-		<mapper resource="mapper/msgMapper.xml" />
 </configuration>

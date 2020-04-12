@@ -19,6 +19,5 @@ public class Sender_MsgVO {
 	
 	public Sender_MsgVO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 }
