@@ -10,11 +10,9 @@
 <title>자기소개서 도우미</title>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script>
-
 $(function(){
+	getBookmarkList();
     test();
-    var bookmarkList = ${bookmarkList}
-    console.log(bookmarkList);
 })
 function test(){
 	$('#testBtn').on('click',function(){
@@ -36,6 +34,38 @@ function test(){
 		})
 	})
 }
+function getBookmarkList() {
+	$.ajax({
+        url : "/zipangu/analysis/getBookmarkList",
+        type: "post",
+        success: function(data){
+            bookmarkAnalysis(data)
+        },
+        error: function(e){
+            console.log(e);
+        }
+	});
+}
+function bookmarkAnalysis(data) {
+	var str = ''
+	$.each(data, function(index, item) {
+		str += item.type + '/' + item.count+'<br>';
+		$.ajax({
+			url : "/zipangu/analysis/kuromoji",
+			type : "post",
+			data : {
+				type : item.type
+			},
+			async: false,
+			success: function(data){
+				console.log(data);
+			}, error: function(e){
+				console.log(e);
+			}
+		});
+	})
+	$('#resultDiv').html(str);
+}
 </script>
 </head>
 <body>
@@ -43,5 +73,6 @@ function test(){
 <h1>자소서 작업중</h1>
 
 <input type="button" value="테스트" id="testBtn">
+<div id="resultDiv"></div>
 </body>
 </html>

@@ -15,4 +15,5 @@ public class CompanyVO {
 	private String type;
 	private String location;
 	private String contact;
+	private int count;
 }

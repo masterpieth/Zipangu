@@ -16,10 +16,12 @@
     </insert>
     <select id="getBookmark" parameterType="string" resultType="companyVO">
         select
-            *
+            type,
+            count(*) as count
         from
             company_result
         where
             userid = #{userID}
+        group by type
     </select>
 </mapper>
