@@ -39,7 +39,8 @@ function getBookmarkList() {
         url : "/zipangu/analysis/getBookmarkList",
         type: "post",
         success: function(data){
-            bookmarkAnalysis(data);
+            var type_arr = bookmarkAnalysis(data);
+            getEntrysheetList(type_arr);
         },
         error: function(e){
             console.log(e);
@@ -68,6 +69,33 @@ function bookmarkAnalysis(data) {
 	})
 	$('#resultDiv').html(str);
 	return type_arr;
+}
+function getEntrysheetList(type_arr) {
+	var total_result = [];
+	$.each(type_arr, function(index, item) {
+		var entrysheetList = [];
+		var obj = {};
+		$.each(item, function(index2, item2){
+			$.ajax({
+				url : "http://10.10.17.117:5000/getEntrysheetList",
+	            type : "post",
+	            data : {
+		            type : item2
+	            },
+	            async: false,
+	            success: function(data){
+		            $.each(data, function(index3, item3){
+			            entrysheetList.push(item3);
+			         });
+	            }, error: function(e){
+	                console.log(e);
+	            }
+			});
+		});
+		obj[item] = entrysheetList;
+		total_result.push(obj);
+	});
+	console.log(total_result);
 }
 </script>
 </head>
