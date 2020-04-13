@@ -10,37 +10,19 @@
 <title>자기소개서 도우미</title>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script>
+
 $(function(){
 	getBookmarkList();
-    test();
 })
-function test(){
-	$('#testBtn').on('click',function(){
-		$.ajax({
-			url : "http://10.10.17.117:5000/test",
-            type: "post",
-            success: function(data){
-                var result = data;
-                $.each(result, function(index,item){
-                    var str = '';
-                    str += item['ABSORPTION'];
-                    str += item['PR']
-                    str += item['HOBBYNSKILL'];
-                    str += item['STUDY'];
-                });
-            }, error : function(data){
-                console.log(data);
-            }
-		})
-	})
-}
+
 function getBookmarkList() {
 	$.ajax({
         url : "/zipangu/analysis/getBookmarkList",
         type: "post",
         success: function(data){
             var type_arr = bookmarkAnalysis(data);
-            getEntrysheetList(type_arr);
+            var result = getEntrysheetList(type_arr);
+            output(result, type_arr);
         },
         error: function(e){
             console.log(e);
@@ -71,31 +53,42 @@ function bookmarkAnalysis(data) {
 	return type_arr;
 }
 function getEntrysheetList(type_arr) {
-	var total_result = [];
-	$.each(type_arr, function(index, item) {
-		var entrysheetList = [];
-		var obj = {};
-		$.each(item, function(index2, item2){
-			$.ajax({
-				url : "http://10.10.17.117:5000/getEntrysheetList",
-	            type : "post",
-	            data : {
-		            type : item2
-	            },
-	            async: false,
-	            success: function(data){
-		            $.each(data, function(index3, item3){
-			            entrysheetList.push(item3);
-			         });
-	            }, error: function(e){
-	                console.log(e);
-	            }
-			});
-		});
-		obj[item] = entrysheetList;
-		total_result.push(obj);
-	});
-	console.log(total_result);
+// 	$("#testBtn2").on('click',function(){
+		var total_result = [];
+	    $.each(type_arr, function(index, item) {
+	        var entrysheetList = [];
+	        var obj = {};
+	        $.each(item, function(index2, item2){
+	            $.ajax({
+	                url : "http://10.10.17.117:5000/getEntrysheet",
+	                type : "post",
+	                data : JSON.stringify({
+	                    jobType : item2
+	                }),
+	                contentType : "application/json; charset=UTF-8",
+	                async: false,
+	                success: function(data){
+	                  $.each(data, function(index3, item3){
+	                      entrysheetList.push(item3);
+	                   });
+	                }, error: function(e){
+	                    console.log(e);
+	                }
+	            });
+	        });
+	        obj[item] = entrysheetList;
+	        total_result.push(obj);
+	    });
+	    return total_result;
+// 	})
+}
+function output(result, type_arr) {
+	$.each(type_arr, function(index, item){
+		console.log(item);
+		$.each(result, function(index2, item2){
+			console.log(item2[item]);
+		})
+	})
 }
 </script>
 </head>
@@ -112,5 +105,8 @@ function getEntrysheetList(type_arr) {
 </pre>
 <input type="button" value="테스트" id="testBtn">
 <div id="resultDiv"></div>
+<input type="button" value="테스트2" id="testBtn2">
+<div id="resultDiv2">
+</div>
 </body>
 </html>
