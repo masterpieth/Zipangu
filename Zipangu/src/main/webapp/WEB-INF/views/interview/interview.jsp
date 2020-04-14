@@ -192,29 +192,29 @@ function speechToText(blob){
         })
 }
 
-// function testapi(){
-// 	var word = "i love you"
+function testapi(){
+	var word = "初めまして どうぞよろしく このような経験を土台に私は絶望を感じ 希望を見ました"
 	
-// 	$.ajax({
-// 		url : 'https://api.kr-seo.natural-language-understanding.watson.cloud.ibm.com/instances/7191d826-cb08-4e42-a043-2b17891cc13c/v1/analyze?version=2019-07-12',
-// 		type : 'post',
-// 		data : {
-// 			text : word,
-// 			features : 'sentiment : {}',
-// 		},
-// 		headers: {
-// // 			'Authorization': 'Basic' + btoa('apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD'), //원본
-//            'Authorization': 'apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD', //인증에 에러가 발생되어 테스트용 코드
-//            'Content-Type' : 'application/json'
-//            },
-// 		success : function(data){
-// 			console.log(data);
-// 		},
-// 		error : function(e){
-// 		console.log(e);
-// 		}
-// 	});
-// };
+	$.ajax({
+		url : 'https://api.kr-seo.natural-language-understanding.watson.cloud.ibm.com/instances/7191d826-cb08-4e42-a043-2b17891cc13c/v1/analyze?version=2019-07-12',
+		type : 'post',
+		data : {
+			text : word,
+			features : 'sentiment : {}',
+		},
+		headers: {
+// 			'Authorization': 'Basic' + btoa('apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD'), //원본
+           'Authorization': 'Basic YXBpa2V5OlF6b1F2SFV3OGdwRXBYRnVOVldDY3pVbGplbFNvbV8xSUtYTkU0a2dYdXRm', //인증에 에러가 발생되어 테스트용 코드
+           'Content-Type' : 'application/json'
+           },
+		success : function(data){
+			console.log(data);
+		},
+		error : function(e){
+		console.log(e);
+		}
+	});
+};
 
 </script>
 <body>
