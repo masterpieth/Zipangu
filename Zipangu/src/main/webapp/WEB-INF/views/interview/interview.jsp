@@ -8,7 +8,7 @@
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css' />">
-	<jsp:include page="../include/header.jsp"></jsp:include>
+<%-- 	<jsp:include page="../include/header.jsp"></jsp:include> --%>
 </head>
 
 <script>
@@ -17,14 +17,12 @@
 	var text = "";
 	var i;
 	
-window.onload = function(){
-	function nextQuestionButton(){
+// window.onload = function(){
 
+	function nextQuestionButton(){
 		var arr = ${requestScope.questionList};
 		var question_Doc = document.getElementById("question");
 
-		question_Doc.innerHTML = arr[mouseClick].question_text;
-		
 		if(mouseClick === 0){
 			question_Doc.innerHTML = arr[mouseClick].question_text;
 			mouseClick++;
@@ -52,7 +50,7 @@ window.onload = function(){
 		}
 	}
 	
-// 	window.onload = function(){
+window.onload = function(){
 	URL = window.URL || window.webkitURL;
 	
 	var sec = 60;	//카운트
@@ -194,17 +192,41 @@ function speechToText(blob){
         })
 }
 
+// function testapi(){
+// 	var word = "i love you"
+	
+// 	$.ajax({
+// 		url : 'https://api.kr-seo.natural-language-understanding.watson.cloud.ibm.com/instances/7191d826-cb08-4e42-a043-2b17891cc13c/v1/analyze?version=2019-07-12',
+// 		type : 'post',
+// 		data : {
+// 			text : word,
+// 			features : 'sentiment : {}',
+// 		},
+// 		headers: {
+// // 			'Authorization': 'Basic' + btoa('apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD'), //원본
+//            'Authorization': 'apikey:GZoCSYVV6T07ZP3_bJuAsEQseDT6J6ZbkMqpymw09fkD', //인증에 에러가 발생되어 테스트용 코드
+//            'Content-Type' : 'application/json'
+//            },
+// 		success : function(data){
+// 			console.log(data);
+// 		},
+// 		error : function(e){
+// 		console.log(e);
+// 		}
+// 	});
+// };
+
 </script>
-
-
 <body>
 
 
 
 <div align="center">
-<p><h3>다음 질문에 답해주세요</h3></p>
+<h3>다음 질문에 답해주세요</h3>
 
-<!-- <button onclick='nextQuestionButton()' >시작하기</button> -->
+<input type="button" onclick="testapi()" value="apitest">
+
+<button onclick="nextQuestionButton()">시작하기</button>
 
 <!-- 질문 -->
 <h1 id="question"></h1>

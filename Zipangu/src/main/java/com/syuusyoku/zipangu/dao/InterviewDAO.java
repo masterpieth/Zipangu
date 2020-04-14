@@ -39,9 +39,6 @@ public class InterviewDAO {
 		}
 		return list;
 	}
-	
-
-		
 	//multipart File converter
 	public MultipartFile convert(MultipartFile blob) {
 		//파일명
