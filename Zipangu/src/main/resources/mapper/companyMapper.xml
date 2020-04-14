@@ -23,5 +23,6 @@
         where
             userid = #{userID}
         group by type
+        order by count(*) desc
     </select>
 </mapper>
