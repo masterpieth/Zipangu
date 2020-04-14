@@ -6,5 +6,6 @@ import com.syuusyoku.zipangu.vo.CompanyVO;
 
 public interface CompanyMapper {
 	public int insertBookmark(CompanyVO vo);
-	public ArrayList<CompanyVO> getBookmark(String userID);
+	public ArrayList<CompanyVO> getBookmarkCount(String userID);
+	public ArrayList<CompanyVO> getBookmarkList(String userID);
 }

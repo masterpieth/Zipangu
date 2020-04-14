@@ -6,53 +6,66 @@
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
+
+var bookmarkCount;
+var bookmarkList;
+var totalEntrysheet;
+var type_arr;
+
 $(function(){
+	getBookmarkCount();
+	getBookmarkList();
+	getTotalEntrysheet();
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
-	getBookmarkList();
-})
-var bookmarkList;
+    
+    setNavUl(bookmarkCount);
+    bookmarkAnalysis(bookmarkCount);
 
-function getBookmarkList() {
+    setEntrysheet();
+})
+
+function getBookmarkCount() {
 	$.ajax({
-        url : "/zipangu/analysis/getBookmarkList",
+        url : "/zipangu/analysis/getBookmarkCount",
         type: "post",
+        async: false,
         success: function(data){
-            bookmarkList = data;
-            var type_arr = bookmarkAnalysis(data);
-            var result = getEntrysheetList(type_arr);
-            output(result);
+            bookmarkCount = data;
         },
         error: function(e){
             console.log(e);
         }
 	});
 }
-function bookmarkAnalysis(data) {
-	var str = ''
-	var type_arr = [];
-	$.each(data, function(index, item) {
-		$.ajax({
-			url : "/zipangu/analysis/kuromoji",
-			type : "post",
-			data : {
-				type : item.type
-			},
-			async: false,
-			success: function(data){
-				data = $.unique(data.split(' '));
-				type_arr.push(data);
-			}, error: function(e){
-				console.log(e);
-			}
-		});
-	})
-	return type_arr;
+function getBookmarkList(){
+	$.ajax({
+        url : "/zipangu/analysis/getBookmarkList",
+        type: "post",
+        async: false,
+        success: function(data){
+        	bookmarkList = data;
+        },
+        error: function(e){
+            console.log(e);
+        }
+    });
+}
+function getTotalEntrysheet() {
+    $.ajax({
+        url : "http://192.168.0.8:5000/getTotalEntrysheet",
+        type : "post",
+        success: function(data){
+            totalEntrysheet = data;
+        }, error: function(e){
+            console.log(e);
+        }
+    });
 }
 function drawChart(){
 	var chartData = [];
 	var totalCount = 0;
-	$.each(bookmarkList, function(index, item){
+	$.each(bookmarkCount, function(index, item){
 		var temp = [item.type, item.count];
 		totalCount += item.count;
 		chartData.push(temp);
@@ -71,40 +84,95 @@ function drawChart(){
 	var chart = new google.visualization.PieChart(document.getElementById('chartDiv'));
     chart.draw(data, options);
 }
-function getEntrysheetList(type_arr) {
-	var total_result = [];
-	$.each(type_arr, function(index, item) {
-		var entrysheetList = [];
-		var obj = {};
-		$.each(item, function(index2, item2){
-			$.ajax({
-// 				url : "http://10.10.17.117:5000/getEntrysheet",
-                url : "http://192.168.0.8:5000/getEntrysheet",
-                type : "post",
-                data : JSON.stringify({
-                    jobType : item2
-                    }),
-                contentType : "application/json; charset=UTF-8",
-                async: false,
-                success: function(data){
-                    $.each(data, function(index3, item3){
-                        entrysheetList.push(item3);
-                        });
-                    }, error: function(e){
-                        console.log(e);
-                    }
-            });
+
+function bookmarkAnalysis(data) {
+    var str = ''
+    var temp = [];
+    $.each(data, function(index, item) {
+        $.ajax({
+            url : "/zipangu/analysis/kuromoji",
+            type : "post",
+            data : {
+                type : item.type
+            },
+            async: false,
+            success: function(data){
+                data = $.unique(data.split(' '));
+                temp.push(data);
+            }, error: function(e){
+                console.log(e);
+            }
         });
-        obj[item] = entrysheetList;
-        total_result.push(obj);
-    });
-	return total_result;
+    })
+    type_arr = temp;
 }
-function output(result) {
-	$.each(result, function(index, item){
-		var item_arr = Object.values(item)[0];
-		console.log(item_arr);
+function setNavUl(data) {
+	var liStr = '';
+	var divStr = '';
+	$.each(data, function(index, item){
+		if(index == 0){
+			liStr += '<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#li' + index +'">';
+			liStr += item.type;
+			liStr += '</a></li>';
+			divStr = '<div class="tab-pane fade show active" id="li' + index +'">'+ index + '</div>';
+		} else {
+			liStr += '<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#li' + index +'">';
+			liStr += item.type;
+			liStr += '</a></li>';
+			divStr +='<div class="tab-pane fade" id="li' + index +'">' + index + '</div>';
+		}
 	});
+	$('ul.nav-tabs').html(liStr);
+	$('div.tab-content').html(divStr);
+
+	var str = entrysheetOutput(data[0].type);
+	if(str.length != 0){
+		$('#li0').html(str);
+	} else {
+		$('#li0').html('검색 결과가 없습니다.');
+	}
+	$('#bookmark_tbody').html(bookmarkOutput(data[0].type));
+}
+function setEntrysheet(){
+	$('a.nav-link').on('click', function(){
+		var type = $(this).text();
+		var divId = $(this).attr('href');
+		var str = entrysheetOutput(type);
+		if(str.length != 0){
+			$(divId).html(str);
+		} else {
+			$(divId).html('검색 결과가 없습니다.');
+		}
+	});
+}
+function entrysheetOutput(type){
+	var str = '';
+    $.each(totalEntrysheet, function(index, item){
+        if(item.JOBTYPE.indexOf(type) !== -1){
+            str += item.ABSORPTION +'<br>';
+            str += item.ADVICE +'<br>';
+            str += item.COMLOCATION +'<br>';
+            str += item.COMSIZE +'<br>';
+            str += item.HOBBYNSKILL +'<br>';
+            str += item.JOBTYPE +'<br>';
+            str += item.PR +'<br>';
+            str += item.QUALIFICATION +'<br>';
+            str += item.STUDY +'<br>';
+        }
+    });
+    return str;
+}
+function bookmarkOutput(type) {
+	var str = '';
+	$.each(bookmarkList, function(index, item){
+		if(item.type.indexOf(type) !== -1) {
+			str += '<tr><td>' + item.company_num + '</td>';
+			str += '<td>'+ item.coname + '</td>';
+			str += '<td>' + item.location + '</td>';
+			str += '<td>' + item.contact + '</td></tr>';
+		}
+	});
+	return str;
 }
 </script>
 </head>
@@ -117,9 +185,9 @@ function output(result) {
                     <div class="page_link">
                         <a href="<c:url value="/"/>">메인페이지
                         </a>
-                        <a href="<c:url value="/analysis/company"/>">기업분석</a>
+                        <a href="<c:url value="/analysis/company"/>">자기소개서 추천</a>
                     </div>
-                    <h2>기업분석</h2>
+                    <h2>자기소개서 추천</h2>
                     <br>
                     <p style="color: white;"></p>
                 </div>
@@ -128,16 +196,36 @@ function output(result) {
     </section>
 <!--================End Home Banner Area =================-->
 
-<h1>자소서 작업중</h1>
-<pre>
-해야되는거 -> 직종 nouns 까지 뽑았으니 순서대로 돌리면서 entrysheet jobtype이랑 맞는거 있는지 조회
-->조회한 결과 가져옴 각 entrysheet이랑 등록된 파일과 유사도도 제시(유사도는 일단 보류)
-->entrysheet는 전체를 보여줌(paging)
-->즐겨찾기 없는 경우에는 없다고 함
-->그 아래쪽에는 전체 entrysheet에서 뽑아낸 문장들 선택해서 파트별로 작성할 수 있게 함
-->즐겨찾기 바탕으로 google chart사용해서 관심사 시각화해서 보여줌
-</pre>
-<div id="chartDiv"></div>
+	<div class="container-fluid">
+	    <br>
+		<div class="row">
+		    <div class="col-md-6">
+				<div id="chartDiv"></div>
+		    </div>
+			<div class="col-md-6">
+	            <table class="table">
+	                <thead>
+	                    <tr>
+	                        <th>#</th>
+	                        <th>기업명</th>
+	                        <th>위치</th>
+	                        <th>연락처</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="bookmark_tbody">
+	                </tbody>
+	            </table>
+			</div>
+		</div>
+		<div class="row">
+		   <div class="container" id="inputContainer">
+		       <ul class="nav nav-tabs">
+	            </ul>
+	            <div class="tab-content">
+	            </div>
+	        </div>
+		</div>
+	</div>
 <input type="button" value="테스트2" id="testBtn2">
 <div id="resultDiv2">
 </div>

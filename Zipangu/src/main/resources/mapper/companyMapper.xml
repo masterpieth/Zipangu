@@ -14,7 +14,7 @@
             #{contact}
         )
     </insert>
-    <select id="getBookmark" parameterType="string" resultType="companyVO">
+    <select id="getBookmarkCount" parameterType="string" resultType="companyVO">
         select
             type,
             count(*) as count
@@ -24,5 +24,18 @@
             userid = #{userID}
         group by type
         order by count(*) desc
+    </select>
+    <select id="getBookmarkList" parameterType="string" resultType="companyVO">
+        select
+            company_num,
+            userid,
+            coname,
+            type,
+            location,
+            contact
+        from 
+            company_result
+        where
+            userid = #{userID}
     </select>
 </mapper>

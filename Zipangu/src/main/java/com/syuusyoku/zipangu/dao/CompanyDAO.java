@@ -28,12 +28,23 @@ public class CompanyDAO {
 		}
 		return result > 0;
 	}
-	public ArrayList<CompanyVO> getBookmark(HttpSession httpSession) {
+	public ArrayList<CompanyVO> getBookmarkCount(HttpSession httpSession) {
 		String userID = (String)httpSession.getAttribute("userID");
 		ArrayList<CompanyVO> result = null;
 		try {
 			CompanyMapper mapper = session.getMapper(CompanyMapper.class);
-			result = mapper.getBookmark(userID);
+			result = mapper.getBookmarkCount(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public ArrayList<CompanyVO> getBookmarkList(HttpSession httpSession) {
+		String userID = (String)httpSession.getAttribute("userID");
+		ArrayList<CompanyVO> result = null;
+		try {
+			CompanyMapper mapper = session.getMapper(CompanyMapper.class);
+			result = mapper.getBookmarkList(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

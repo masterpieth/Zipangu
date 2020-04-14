@@ -39,9 +39,15 @@ public class CompanyController {
 		return false;
 	}
 	@ResponseBody
+	@RequestMapping(value="analysis/getBookmarkCount", method = RequestMethod.POST)
+	public ArrayList<CompanyVO> getBookmarkCount(HttpSession httpSession) {
+		ArrayList<CompanyVO> bookmarkCount = dao.getBookmarkCount(httpSession);
+		return bookmarkCount;
+	}
+	@ResponseBody
 	@RequestMapping(value="analysis/getBookmarkList", method = RequestMethod.POST)
 	public ArrayList<CompanyVO> getBookmarkList(HttpSession httpSession) {
-		ArrayList<CompanyVO> bookmarkList = dao.getBookmark(httpSession);
+		ArrayList<CompanyVO> bookmarkList = dao.getBookmarkList(httpSession);
 		return bookmarkList;
 	}
 	@ResponseBody
@@ -50,5 +56,10 @@ public class CompanyController {
 		String result = kuromoji.kuromoji(type);
 		result = result.trim();
 		return result;
+	}
+	
+	@RequestMapping(value="analysis/entrysheet", method = RequestMethod.GET)
+	public String entrysheetHelper() {
+		return "company/entrysheetHelper";
 	}
 }
