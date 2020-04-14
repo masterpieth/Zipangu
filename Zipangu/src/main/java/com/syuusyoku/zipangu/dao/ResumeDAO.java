@@ -2,6 +2,7 @@ package com.syuusyoku.zipangu.dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,7 +29,7 @@ public class ResumeDAO {
 	) {
 		int result = 0;
 		try {
-			resume.setUserID(session.getAttribute("userID").toString());
+			resume.setUserID((String) session.getAttribute("userID"));
 			resume.setPicFileName(picFile.getOriginalFilename());
 			ResumeMapper mapper = this.session.getMapper(ResumeMapper.class);
 			result = mapper.saveResume(resume);
@@ -57,21 +58,26 @@ public class ResumeDAO {
 		ArrayList<ResumeVO> resumeList = null;
 		try {
 			ResumeMapper mapper = this.session.getMapper(ResumeMapper.class);
-			resumeList = mapper.resumeList(session.getAttribute("userID").toString());
+			resumeList = mapper.resumeList((String) session.getAttribute("userID"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resumeList;
 	}
 
-//	public boolean checkID(String userID) {
-//		int result = 0;
-//		try {
-//			MemberMapper mapper = session.getMapper(MemberMapper.class);
-//			result = mapper.checkID(userID);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return result > 0;
-//	}
+	public HashMap<String, Object> getResume(int resume_num, HttpSession session) {
+		HashMap<String, Object> resume = new HashMap<>();
+		try {
+			ResumeMapper mapper = this.session.getMapper(ResumeMapper.class);
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("userID", (String) session.getAttribute("userID"));
+			map.put("resume_num", resume_num);
+			resume.put("resume", mapper.getResume(map));
+			resume.put("careerList", mapper.getCareer(resume_num));
+			resume.put("qualifiedList", mapper.getQualified(resume_num));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resume;
+	}
 }

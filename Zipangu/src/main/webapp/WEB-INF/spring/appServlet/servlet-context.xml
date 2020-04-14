@@ -22,7 +22,14 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.syuusyoku.zipangu" />
-	
-	
-	
+
+	<beans:bean id="interceptor" class="com.syuusyoku.zipangu.interceptor.Interceptor" />
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/resume/resumeForm"/>
+			<mapping path="/schedule/scheduleForm"/>
+			<beans:ref bean="interceptor" />
+		</interceptor>
+	</interceptors>
 </beans:beans>

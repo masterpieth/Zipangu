@@ -17,7 +17,7 @@
 		VALUES (
 			#{userID},
 			#{userPwd},
-			#{eMail},
+			#{email},
 			#{userName},
 			#{birth},
 			#{address},
@@ -29,9 +29,17 @@
 		)
 	</insert>
 
-	<select id="login" parameterType="member" resultType="int">
+	<select id="getMember" parameterType="member" resultType="member">
 		SELECT
-			COUNT(*)
+			userid,
+			email,
+			username,
+			TO_CHAR(birth,'YYYY-MM-DD') AS birth,
+			address,
+			phone,
+			sex,
+			authority,
+			textfilename
 		FROM
 			member
 		WHERE

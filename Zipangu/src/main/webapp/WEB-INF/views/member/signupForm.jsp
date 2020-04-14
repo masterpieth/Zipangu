@@ -43,9 +43,9 @@
 				<div class="valid-message" id="pwdCheckMessage">동일한 비밀번호를 입력해 주세요.</div>
 			</div>
 			<div class="form-group">
-				<label for="eMail">이메일:</label>
-				<input type="email" class="form-control" id="eMail" placeholder="이메일을 입력하세요." name="eMail" required>
-				<div class="valid-message" id="eMailMessage">이메일을 입력해 주세요.</div>
+				<label for="email">이메일:</label>
+				<input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요." name="email" required>
+				<div class="valid-message" id="emailMessage">이메일을 입력해 주세요.</div>
 			</div>
 			<div class="form-group">
 				<label for="userName">이름:</label>
@@ -138,14 +138,14 @@ $(function() {
 		}
 	});
 
-	$('#eMail').keyup(function() {
-		var eMail = $('#eMail').val();
+	$('#email').keyup(function() {
+		var eMail = $('#email').val();
 		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		if (regExp.test(eMail)) {
-			$('#eMailMessage').css('color', '#28a745');
+			$('#emailMessage').css('color', '#28a745');
 			checkEMail = true;
 		} else {
-			$('#eMailMessage').css('color', '#dc3545');
+			$('#emailMessage').css('color', '#dc3545');
 			checkEMail = false;
 		}
 	});

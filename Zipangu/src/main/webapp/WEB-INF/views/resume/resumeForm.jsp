@@ -76,7 +76,7 @@ textarea {
 	right: 169px;
 	width: 170px;
 }
-#eMail {
+#email {
 	bottom: 2580px;
 	right: 170px;
 }
@@ -139,29 +139,30 @@ textarea {
 	<div class="container" id="resume">
 		<img src="<c:url value='/resources/img/resume_kor1.png' />" width="100%">
 		<img src="<c:url value='/resources/img/resume_kor2.png' />" width="100%">
-		<img id="pic">
+		<img src="<c:url value='/uploaded/img/picFile/${resume.picFileName}' />" id="pic">
 		<form action="<c:url value='/resume/saveResume' />" id="resumeForm" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="resume_num">
 			<input type="file" class="form-control-file border" id="picFile" name="picFile">
 			<input class="form-control" type="text" id="writeYear">
 			<input class="form-control" type="text" id="writeMonth">
 			<input class="form-control" type="text" id="writeDay">
-			<input class="form-control" type="text" id="userName" value="${userName}">
+			<input class="form-control" type="text" id="userName" value="${member.userName}">
 			<input class="form-control" type="text" id="birthYear">
 			<input class="form-control" type="text" id="birthMonth">
 			<input class="form-control" type="text" id="birthDay">
 			<input class="form-control" type="text" id="age">
-			<input class="form-control" type="text" id="sex" value="${sex}">
-			<textarea rows="3" cols="65" id="address" name="address">${address}</textarea>
-			<input class="form-control" type="text" id="phone" value="${phone}">
-			<textarea rows="2" cols="16" id="eMail"></textarea>
+			<input class="form-control" type="text" id="sex" value="${member.sex}">
+			<textarea rows="3" cols="65" id="address" name="address">${member.address}</textarea>
+			<input class="form-control" type="text" id="phone" value="${member.phone}">
+			<textarea rows="2" cols="16" id="email"></textarea>
 			<div id="career"></div>
 			<button type="button" class="btn btn-success btn-sm" id="addCareer">+</button>
 			<button type="button" class="btn btn-danger btn-sm" id="deleteCareer">-</button>
 			<div id="qualified"></div>
 			<button type="button" class="btn btn-success btn-sm" id="addQualified">+</button>
 			<button type="button" class="btn btn-danger btn-sm" id="deleteQualified">-</button>
-			<textarea rows="8" cols="87" id="hobbyNSkill" name="hobbyNSkill"></textarea>
-			<textarea rows="10" cols="87" id="introduce" name="introduce"></textarea>
+			<textarea rows="8" cols="87" id="hobbyNSkill" name="hobbyNSkill">${resume.hobbyNSkill}</textarea>
+			<textarea rows="10" cols="87" id="introduce" name="introduce">${resume.introduce}</textarea>
 			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="toServer">서버에 저장</button>
 			<button type="button" class="btn btn-secondary btn-lg" id="toFile">테두리 없애기</button>
 			<div class="modal" id="inputTitle">
@@ -171,7 +172,7 @@ textarea {
 							<h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
-						<div class="modal-body"><input class="form-control" type="text" name="title" value="1"></div>
+						<div class="modal-body"><input class="form-control" type="text" name="title" value="${resume.title}" required></div>
 						<div class="modal-footer">
 							<button type="submit" class="btn btn-primary">서버에 저장</button>
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -183,17 +184,76 @@ textarea {
 	</div>
 </body>
 <script>
-	$(function() {
-		$('input, textarea').css('border', 'none');
+var careerCount = 0;
+var careerBottom = 2405;
+function addCareer() {
+	if (careerCount > 10)
+		alert('더 이상 추가할 수 없습니다.');
+	else {
+		var careerVal = [];
+		$('#career>*').each(function(index, item) {
+			careerVal[index] = $(this).val();
+		});
+		var career = $('#career').html();
+		career += '<input class="form-control" type="text" name="careerStartYear" style="bottom:'
+				+ (careerBottom + 50)
+				+ 'px;right:880px;width:85px">';
+		career += '<input class="form-control" type="text" name="careerStartMonth" style="bottom:'
+				+ (careerBottom + 50)
+				+ 'px;right:810px;width:65px">';
+		career += '<input class="form-control" type="text" name="careerEndYear" style="bottom:' + careerBottom + 'px;right:880px;width:85px">';
+		career += '<input class="form-control" type="text" name="careerEndMonth" style="bottom:' + careerBottom + 'px;right:810px;width:65px">';
+		career += '<textarea class="form-control" rows="3" name="careerContent" style="bottom:' + careerBottom + 'px;right:160px;width:670px"></textarea>';
+		$('#career').html(career);
+		$('#career>*').each(function(index, item) {
+			$(this).val(careerVal[index]);
+		});
+		++careerCount;
+		careerBottom -= 100;
+		if (careerCount === 8)
+			careerBottom -= 217;
+	}
+};
 
-		if (${empty correctedDate}) {
+var qualifiedCount = 0;
+var qualifiedBottom = 1106;
+function addQualified() {
+	if (qualifiedCount > 6) {
+		alert('더 이상 추가할 수 없습니다.');
+	} else {
+		var qualifiedVal = [];
+		$('#qualified>*').each(function(index, item) {
+			qualifiedVal[index] = $(this).val();
+		});
+		var qualified = $('#qualified').html();
+		qualified += '<input class="form-control" type="text" name="qualifiedYear" style="bottom:' + qualifiedBottom + 'px;right:880px;width:85px">';
+		qualified += '<input class="form-control" type="text" name="qualifiedMonth" style="bottom:' + qualifiedBottom + 'px;right:810px;width:65px">';
+		qualified += '<input class="form-control" type="text" name="qualifiedContent" style="bottom:' + qualifiedBottom + 'px;right:160px;width:670px">';
+		$('#qualified').html(qualified);
+		$('#qualified>*').each(function(index, item) {
+			$(this).val(qualifiedVal[index]);
+		});
+		++qualifiedCount;
+		qualifiedBottom -= 50;
+	}
+};
+
+	$(function() {
+		if (${empty resume}) {
 			var today = new Date();
 			$('#writeYear').val(today.getFullYear());
 			$('#writeMonth').val(today.getMonth() + 1);
 			$('#writeDay').val(today.getDate());
+			$('input[name=resume_num]').val(-1);
+		} else {
+			var today = '${resume.correctedDate}'.split('-');
+			$('#writeYear').val(today[0]);
+			$('#writeMonth').val(today[1]);
+			$('#writeDay').val(today[2]);
+			$('input[name=resume_num]').val(${resume.resume_num});
 		}
 
-		var birth = '2020-04-01'.split('-');
+		var birth = '${member.birth}'.split('-');
 		$('#birthYear').val(birth[0]);
 		$('#birthMonth').val(Number(birth[1]));
 		$('#birthDay').val(Number(birth[2]));
@@ -207,7 +267,7 @@ textarea {
 		if (day < 10)
 			day = '0' + day;
 		var today = Number(year + month + day);
-		var birth = Number('1987-09-23'.replace(/-/g, ''));
+		var birth = Number('${member.birth}'.replace(/-/g, ''));
 		var age = String(today - birth);
 		age = age.substr(0, age.length > 6 ? 3 : 2);
 		$('#age').val(age); 
@@ -222,41 +282,32 @@ textarea {
 			}
 		});
 
-		var eMail = 'test@test.com'.split('@');
-		$('#eMail').text(eMail[0] + '\n@' + eMail[1]);
+		var email = '${member.email}'.split('@');
+		$('#email').text(email[0] + '\n@' + email[1]);
 
-		var careerCount = 0;
-		var careerBottom = 2405;
-		$('#addCareer')
-				.click(
-						function() {
-							if (careerCount > 10)
-								alert('더 이상 추가할 수 없습니다.');
-							else {
-								var careerVal = [];
-								$('#career>*').each(function(index, item) {
-									careerVal[index] = $(this).val();
-								});
-								var career = $('#career').html();
-								career += '<input class="form-control" type="text" name="careerStartYear" style="bottom:'
-										+ (careerBottom + 50)
-										+ 'px;right:880px;width:85px">';
-								career += '<input class="form-control" type="text" name="careerStartMonth" style="bottom:'
-										+ (careerBottom + 50)
-										+ 'px;right:810px;width:65px">';
-								career += '<input class="form-control" type="text" name="careerEndYear" style="bottom:' + careerBottom + 'px;right:880px;width:85px">';
-								career += '<input class="form-control" type="text" name="careerEndMonth" style="bottom:' + careerBottom + 'px;right:810px;width:65px">';
-								career += '<textarea class="form-control" rows="3" name="careerContent" style="bottom:' + careerBottom + 'px;right:160px;width:670px"></textarea>';
-								$('#career').html(career);
-								$('#career>*').each(function(index, item) {
-									$(this).val(careerVal[index]);
-								});
-								++careerCount;
-								careerBottom -= 100;
-								if (careerCount === 8)
-									careerBottom -= 217;
-							}
-						});
+		$('#addCareer').click(function() {
+			addCareer();
+		});
+
+		var careerList = new Array();
+		<c:forEach var="career" items="${careerList}">
+			var json = new Object();
+			json.resume_num = "${career.resume_num}";
+			json.start_period = "${career.start_period}";
+			json.end_period = "${career.end_period}";
+			json.content = "${career.content}";
+			careerList.push(json);
+		</c:forEach>
+		for (var i = 0; i < careerList.length; i++) {
+			addCareer();
+			var start_period = careerList[i].start_period.split('-');
+			var end_period = careerList[i].end_period.split('-');
+			$('input[name=careerStartYear]:last').val(start_period[0]);
+			$('input[name=careerStartMonth]:last').val(start_period[1]);
+			$('input[name=careerEndYear]:last').val(end_period[0]);
+			$('input[name=careerEndMonth]:last').val(end_period[1]);
+			$('textarea[name=careerContent]:last').val(careerList[i].content);
+		};
 
 		$('#deleteCareer').click(function() {
 			if (careerCount < 1)
@@ -273,50 +324,46 @@ textarea {
 			}
 		});
 
-		var qualifiedCount = 0;
-		var qualifiedBottom = 1106;
-		$('#addQualified')
-				.click(
-						function() {
-							if (qualifiedCount > 6) {
-								alert('더 이상 추가할 수 없습니다.');
-							} else {
-								var qualifiedVal = [];
-								$('#qualified>*').each(function(index, item) {
-									qualifiedVal[index] = $(this).val();
-								});
-								var qualified = $('#qualified').html();
-								qualified += '<input class="form-control" type="text" name="qualifiedYear" style="bottom:' + qualifiedBottom + 'px;right:880px;width:85px">';
-								qualified += '<input class="form-control" type="text" name="qualifiedMonth" style="bottom:' + qualifiedBottom + 'px;right:810px;width:65px">';
-								qualified += '<input class="form-control" type="text" name="qualifiedContent" style="bottom:' + qualifiedBottom + 'px;right:160px;width:670px">';
-								$('#qualified').html(qualified);
-								$('#qualified>*').each(function(index, item) {
-									$(this).val(qualifiedVal[index]);
-								});
-								++qualifiedCount;
-								qualifiedBottom -= 50;
-							}
-						});
+		$('#addQualified').click(function() {
+			addQualified();
+		});
 
-		$('#deleteQualified').click(
-				function() {
-					if (qualifiedCount < 1)
-						alert('삭제할 항목이 없습니다.');
-					else {
-						$($('#qualified>*').get().reverse()).each(
-								function(index, item) {
-									if (index < 3)
-										$(this).remove();
-								});
-						--qualifiedCount;
-						qualifiedBottom += 50;
-					}
-				});
+		var qualifiedList = new Array();
+		<c:forEach var="qualified" items="${qualifiedList}">
+			var json = new Object();
+			json.resume_num = "${qualified.resume_num}";
+			json.period = "${qualified.period}";
+			json.content = "${qualified.content}";
+			qualifiedList.push(json)
+		</c:forEach>
+		for (var i = 0; i < qualifiedList.length; i++) {
+			addQualified();
+			var period = qualifiedList[i].period.split('-');
+			$('input[name=qualifiedYear]:last').val(period[0]);
+			$('input[name=qualifiedMonth]:last').val(period[1]);
+			$('input[name=qualifiedContent]:last').val(qualifiedList[i].content);
+		};
+
+		$('input, textarea').css('border', 'none');
+
+		$('#deleteQualified').click(function() {
+			if (qualifiedCount < 1)
+				alert('삭제할 항목이 없습니다.');
+			else {
+				$($('#qualified>*').get().reverse()).each(
+						function(index, item) {
+							if (index < 3)
+								$(this).remove();
+						});
+				--qualifiedCount;
+				qualifiedBottom += 50;
+			}
+		});
 
 		$('#toServer').click(function() {
 			$('#toServer').removeAttr('data-target');
 			var flag = true;
-			$('input, textarea').each(function() {
+			$('input[type=text], textarea').each(function() {
 				if ($(this).val().length < 1) {
 					$(this).focus();
 					alert("내용을 입력해 주세요.");

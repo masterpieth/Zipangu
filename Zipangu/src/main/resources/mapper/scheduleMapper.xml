@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.syuusyoku.zipangu.dao.ScheduleMapper">
+	<select id="scheduleList" resultType="schedule">
+		SELECT
+			mentorid,
+			menteeid,
+			TO_CHAR(reservedate,'YYYY-MM-DD') AS reserveDate
+		FROM
+			schedule
+		WHERE
+			reservedate >= #{date}
+		AND
+			<choose>
+				<when test="authority gt 1">
+					(menteeid = #{userID} OR menteeid IS NULL)
+				</when>
+				<otherwise>
+					mentorid = #{userID}
+				</otherwise>
+			</choose>
+		ORDER BY
+			reservedate ASC
+	</select>
+
+	<update id="updateSchedule" parameterType="schedule">
+		UPDATE
+			schedule
+		SET
+			menteeid = #{menteeID}
+		WHERE
+			mentorid = #{mentorID}
+		AND
+			reserveDate = #{reserveDate}
+	</update>
+
+	<delete id="deleteSchedule">
+		DELETE
+			schedule
+		WHERE
+			mentorid = #{mentorID}
+		AND
+			reserveDate >= #{date}
+	</delete>
+
+	<insert id="insertSchedule" parameterType="schedule">
+		INSERT INTO
+			schedule
+		VALUES (
+			#{mentorID},
+			#{menteeID},
+			#{reserveDate}
+		)
+		</insert>
+</mapper>

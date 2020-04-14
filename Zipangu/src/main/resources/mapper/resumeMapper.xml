@@ -4,7 +4,11 @@
 <mapper namespace="com.syuusyoku.zipangu.dao.ResumeMapper">
 	<select id="resumeList" resultType="resume">
 		SELECT
-			*
+			resume_num,
+			userid,
+			title,
+			TO_CHAR(inputdate,'YYYY-MM-DD') AS inputDate,
+			TO_CHAR(correcteddate,'YYYY-MM-DD') AS correctedDate
 		FROM
 			resume
 		WHERE
@@ -51,4 +55,45 @@
 			#{content}
 		)
 	</insert>
+
+	<select id="getResume" parameterType="map" resultType="resume">
+		SELECT
+			resume_num,
+			userid,
+			hobbynskill,
+			introduce,
+			picfilename,
+			title,
+			TO_CHAR(inputdate,'YYYY-MM-DD') AS inputDate,
+			TO_CHAR(correcteddate,'YYYY-MM-DD') AS correctedDate
+		FROM
+			resume
+		WHERE
+			resume_num = #{resume_num}
+		AND
+			userid = #{userID}
+	</select>
+
+	<select id="getCareer" resultType="career">
+		SELECT
+			resume_num,
+			TO_CHAR(start_period,'YYYY-MM-DD') AS start_period,
+			TO_CHAR(end_period,'YYYY-MM-DD') AS end_period,
+			content
+		FROM
+			career
+		WHERE
+			resume_num = #{resume_num}
+	</select>
+
+	<select id="getQualified" resultType="qualified">
+		SELECT
+			resume_num,
+			TO_CHAR(period,'YYYY-MM-DD') AS period,
+			content
+		FROM
+			qualified
+		WHERE
+			resume_num = #{resume_num}
+	</select>
 </mapper>

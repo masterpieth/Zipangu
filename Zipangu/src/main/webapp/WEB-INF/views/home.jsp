@@ -17,8 +17,9 @@
 <a href="<c:url value='/footer' />">푸터확인</a>
 <a href="<c:url value='/maintemp' />">메인화면(작업중)</a>
 =======
-<a href="<c:url value='/resume/resumeForm' />">이력서 작성</a>
+<a href="<c:url value='/resume/resumeForm?resume_num=-1' />">이력서 작성</a>
 <a href="<c:url value='/resume/resumeList' />">이력서 조회</a>
+<a href="<c:url value='/schedule/scheduleForm' />">스케쥴 조회</a>
 >>>>>>> Stashed changes
 <hr>
 <div class="container">
@@ -32,6 +33,7 @@
 	</c:when>
 	<c:otherwise>
 		<h1>${userID}로 로그인 중</h1>
+		<hr><a href="<c:url value='/member/logout' />">로그아웃</a>
 	</c:otherwise>
 </c:choose>
 </div>

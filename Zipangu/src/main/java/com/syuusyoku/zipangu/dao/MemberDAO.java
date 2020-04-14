@@ -39,24 +39,40 @@ public class MemberDAO {
 		return result > 0;
 	}
 
-	public void sendSimpleMessage(String to, String subject, String text) {
+	public void sendSimpleMessage(String address, String title, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(to);
-		message.setSubject(subject);
+		message.setTo(address);
+		message.setSubject(title);
 		message.setText(text);
 		mailSender.send(message);
 	}
 
 	public boolean login(MemberVO member, HttpSession session) {
+		member = getMember(member);
 		try {
-			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
-			if (mapper.login(member) > 0) {
+			if (member.getUserID().length() > 0) {
 				session.setAttribute("userID", member.getUserID());
+				session.setAttribute("userPwd", member.getUserPwd());
+				session.setAttribute("authority", member.getAuthority());
 				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public MemberVO getMember(MemberVO member) {
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			member = mapper.getMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
+	}
+
+	public void logout(HttpSession session) {
+		session.invalidate();
 	}
 }

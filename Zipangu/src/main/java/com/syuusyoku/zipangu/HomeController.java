@@ -11,16 +11,24 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+
 	@RequestMapping(value = "/header", method = RequestMethod.GET)
 	public String header() {
 		return "include/header";
 	}
+
 	@RequestMapping(value = "/footer", method = RequestMethod.GET)
 	public String footer() {
 		return "include/footer";
 	}
+
 	@RequestMapping(value = "/maintemp", method = RequestMethod.GET)
 	public String main() {
 		return "main";
+	}
+
+	@RequestMapping(value = "/alert", method = RequestMethod.GET)
+	public String alert() {
+		return "alert";
 	}
 }

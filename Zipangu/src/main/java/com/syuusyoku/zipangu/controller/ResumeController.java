@@ -1,6 +1,7 @@
 package com.syuusyoku.zipangu.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.dao.ResumeDAO;
 import com.syuusyoku.zipangu.vo.CareerVO;
+import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.QualifiedVO;
 import com.syuusyoku.zipangu.vo.ResumeVO;
 
@@ -20,9 +23,21 @@ import com.syuusyoku.zipangu.vo.ResumeVO;
 public class ResumeController {
 	@Autowired
 	private ResumeDAO dao;
+	@Autowired
+	private MemberDAO memberDao;
 
 	@RequestMapping(value = "resume/resumeForm", method = RequestMethod.GET)
-	public String resumeForm() {
+	public String resumeForm(int resume_num, HttpSession session, Model model) {
+		if (resume_num > -1) {
+			HashMap<String, Object> resume = dao.getResume(resume_num, session);
+			model.addAttribute("resume", resume.get("resume"));
+			model.addAttribute("careerList", resume.get("careerList"));
+			model.addAttribute("qualifiedList", resume.get("qualifiedList"));
+		}
+		MemberVO member = new MemberVO();
+		member.setUserID((String) session.getAttribute("userID"));
+		member.setUserPwd((String) session.getAttribute("userPwd"));
+		model.addAttribute("member", memberDao.getMember(member));
 		return "resume/resumeForm";
 	}
 
@@ -53,7 +68,8 @@ public class ResumeController {
 			qualified.setContent(qualifiedContent[i]);
 			qualifiedList.add(qualified);
 		}
+		if (resume.getResume_num() > -1)
 		dao.saveResume(picFile, resume, session, careerList, qualifiedList);
-		return "resume/resumeForm";
+		return "/";
 	}
 }

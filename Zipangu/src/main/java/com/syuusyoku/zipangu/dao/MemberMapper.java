@@ -8,5 +8,5 @@ public interface MemberMapper {
 
 	int signup(MemberVO member);
 
-	int login(MemberVO member);
+	MemberVO getMember(MemberVO member);
 }
