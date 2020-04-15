@@ -53,7 +53,8 @@ function getBookmarkList(){
 }
 function getTotalEntrysheet() {
     $.ajax({
-        url : "http://192.168.0.8:5000/getTotalEntrysheet",
+//         url : "http://192.168.0.8:5000/getTotalEntrysheet",
+        url : "http://10.10.17.117:5000/getTotalEntrysheet",
         type : "post",
         success: function(data){
             totalEntrysheet = data;
@@ -76,7 +77,7 @@ function drawChart(){
     data.addRows(chartData);
     
 	var options = {
-			title : '등록된 즐겨찾기 수 : ' + totalCount,
+			title : '등록된 즐겨찾기 수 : ' + totalCount + '개',
 			width : 600,
 			height : 400,
 			is3D : true, 
@@ -114,59 +115,90 @@ function setNavUl(data) {
 			liStr += '<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#li' + index +'">';
 			liStr += item.type;
 			liStr += '</a></li>';
-			divStr = '<div class="tab-pane fade show active" id="li' + index +'">'+ index + '</div>';
+			divStr = '<div class="tab-pane fade show active" id="li' + index +'"></div>';
 		} else {
 			liStr += '<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#li' + index +'">';
 			liStr += item.type;
 			liStr += '</a></li>';
-			divStr +='<div class="tab-pane fade" id="li' + index +'">' + index + '</div>';
+			divStr +='<div class="tab-pane fade" id="li' + index +'"></div>';
 		}
 	});
 	$('ul.nav-tabs').html(liStr);
 	$('div.tab-content').html(divStr);
 
-	var str = entrysheetOutput(data[0].type);
-	if(str.length != 0){
-		$('#li0').html(str);
-	} else {
-		$('#li0').html('검색 결과가 없습니다.');
-	}
+// 	var str = entrysheetOutput(data[0].type);
+// 	if(str.length != 0){
+// 		$('#li0').html(str);
+// 	} else {
+// 		$('#li0').html('검색 결과가 없습니다.');
+// 	}
 	$('#bookmark_tbody').html(bookmarkOutput(data[0].type));
 }
 function setEntrysheet(){
 	$('a.nav-link').on('click', function(){
 		var type = $(this).text();
 		var divId = $(this).attr('href');
-		var str = entrysheetOutput(type);
-		if(str.length != 0){
-			$(divId).html(str);
+		var liStr = entrysheetOutput(type);
+		var tbodyStr = bookmarkOutput(type);
+		if(liStr.length != 0){
+			$(divId).html(liStr);
 		} else {
 			$(divId).html('검색 결과가 없습니다.');
 		}
+		$('#bookmark_tbody').html(tbodyStr);
 	});
 }
 function entrysheetOutput(type){
 	var str = '';
+	var typeResult = [];
     $.each(totalEntrysheet, function(index, item){
         if(item.JOBTYPE.indexOf(type) !== -1){
-            str += item.ABSORPTION +'<br>';
-            str += item.ADVICE +'<br>';
-            str += item.COMLOCATION +'<br>';
-            str += item.COMSIZE +'<br>';
-            str += item.HOBBYNSKILL +'<br>';
-            str += item.JOBTYPE +'<br>';
-            str += item.PR +'<br>';
-            str += item.QUALIFICATION +'<br>';
-            str += item.STUDY +'<br>';
+            typeResult.push(item);
+//             str += item.ABSORPTION +'<br>';
+//             str += item.ADVICE +'<br>';
+//             str += item.COMLOCATION +'<br>';
+//             str += item.COMSIZE +'<br>';
+//             str += item.HOBBYNSKILL +'<br>';
+//             str += item.JOBTYPE +'<br>';
+//             str += item.PR +'<br>';
+//             str += item.QUALIFICATION +'<br>';
+//             str += item.STUDY +'<br>';
         }
     });
+//     console.log(typeResult);
+//     console.log(typeResult.length);
+    var typeResultIndex = 0;
+    if(typeResult.length != 0){
+        $('#li'+typeResultIndex).html(entrysheetStr(typeResult, typeResultIndex));
+	    $('#prev').on('click',function(){
+		    if(typeResultIndex != 0) {
+		    	typeResultIndex --;
+		    	$(divId).html(entrysheetStr(typeResult, typeResultIndex));
+			}
+	    });
+	    $('#next').on('click',function(){
+		    if(typeResultIndex != (typeResult.length -1)){
+		    	typeResultIndex ++;
+		    	$(divId).html(entrysheetStr(typeResult, typeResultIndex));
+			}
+	    });
+    }
+    return str;
+}
+function entrysheetStr(typeResult, typeResultIndex){
+	var str = '';
+	str += typeResult[typeResultIndex].ADVICE + '<br>';
+    str += typeResult[typeResultIndex].ABSORPTION + '<br>';
     return str;
 }
 function bookmarkOutput(type) {
 	var str = '';
+	var num = 1;
+	var typeResult = [];
 	$.each(bookmarkList, function(index, item){
 		if(item.type.indexOf(type) !== -1) {
-			str += '<tr><td>' + item.company_num + '</td>';
+			typeResult.push(item);
+			str += '<tr><td>' + (num++) + '</td>';
 			str += '<td>'+ item.coname + '</td>';
 			str += '<td>' + item.location + '</td>';
 			str += '<td>' + item.contact + '</td></tr>';
@@ -174,6 +206,7 @@ function bookmarkOutput(type) {
 	});
 	return str;
 }
+
 </script>
 </head>
 <body>
@@ -203,7 +236,7 @@ function bookmarkOutput(type) {
 				<div id="chartDiv"></div>
 		    </div>
 			<div class="col-md-6">
-	            <table class="table">
+	            <table class="table" id="testTable">
 	                <thead>
 	                    <tr>
 	                        <th>#</th>
@@ -215,19 +248,56 @@ function bookmarkOutput(type) {
 	                <tbody id="bookmark_tbody">
 	                </tbody>
 	            </table>
+	            <div id="pagination" style="text-align: center"></div>
+	            <nav class="blog-pagination justify-content-center d-flex">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a href="#" class="page-link" aria-label="Previous" id="prev">
+                                <span aria-hidden="true">
+                                    <span class="lnr lnr-chevron-left"></span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a href="#" class="page-link" aria-label="Next" id="next">
+                                <span aria-hidden="true">
+                                    <span class="lnr lnr-chevron-right"></span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 			</div>
 		</div>
 		<div class="row">
 		   <div class="container" id="inputContainer">
 		       <ul class="nav nav-tabs">
 	            </ul>
+	            <nav class="blog-pagination justify-content-center d-flex">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a href="#" class="page-link" aria-label="Previous">
+                                <span aria-hidden="true">
+                                    <span class="lnr lnr-chevron-left"></span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a href="#" class="page-link" aria-label="Next">
+                                <span aria-hidden="true">
+                                    <span class="lnr lnr-chevron-right"></span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
 	            <div class="tab-content">
 	            </div>
 	        </div>
 		</div>
 	</div>
-<input type="button" value="테스트2" id="testBtn2">
-<div id="resultDiv2">
+<div class="card">
+    <div></div>
 </div>
 </body>
 </html>
