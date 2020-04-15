@@ -40,7 +40,7 @@
 			);
 	</insert>
 
-<!-- 	interview_num에서 중복된 값이 5개인 경우 테이블 출력 -->
+<!-- 	interview_num 중복된 값이 5개인 경우 테이블 출력 -->
 	<select id="select_result" parameterType="ivo" resultType="rvo">
 		select
 			(interview_num
