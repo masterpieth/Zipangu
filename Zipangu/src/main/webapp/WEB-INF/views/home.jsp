@@ -9,7 +9,6 @@
 <h1>
 	Hello world!  
 </h1>
-<a href="<c:url value="analysis/company"/>">인재상 분석</a>
 <h3><a href="<c:url value='/member/loginTemp' />">임시 로그인 페이지</a></h3>
 <h3><a href="<c:url value='/member/logoutTemp' />">로그아웃</a></h3>
 <h3>${sessionScope.userID} : 지금 접속해 있는 사람</h3>
@@ -19,10 +18,8 @@
 <h3><a href="<c:url value='/msg/msg_tmain'/>">멘토로 로그인 했을 때: 대화를 건 멘토들 목록 나오고 + 선택하면 대화창으로(msg_read)</a></h3>
 <a href="<c:url value='/member/signupForm' />">회원 가입</a>
 
-<a href="<c:url value='/header' />">헤더확인</a>
-<a href="<c:url value='/footer' />">푸터확인</a>
 <a href="<c:url value='/maintemp' />">메인화면(작업중)</a>
-<a href="<c:url value='analysis/companyTemp' />">기업 분석 화면 작업중</a>
+<a href="<c:url value='analysis/company' />">기업 분석 화면 작업중</a>
 <a href="<c:url value='analysis/entrysheet' />">자소서 작업중</a>
 </body>
 </html>

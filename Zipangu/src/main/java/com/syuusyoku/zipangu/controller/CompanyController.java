@@ -24,12 +24,8 @@ public class CompanyController {
 	Kuromoji kuromoji;
 	
 	@RequestMapping(value="analysis/company", method = RequestMethod.GET)
-	public String comAnalysisPage() {
-		return "company/comAnalysis";
-	}
-	@RequestMapping(value="analysis/companyTemp", method = RequestMethod.GET)
 	public String companyTemp() {
-		return "company/comAnalysisTemp";
+		return "company/comAnalysis";
 	}
 	@ResponseBody
 	@RequestMapping(value="analysis/bookmark", method = RequestMethod.POST)
@@ -60,6 +56,6 @@ public class CompanyController {
 	
 	@RequestMapping(value="analysis/entrysheet", method = RequestMethod.GET)
 	public String entrysheetHelper() {
-		return "company/entrysheetHelper";
+		return "company/entrysheet";
 	}
 }
