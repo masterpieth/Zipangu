@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="../include/header.jsp"></jsp:include>
 	멘토 목록
 	<table>
 	<c:forEach items="${requestScope.mentorList}" var="mentor">
@@ -25,5 +26,7 @@
 		</tr>
 	</c:forEach>
 	</table>
+	
+	<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

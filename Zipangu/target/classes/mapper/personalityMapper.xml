@@ -25,10 +25,7 @@
 		insert into timeline(TIMELINE_NUM, USERID, TRAITS_SELECTED, EPISODE_TITLE, EPISODE_CONTENT, START_DATE, FINISH_DATE)
 		values(TIMELINE_SEQ.nextval, #{userID}, #{traits_Selected}, #{episode_Title}, #{episode_Content}, TO_DATE(#{start_Date},'YYYY-MM-DD'), TO_DATE(#{finish_Date},'YYYY-MM-DD'))
 	</insert>
-	
-	<select id="timelineList" resultType="TimelineVO">
-		select * from timeline order by start_date desc
-	</select>
+
 	
 	<select id="timelineRead" parameterType="int" resultType="TimelineVO">
 		select * from timeline where timeline_Num=#{timeline_Num}
