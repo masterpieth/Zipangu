@@ -125,88 +125,76 @@ function setNavUl(data) {
 	});
 	$('ul.nav-tabs').html(liStr);
 	$('div.tab-content').html(divStr);
-
-// 	var str = entrysheetOutput(data[0].type);
-// 	if(str.length != 0){
-// 		$('#li0').html(str);
-// 	} else {
-// 		$('#li0').html('검색 결과가 없습니다.');
-// 	}
 	$('#bookmark_tbody').html(bookmarkOutput(data[0].type));
 }
 function setEntrysheet(){
 	$('a.nav-link').on('click', function(){
 		var type = $(this).text();
 		var divId = $(this).attr('href');
-		var liStr = entrysheetOutput(type);
+		
+		var typeResult = searchEntrysheet(type);
+		entrysheetOutput(typeResult, divId);
+		
 		var tbodyStr = bookmarkOutput(type);
-		if(liStr.length != 0){
-			$(divId).html(liStr);
-		} else {
-			$(divId).html('검색 결과가 없습니다.');
-		}
 		$('#bookmark_tbody').html(tbodyStr);
+		$('#currentBookmarkTitle').html('즐겨찾기 상세 : ' + type)
 	});
 }
-function entrysheetOutput(type){
+function searchEntrysheet(type){
 	var str = '';
 	var typeResult = [];
     $.each(totalEntrysheet, function(index, item){
         if(item.JOBTYPE.indexOf(type) !== -1){
             typeResult.push(item);
-//             str += item.ABSORPTION +'<br>';
-//             str += item.ADVICE +'<br>';
-//             str += item.COMLOCATION +'<br>';
-//             str += item.COMSIZE +'<br>';
-//             str += item.HOBBYNSKILL +'<br>';
-//             str += item.JOBTYPE +'<br>';
-//             str += item.PR +'<br>';
-//             str += item.QUALIFICATION +'<br>';
-//             str += item.STUDY +'<br>';
         }
     });
-//     console.log(typeResult);
-//     console.log(typeResult.length);
-    var typeResultIndex = 0;
-    if(typeResult.length != 0){
-        $('#li'+typeResultIndex).html(entrysheetStr(typeResult, typeResultIndex));
-	    $('#prev').on('click',function(){
-		    if(typeResultIndex != 0) {
-		    	typeResultIndex --;
-		    	$(divId).html(entrysheetStr(typeResult, typeResultIndex));
-			}
-	    });
-	    $('#next').on('click',function(){
-		    if(typeResultIndex != (typeResult.length -1)){
-		    	typeResultIndex ++;
-		    	$(divId).html(entrysheetStr(typeResult, typeResultIndex));
-			}
-	    });
-    }
-    return str;
-}
-function entrysheetStr(typeResult, typeResultIndex){
-	var str = '';
-	str += typeResult[typeResultIndex].ADVICE + '<br>';
-    str += typeResult[typeResultIndex].ABSORPTION + '<br>';
-    return str;
+    return typeResult;
 }
 function bookmarkOutput(type) {
-	var str = '';
-	var num = 1;
-	var typeResult = [];
-	$.each(bookmarkList, function(index, item){
-		if(item.type.indexOf(type) !== -1) {
-			typeResult.push(item);
-			str += '<tr><td>' + (num++) + '</td>';
-			str += '<td>'+ item.coname + '</td>';
-			str += '<td>' + item.location + '</td>';
-			str += '<td>' + item.contact + '</td></tr>';
-		}
-	});
-	return str;
+    var str = '';
+    var num = 1;
+    var typeResult = [];
+    $.each(bookmarkList, function(index, item){
+        if(item.type.indexOf(type) !== -1) {
+            typeResult.push(item);
+            str += '<tr><td>' + (num++) + '</td>';
+            str += '<td>'+ item.coname + '</td>';
+            str += '<td>' + item.location + '</td>';
+            str += '<td>' + item.contact + '</td></tr>';
+        }
+    });
+    return str;
 }
 
+function entrysheetOutput(typeResult, divId){
+	var str = '';
+	str += '<table class="table paginated">';
+	
+	if(typeResult.length != 0){
+		str += '<tr><th>COMSIZE</th></tr>';
+		str += '<tr><th>' + typeResult[0].COMSIZE + '</th></tr>';
+		str += '<tr><th>JOBTYPE</th></tr>';
+	    str += '<tr><th>' + typeResult[0].JOBTYPE + '</th></tr>';
+	    str += '<tr><th>COMLOCATION</th></tr>';
+	    str += '<tr><th>' + typeResult[0].COMLOCATION + '</th></tr>';
+	    str += '<tr><th>QUALIFICATION</th></tr>';
+	    str += '<tr><th>' + typeResult[0].QUALIFICATION + '</th></tr>';
+	    str += '<tr><th>HOBBYNSKILL</th></tr>';
+	    str += '<tr><th>' + typeResult[0].HOBBYNSKILL + '</th></tr>';
+	    str += '<tr><th>STUDY</th></tr>';
+	    str += '<tr><th>' + typeResult[0].STUDY + '</th></tr>';
+	    str += '<tr><th>PR</th></tr>';
+	    str += '<tr><th>' + typeResult[0].PR + '</th></tr>';
+	    str += '<tr><th>ABSORPTION</th></tr>';
+	    str += '<tr><th>' + typeResult[0].ABSORPTION + '</th></tr>';
+	    str += '<tr><th>ADVICE</th></tr>';
+	    str += '<tr><th>' + typeResult[0].ADVICE + '</th></tr>';
+	} else {
+		str += '<tr><th>검색결과가 없습니다.</th></tr>';
+	}
+	str += '</table>';
+	$(divId).html(str);
+}
 </script>
 </head>
 <body>
@@ -232,48 +220,41 @@ function bookmarkOutput(type) {
 	<div class="container-fluid">
 	    <br>
 		<div class="row">
-		    <div class="col-md-6">
-				<div id="chartDiv"></div>
-		    </div>
-			<div class="col-md-6">
-	            <table class="table" id="testTable">
-	                <thead>
-	                    <tr>
-	                        <th>#</th>
-	                        <th>기업명</th>
-	                        <th>위치</th>
-	                        <th>연락처</th>
-	                    </tr>
-	                </thead>
-	                <tbody id="bookmark_tbody">
-	                </tbody>
-	            </table>
-	            <div id="pagination" style="text-align: center"></div>
-	            <nav class="blog-pagination justify-content-center d-flex">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Previous" id="prev">
-                                <span aria-hidden="true">
-                                    <span class="lnr lnr-chevron-left"></span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Next" id="next">
-                                <span aria-hidden="true">
-                                    <span class="lnr lnr-chevron-right"></span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+			<div class="container">
+				<div class="col-md-6" style="float: right;">
+				    <div class="card">
+			            <h4 class="card-title">즐겨찾기 등록 현황</h4>
+			            <hr>
+			            <div id="chartDiv"></div>
+			        </div>
+				</div>
+			    <div class="col-md-6">
+			       <div class="card">
+		                <h4 class="card-title" id="currentBookmarkTitle">즐겨찾기 상세</h4>
+		                <hr>
+		                <div class="card-body pre-scrollable" style="height: 100%;">
+		                <table class="table" id="testTable">
+		                    <thead>
+		                        <tr>
+		                            <th style="width: 10%;">#</th>
+		                            <th style="width: 20%;">기업명</th>
+		                            <th style="width: 10%;">위치</th>
+		                            <th style="width: 60%;">연락처</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody id="bookmark_tbody">
+		                    </tbody>
+		                </table>
+		                </div>
+		            </div>
+			    </div>
 			</div>
 		</div>
 		<div class="row">
 		   <div class="container" id="inputContainer">
 		       <ul class="nav nav-tabs">
 	            </ul>
-	            <nav class="blog-pagination justify-content-center d-flex">
+	            <nav class="blog-pagination justify-content-center d-flex" style="padding-bottom: 10px;">
                     <ul class="pagination">
                         <li class="page-item">
                             <a href="#" class="page-link" aria-label="Previous">
@@ -297,7 +278,6 @@ function bookmarkOutput(type) {
 		</div>
 	</div>
 <div class="card">
-    <div></div>
 </div>
 </body>
 </html>
