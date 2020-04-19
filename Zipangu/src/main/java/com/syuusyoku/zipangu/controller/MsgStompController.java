@@ -29,7 +29,6 @@ public class MsgStompController {
 		message.setUserID(vo.getUserID());
 		message.setUserName(vo.getUserName());
 		message.setSend_Time(LocalDateTime.now());
-		
 		logger.info("채팅 컨트롤러 종료");
 		return message;
 	}

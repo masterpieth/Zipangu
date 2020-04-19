@@ -53,9 +53,18 @@
 					str += data.userName+" 님 -> "+data.content;
 					str += '</div>';
 				}
+				var mentor = $("#mentor_id").val();
+				var mentee = $("#mentee_id").val()
+				
+				//대화 상대가 admin이면 자동으로 답변 나가게..
+				if(mentor=='admin'||mentee=='admin') {
+					str += '<div class="bubble you">';
+					str += 'dfksnlfsnlkfnslk';
+					str += '</div>';		
+				}
 				$(".chat").append(str);			
 			});	
-				
+			
 		});
 	}
 		
@@ -75,6 +84,7 @@
 	function disconnect() {
 		stompClient.disconnect();
 	}
+
 </script>
 	
 	<title>대화 화면</title>
@@ -92,7 +102,7 @@ ${requestScope.List_MsgVO.msg_num}
             <ul class="people">
           		<c:forEach items="${who_user_msg_to_list}" var="list">         	
             		<a href="/zipangu/msg/msg_start?mentee_id=${list.mentee_id}&mentor_id=${list.mentor_id}">
-	            		<c:if test="${sessionScope.userID==list.mentor_id}">
+            			<c:if test="${sessionScope.userID==list.mentor_id}">
 			                <li class="person" data-chat="person${list.msg_num}">	
 			                     <span class="name">${list.mentee_id}</span>
 			                </li>
@@ -109,6 +119,8 @@ ${requestScope.List_MsgVO.msg_num}
         <div class="right">
 	        <div class="chat" data-chat="person${requestScope.List_MsgVO.msg_num}">
 	            <div id="chatroom"></div>
+	            <input type="hidden" value="${requestScope.List_MsgVO.mentee_id}" name="mentee_id" id="mentee_id">
+            	<input type="hidden" value="${requestScope.List_MsgVO.mentor_id}" name="mentor_id" id="mentor_id">		
         	</div>
           	<div class="write">
                	<input type="text" id="chatbox">
