@@ -12,44 +12,9 @@
 </head>
 
 <script>
-	var mouseClick = 0;
-	var temp;
-	var text = "";
-	var temp2;
-	var text2 = "";
-	var stats = "";
 	var i;
-	
-	function nextQuestionButton(){
-		var arr = ${requestScope.questionList};
-		var question_Doc = document.getElementById("question");
-
-		if(mouseClick === 0){
-			question_Doc.innerHTML = arr[mouseClick].question_text;
-			mouseClick++;
-			console.log(mouseClick);
-			console.log(arr[mouseClick].question_text);
-		} else if(mouseClick === 1) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
-			console.log(mouseClick);
-			console.log(arr[mouseClick].question_text);
-			mouseClick++;
-		} else if(mouseClick === 2) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
-			console.log(mouseClick);
-			console.log(arr[mouseClick].question_text);
-			mouseClick++;
-		} else if(mouseClick === 3) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
-			console.log(mouseClick);
-			console.log(arr[mouseClick].question_text);
-			mouseClick++;
-		} else if(mouseClick === 4) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
-			console.log(mouseClick);
-			console.log(arr[mouseClick].question_text);
-		}
-	}
+	var mouseClick = 0;
+	var filename;
 	
 window.onload = function(){
 	URL = window.URL || window.webkitURL;
@@ -69,30 +34,26 @@ window.onload = function(){
 
 	recordButton.addEventListener("click", startRecording);
 	stopButton.addEventListener("click", stopRecording);
-	
+
+	recordButton.disabled = true;
+	stopButton.disabled = true;
 	
 	function startRecording() {
 			//카운트 다운
 			leftTime = setInterval(function() {
 
-			 	document.getElementById("counting").innerHTML = "残り時間 : " + sec + "秒";
-			 	sec--;
+		 	document.getElementById("counting").innerHTML = "남은시간 : " + sec + "초";
+		 	sec--;
 
 			 	if (sec < 0) {
 			 		clearInterval(leftTime);
-			 		document.getElementById("counting").innerHTML = "答えは60秒内にしてください";
-
-					stopButton.disabled = true;
-					recordButton.disabled = false;
-					
+			 		document.getElementById("counting").innerHTML = "답변은 60초 이내로 해주세요.";
+	
 					rec.stop();
-					gumStream.getAudioTracks()[0].stop();
-					rec.exportWAV(createDownloadLink);
-			}
-	}, 1000);
+				}
+			}, 1000);
 
 	    var constraints = { audio: true, video:false }
-
 		recordButton.disabled = true;
 		stopButton.disabled = false;
 		
@@ -110,35 +71,38 @@ window.onload = function(){
 	}
 		
 	function stopRecording() {
-		stopButton.disabled = true;
+		//답변 완료
 		recordButton.disabled = false;
+		stopButton.disabled = true;
 		rec.stop();
 		gumStream.getAudioTracks()[0].stop();
 		rec.exportWAV(createDownloadLink);
+
+		//남은 시간 리셋
 		clearInterval(leftTime);
 		sec = 60;
-		document.getElementById("counting").innerHTML = "残り時間 : " + sec + "秒";
+		document.getElementById("counting").innerHTML = "남은시간 : " + sec + "초";
 	}
 
-	// 	다운로드
+	//답변 완료 선택 시 하단에 결과 표시
 	function createDownloadLink(blob) {
 		var url = URL.createObjectURL(blob);
 		var au = document.createElement('audio');
 		var li = document.createElement('li');
-				li.className = 'lis'; //녹음 후 생성되는 리스트에 Class 추가
+		li.className = 'lis'; 
 
 		var filename = new Date().toISOString();
 		au.controls = true; //오디오 컨트롤 바
 		au.src = url;
 		li.appendChild(au);
-		li.appendChild(document.createTextNode("この結果を選ぶ"))
+		li.appendChild(document.createTextNode("이 답변으로"))
 		recordingsList.appendChild(li);
 
-		//파일저장
+		//파일저장 및 API 실행
 		var upload = document.createElement('button');
 			upload.id = 'select';
 			upload.href = "#";
-			upload.innerHTML = "選ぶ";
+			upload.innerHTML = "제출하기";
 
 			upload.addEventListener("click", function(event) {
 				var fd = new FormData();
@@ -147,7 +111,8 @@ window.onload = function(){
 				speechToText(blob); 	//STT API 실행
 				naturalLanguageUnderstanding(); //NLU API 실행
 				nextQuestionButton();
-				 
+
+				//답변 파일 저장
 				$.ajax({
 					url: "/zipangu/interview/voice",
 					type:"post",
@@ -157,7 +122,10 @@ window.onload = function(){
 					contentType: false,
 					success: function(data){
 						console.log("saved complete"); //녹음 파일 저장 완료 확인
-						$("li").remove(".lis"); //녹음 리스트 삭제
+						$('#voicefilename').val(data+".wav");
+						console.log(data+".wav");
+						console.log(fd);
+						$("li").remove(".lis"); //제출 후 녹음 리스트 초기화
 						}
 				});
 			});
@@ -166,8 +134,11 @@ window.onload = function(){
 	}
 }
 
-	//음성 파일 텍스트 변환
+	//STT
 function speechToText(blob){
+	var temp;
+	var text = "";
+	
 		$.ajax({
             url : "https://api.kr-seo.speech-to-text.watson.cloud.ibm.com/instances/11a86b43-4a67-4691-bd6c-64c1d352ef3f/v1/recognize?model=ja-JP_NarrowbandModel",
             type : "post",
@@ -196,18 +167,15 @@ function speechToText(blob){
         })
 }
 
+	//NLU
 function naturalLanguageUnderstanding(){
-
-    //감정분석 타겟이 되는 전체
+	var temp2;
+	var text2 = "";
+	var stats = "";
+	
 	var word = $('#demo').val();
-	//공백을 기준으로 문장을 나누어 문장 array를 만듦 -> [悲しいことに今日もここに来ている, なぜだろ] 이렇게
 	var string_arr = word.split(' ');
-	//ajax내부 관련하여 -> json을 사용할때는 json형태의 데이터를 사용해야 합니다. 이전 코드에는 data에 JSON.stringify가 없었어요.
-	//해당 메소드를 쓰지 않은 data는 단순 객체가 되어버리기 때문에 인식이 안됐을 겁니다
-	//data를 stringify를 써서 JSON 형식으로 변환해주고, url에 요청을 보냅니다
-	//그리고 가이드상에 parameter 설정하는 거랑 조금 다른 부분이 있었습니다
-	//이전 코드에는 features : 'sentiment :  {}' 이렇게 되어있었던 것 같은데,
-	//가이드를 보면 features라는 객체 안의 sentiment라는 객체 안에 분석 대상이 되는 문장 array를 넣으라고 되어있어요. 객체 안에 객체 안에 객체 뭐 이런식이라 아래와 같이 변경되었습니다
+	
 	$.ajax({
 		url : 'https://api.kr-seo.natural-language-understanding.watson.cloud.ibm.com/instances/7191d826-cb08-4e42-a043-2b17891cc13c/v1/analyze?version=2019-07-12',
 		type : 'post',
@@ -229,14 +197,14 @@ function naturalLanguageUnderstanding(){
            	text2 = temp2.sentiment.document.label;
 
             if (text2="positive") {
-                stats = "肯定的";
+                stats = "긍정적";
               } else if (text2 ="negative") {
-            	  stats = "否定的";
+            	  stats = "부정적";
               } else {
-            	  stats = "中立的";
+            	  stats = "중립적";
               }
            	
-           	document.getElementById("demo2").innerHTML = stats;
+            $('#demo2').val(stats);
 		},
 		error : function(request, status, error){
 			console.log(request.status + '/' + request.responseText + '/' + error);
@@ -244,37 +212,119 @@ function naturalLanguageUnderstanding(){
 	});
 };
 
+//선택 버튼을 누르면 결과를 DB에 저장
+// 	$(function(){
+// 		$('#select').on('click',function(){
+// 			$.ajax({
+// 				url : "/zipangu/interview/insertInterview",
+// 				type : "post",
+// 				data : {
+// 					interview_num : ${vo.interview_num}//인터뷰 번호 1개 고정
+// 					,voicefilename : ${vo.voiceFileName} //녹음 파일 이름
+// 					,result : ('#demo2').val //감정 분석 결과
+// 				},
+// 				success : function(data){
+// 					console.log(data); //저장 완료 시 콘솔 로그 표시
+// 				},
+// 				error : function(e){
+// 					console.log(e);
+// 				}
+// 			});
+// 		});
+// 	});
+
+	//모의 면접 시작
+	$(function (){
+		$('#startInterview').on('click',function(){
+			$.ajax({
+				url : "/zipangu/interview/startInterview",
+				type : "post",
+				data: {
+					userID : "${sessionScope.userID}"
+				},
+				success : function(data){
+					console.log("모의면접 준비 완료");
+					nextQuestionButton();
+					recordButton.disabled = false;
+					stopButton.disabled = true;
+					startInterview.disabled = true;
+				},
+				error : function(){
+					console.log("모의면접 실패");
+				}
+			});	
+		});
+	});
+
+	//질문 표시
+	function nextQuestionButton(){
+		var arr = ${requestScope.questionList};
+		var question_Doc = document.getElementById("question");
+		var question_num = document.getElementById("question_num");
+		var interviewInfo = document.getElementById("info");
+			
+		if(mouseClick === 0){
+			interviewInfo.innerHTML = "다음 질문에 답변해주세요.";
+			question_Doc.innerHTML = arr[mouseClick].question_text;
+			$('#question_num').val(arr[mouseClick].question_num);
+			mouseClick++;
+		} else if(mouseClick === 1) {
+			question_Doc.innerHTML = arr[mouseClick].question_text;
+			$('#question_num').val(arr[mouseClick].question_num);
+			mouseClick++;
+		} else if(mouseClick === 2) {
+			question_Doc.innerHTML = arr[mouseClick].question_text;
+			$('#question_num').val(arr[mouseClick].question_num);
+			mouseClick++;
+		} else if(mouseClick === 3) {
+			question_Doc.innerHTML = arr[mouseClick].question_text;
+			$('#question_num').val(arr[mouseClick].question_num);
+			mouseClick++;
+		} else if(mouseClick === 4) {
+			question_Doc.innerHTML = arr[mouseClick].question_text;
+			$('#question_num').val(arr[mouseClick].question_num);
+		}
+	}
+
+	
 </script>
 <body>
-
 <div align="center">
 
-<button class="qBtn" onclick="nextQuestionButton()">模擬面接を開始</button>
+<button id="startInterview">모의면접 시작</button>
+<p>진행자 : <input type="text" value="${sessionScope.userID}" disabled="disabled"></p>
 
 <!-- 질문 -->
-<h3 id="info">次の質問に答えてください。</h3>
+<h4 id="info"></h4>
 <h1 id="question"></h1>
 </div>
 
 <!-- 타이머 -->
 <p id="counting" align="center"></p>
 
-<!-- 음성녹음(답변) -->
+<!-- 음성녹음(진행 버튼) -->
 <div align="center">
 	<div id="controls" align="center">
-		<button id="recordButton">返事する</button>
-		<button id="stopButton" disabled>返事完了</button>
+		<button id="recordButton">답변하기</button>
+		<button id="stopButton" disabled>답변완료</button>
 	</div>
-</div>
-
-<div align="center">
+<!-- 음성 녹음(완료 리스트) -->
 	<ul id="recordingsList" ></ul>
 </div>
 
+<!-- 진행 완료된 값들 저장 테스트 -->
 <div align="center">
-	<textarea id="demo" readonly="readonly" ></textarea><br>
-	<textarea id="demo2" readonly="readonly"></textarea>
+<h2>----------------테스트용(interviewresult 저장되는 값들)----------------</h2>
+	<form action="insertInterview" method="post">
+		<input type="hidden" name="interview_num" value="${vo.interview_num}">
+		question_num : <input type="text" id="question_num"><br>
+		저장되는 파일 이름 : <input type="text" id="voicefilename"><br>
+		문장 성향 : <input type="text" id="demo2">
+	</form>
+<h2>----------------테스트용(STT 결과(미저장))----------------</h2>
+		STT 결과 : <textarea id="demo" readonly="readonly"></textarea><br>
 </div>
+
 </body>
 	<jsp:include page="../include/footer.jsp"></jsp:include>
 </html>

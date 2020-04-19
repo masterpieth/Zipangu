@@ -12,7 +12,7 @@
 	</select>
 	
 <!-- 			아이디에 면접 결과 저장 -->
-	<insert id="insertinterview" parameterType="ivo">
+	<insert id="startInterview" parameterType="ivo">
 		INSERT INTO
 			interview
 			(INTERVIEW_NUM
@@ -20,44 +20,38 @@
 			,INPUTDATE
 		) VALUES (
 			interview_seq.nextval
-			,#{userid}
-			,to_char(sysdate,'yyyy.mm.dd hh24:mi'));
+			,#{userID}
+			,SYSDATE)
 	</insert>
 	
 <!-- 	면접 완료 결과 저장 -->
-	<insert id="insertResult" parameterType="ivo">
+	<insert id="insertInterview" parameterType="ivo">
 		INSERT INTO
 			insertview_result
 			(interview_num
 			, question_num
 			, voicefilename
 			, result
+
 		) VALUES (
 			interview_num
 			, question_num
-			, voicefilename
-			, result
-			);
+			, #{voicefilename}
+			, #{result}
+			)
 	</insert>
 
 <!-- 	interview_num 중복된 값이 5개인 경우 테이블 출력 -->
 	<select id="select_result" parameterType="ivo" resultType="rvo">
-		select
-			(interview_num
-			,question_num
-			,voicefilename
-			,result
-		)from 
-			interview_result 
-		where 
-			interview_num 
-		like(SELECT 
-			interview_num
-		FROM 
-			interview_result 
-		GROUP BY 
-			interview_num 
-		HAVING COUNT(*)=5)
+SELECT 
+	A.INTERVIEW_NUM, A.USERID, 
+	A.INPUTDATE, B.QUESTION_NUM, 
+	B.VOICEFILENAME, B.RESULT
+FROM 
+	INTERVIEW A, 
+	INTERVIEW_RESULT B
+WHERE 
+	A.INTERVIEW_NUM = B.INTERVIEW_NUM;
 	</select>
 	
 </mapper>

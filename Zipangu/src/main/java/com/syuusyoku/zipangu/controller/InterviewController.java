@@ -3,6 +3,8 @@ package com.syuusyoku.zipangu.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,18 +14,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.InterviewDAO;
+import com.syuusyoku.zipangu.vo.InterviewResultVO;
+import com.syuusyoku.zipangu.vo.InterviewVO;
 import com.syuusyoku.zipangu.vo.QuestionVO;
 
 @Controller
 public class InterviewController {
 	
-//	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);
-	
 	@Autowired
 	private InterviewDAO dao;
 	
+	//모의면접 진입
 	@RequestMapping(value = "interview/getinterview", method = RequestMethod.GET)
 	public String getinterview(Model model) {
 		ArrayList<QuestionVO> questionList = dao.selectList();
@@ -32,6 +36,17 @@ public class InterviewController {
 		return "interview/interview";
 	}
 	
+	//모의 면접 시작
+	@ResponseBody
+	@RequestMapping(value = "interview/startInterview", method = RequestMethod.POST)
+	public String startInterview(InterviewVO vo, HttpSession session, RedirectAttributes rttr) {
+		boolean result = false;
+		if(dao.startInterview(vo, session) == 1) result = true;
+		rttr.addFlashAttribute("startInterview", result);
+		return "data";
+	}
+	
+	//모의면접 녹음 파일
 	@ResponseBody
 	@RequestMapping(value = "interview/voice", method = RequestMethod.POST)
 	public String voice(@RequestParam MultipartFile blob) {
@@ -41,12 +56,21 @@ public class InterviewController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		dao.convert(blob);
-		return "data";
+		String dTime = dao.convert(blob);
+		return dTime;
+	}
+
+	//각 각 모의 면접 결과 저장
+	@ResponseBody
+	@RequestMapping(value = "insertInterview", method = RequestMethod.POST)
+	public String replyBoardWrite(InterviewResultVO vo, HttpSession session) {
+		dao.insertInterview(vo, session);
+		return "redirect:/interview/startInterview?interview_num=" + vo.getInterview_num();
 	}
 	
-	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
-	public String getinterviewResult() {
-		return "interview/interviewResult";
-	}
+//	//모의 면접 결과 화면
+//	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
+//	public String getinterviewResult() {
+//		return "interview/interviewResult";
+//	}
 }

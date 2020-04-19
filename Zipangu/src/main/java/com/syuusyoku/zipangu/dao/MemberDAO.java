@@ -59,4 +59,9 @@ public class MemberDAO {
 		}
 		return false;
 	}
+	
+	public boolean logout(HttpSession session) {
+		session.invalidate();
+		return true;
+	}
 }

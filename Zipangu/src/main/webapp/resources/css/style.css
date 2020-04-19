@@ -42,12 +42,13 @@ red {
 #controls {
   display: flex;
   margin-top: 2rem;
-  max-width: 28em;
+  max-width: 24.5em;
+  
 } 
 
 button {
   flex-grow: 1;
-  height: 3.5rem;
+  height: 2.5rem;
   min-width: 2rem;
   border: none;
   border-radius: 0.15rem;
@@ -88,7 +89,7 @@ button:first-child {
 audio {
   display: block;
   width: 100%;
-  margin-top: 0.2rem;
+  margin-top: 1.2rem;
 }
 
 li {

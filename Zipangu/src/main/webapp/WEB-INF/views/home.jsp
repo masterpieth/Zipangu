@@ -7,7 +7,17 @@
 <title>Zipangu</title>
 </head>
 <body>
-<a href="<c:url value='/member/signupForm' />">회원 가입</a>
+
+<c:choose>
+	<c:when test="${sessionScope.userID != null}">
+		<h2>${sessionScope.userID} 님 반갑습니다!</h2>
+		<a href="<c:url value='/member/logout' />">로그아웃</a>
+	</c:when>
+	<c:otherwise>
+		<a href="<c:url value='/member/signupForm' />">회원 가입</a>
+		<a href="<c:url value='/member/loginForm' />">로그인</a>
+	</c:otherwise>
+</c:choose>
 
 <!-- 면접 -->
 <a href="<c:url value='/interview/getinterview' />">모의 면접 시작</a>

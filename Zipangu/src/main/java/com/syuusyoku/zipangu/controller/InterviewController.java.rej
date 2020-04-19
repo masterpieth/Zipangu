@@ -1,9 +1,0 @@
-diff a/Zipangu/src/main/java/com/syuusyoku/zipangu/controller/InterviewController.java b/Zipangu/src/main/java/com/syuusyoku/zipangu/controller/InterviewController.java	(rejected hunks)
-@@ -19,7 +19,6 @@
- @Controller
- public class InterviewController {
- 	
--//	private static final Logger logger = LoggerFactory.getLogger(InterviewController.class);
- 	
- 	@Autowired
- 	private InterviewDAO dao;

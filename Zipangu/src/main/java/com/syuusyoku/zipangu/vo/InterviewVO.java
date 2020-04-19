@@ -6,6 +6,6 @@ import lombok.Data;
 public class InterviewVO {
 	
 	private int interview_num;
-	private String userid;
+	private String userID;
 	private String inputdate;
 }
