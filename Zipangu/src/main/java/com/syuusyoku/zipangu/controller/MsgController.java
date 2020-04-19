@@ -8,12 +8,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.dao.MsgDAO;
+import com.syuusyoku.zipangu.vo.ChatBotVO;
 import com.syuusyoku.zipangu.vo.List_MsgVO;
 import com.syuusyoku.zipangu.vo.MemberVO;
 
@@ -25,6 +28,18 @@ public class MsgController {
 	
 	@Autowired
 	private MemberDAO daoMe;
+	
+	
+	//chatBot ajax
+	@RequestMapping(value = "msg/chatBot", method = RequestMethod.POST,produces ="application/text; charset=utf8")
+	@ResponseBody
+	public String sendKakao(@RequestBody ChatBotVO vo) {
+		String chatContent="";
+		System.out.println("채팅내용~~"+vo.getChatContent());
+		chatContent = dao.chatBot(vo.getChatContent());
+		return "챗봇답변내용~~"+chatContent;
+	}
+	
 	
 	//멘티가 보는 화면
 	//멘토 목록 + 멘토 선택하면 대화창(msg/msg_read) 나오게

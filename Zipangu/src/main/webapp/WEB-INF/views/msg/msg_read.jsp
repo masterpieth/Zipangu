@@ -54,15 +54,38 @@
 					str += '</div>';
 				}
 				var mentor = $("#mentor_id").val();
-				var mentee = $("#mentee_id").val()
+				var mentee = $("#mentee_id").val();
+				$(".chat").append(str);
 				
+				str="";
 				//대화 상대가 admin이면 자동으로 답변 나가게..
 				if(mentor=='admin'||mentee=='admin') {
-					str += '<div class="bubble you">';
-					str += 'dfksnlfsnlkfnslk';
-					str += '</div>';		
+					var data = {
+							"chatContent": data.content,
+							"msg_num" : data.msg_num
+						};
+					var jsonData = JSON.stringify(data);
+					$.ajax({
+						url: 'chatBot',
+						type: 'post',
+						data: jsonData,
+						contentType : 'application/json;charaset=utf-8',
+						dataType : "text",
+						success: function(data){
+							console.log(data);
+							str += '<div class="bubble you">';
+							str += data;
+							str += '</div>';
+							$(".chat").append(str);
+					    },
+						error: function(request,status,error){
+							console.log("실패");
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}	
+					});
 				}
-				$(".chat").append(str);			
+							
+				console.log("str~~ : "+str);
 			});	
 			
 		});
