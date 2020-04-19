@@ -90,7 +90,7 @@ ${requestScope.List_MsgVO.msg_num}
                 <a href="javascript:;" class="search"></a>
             </div>
             <ul class="people">
-            	<c:forEach items="${who_user_msg_to_list}" var="list">         	
+          		<c:forEach items="${who_user_msg_to_list}" var="list">         	
             		<a href="/zipangu/msg/msg_start?mentee_id=${list.mentee_id}&mentor_id=${list.mentor_id}">
 	            		<c:if test="${sessionScope.userID==list.mentor_id}">
 			                <li class="person" data-chat="person${list.msg_num}">	

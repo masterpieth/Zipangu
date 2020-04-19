@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/nice-select/css/nice-select.css?v=2">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/animate-css/animate.css?v=2">
     <!-- main css -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/style.css?v=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/style.css?v=5">
 </head>
 <body>
 <!--================ Start Header Menu Area =================-->
@@ -98,5 +98,15 @@
                     </div>
                 </div>
             </nav>
-        </div>
+<section id="msgSection">
+	<a href='
+	<c:if test="${sessionScope.authority=='2'}">/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin</c:if>
+	<c:if test="${sessionScope.authority=='1'}">/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}</c:if>
+	'>
+   <button id="msgButton">
+      <i id="msgFa"class="fa fa-comments-o"></i>
+      <label id="msgLabel">Messenger</label>
+   </button>
+   </a>
+</section>        </div>
     </header>

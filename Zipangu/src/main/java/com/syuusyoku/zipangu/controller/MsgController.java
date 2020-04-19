@@ -70,26 +70,7 @@ public class MsgController {
 		//select 해서 msg_num에 해당하는 화면으로 이동
 		List_MsgVO result = dao.select_list_msg(vo);
 		rttr.addFlashAttribute("List_MsgVO", result);
-		
-		return "redirect:/msg/msg_read?msg_num="+result.getMsg_num();
-	}
 	
-	//멘토가 보는 화면
-	@RequestMapping(value = "msg/msg_tmain", method = RequestMethod.GET)
-	public String msg_tmain(Model model, HttpSession session) {
-		String userID = (String)session.getAttribute("userID");
-		String mentor_id = "";
-		ArrayList<List_MsgVO> list = null;
-		
-		//만약 authority = 1이면
-		if(daoMe.memberInfo(userID).getAuthority()==1) {
-			mentor_id = userID;
-			//멘티리스트가 보이게 함
-			list = dao.select_mentee_list(mentor_id);
-		}
-		
-		model.addAttribute("menteeList", list);
-				
-		return "msg/msg_tmain";
+		return "redirect:/msg/msg_read?msg_num="+result.getMsg_num();
 	}
 }

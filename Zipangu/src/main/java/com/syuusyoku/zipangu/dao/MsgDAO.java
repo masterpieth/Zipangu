@@ -23,7 +23,6 @@ public class MsgDAO {
 		}
 	}
 	
-	
 	public List_MsgVO select_list_msg(List_MsgVO vo) {
 		List_MsgVO result = null;
 		try {

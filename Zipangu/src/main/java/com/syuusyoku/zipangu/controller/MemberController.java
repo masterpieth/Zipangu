@@ -1,5 +1,7 @@
 package com.syuusyoku.zipangu.controller;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.MemberDAO;
+import com.syuusyoku.zipangu.dao.MsgDAO;
+import com.syuusyoku.zipangu.vo.List_MsgVO;
 import com.syuusyoku.zipangu.vo.MemberVO;
 
 @Controller
 public class MemberController {
 	@Autowired
 	private MemberDAO dao;
+	
+	@Autowired
+	private MsgDAO daoMs;
 
 	@RequestMapping(value = "member/signupForm", method = RequestMethod.GET)
 	public String signupForm() {
@@ -31,18 +38,39 @@ public class MemberController {
 	@RequestMapping(value = "member/signup", method = RequestMethod.POST)
 	public String signup(MemberVO member, HttpSession session) {
 		if (dao.signup(member)) {
-			dao.sendSimpleMessage(member.getEMail(), member.getUserID() + "님 가입을 환영합니다", "Zipangu에서");
+			dao.sendSimpleMessage(member.getEmail(), member.getUserID() + "님 가입을 환영합니다", "Zipangu에서");
 			dao.login(member, session);
+			//admin과 대화하는 채팅화면 자동 생성
+
+			List_MsgVO listVO = new List_MsgVO();
+			String mentor_id="";
+			String mentee_id="";
+			
+			if(member.getAuthority()==1) {
+	            mentor_id += member.getUserID();
+	            mentee_id += "admin";
+	         }
+	         if(member.getAuthority()==2) {
+	            mentee_id += member.getUserID();
+	            mentor_id += "admin";
+	         }
+	         
+	         
+	         listVO.setMentee_id(mentee_id);
+	         listVO.setMentor_id(mentor_id);
+	         listVO.setMsg_num(UUID.randomUUID().toString());
+
+	         daoMs.insert_list_msg(listVO);
 		}
 		return "member/signupResult";
 	}
 	
-	//임시 로그인
+	//임시 로그인 페이지로 이동
 	@RequestMapping(value = "member/loginTemp", method = RequestMethod.GET)
 	public String loginTemp() {
 		return "member/loginTemp";
 	}
-
+	
 	//임시 로그인
 	@RequestMapping(value = "member/login", method = RequestMethod.POST)
 	public String login(MemberVO member, HttpSession session, RedirectAttributes rttr) {

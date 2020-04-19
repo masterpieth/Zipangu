@@ -17,17 +17,18 @@
 		VALUES (
 			#{userID},
 			#{userPwd},
-			#{eMail},
+			#{email},
 			#{userName},
 			#{birth},
 			#{address},
 			#{phone},
 			#{sex},
-			DEFAULT,
+			#{authority},
 			#{textFileName},
 			DEFAULT
 		)
 	</insert>
+
 
 	<select id="login" parameterType="member" resultType="int">
 		SELECT
