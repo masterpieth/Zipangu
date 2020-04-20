@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+
+<jsp:include page="../include/header.jsp"></jsp:include>
 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/personalityInsight.css'/>">
 
@@ -29,7 +27,7 @@ $(function(){
 			data : revisedContent, 
 			success: function(data){
 
-				console.log(data);
+// 				console.log(data);
 				
 				var resultPersonality = data.personality;
 				var resultNeeds = data.needs;
@@ -76,16 +74,15 @@ $(function(){
 						'trait' : traitAry,
 						'rate' : rateAry
 					},
-					traditional: true,						
+					traditional: true,
 					success: function(){
-						console.log("성공");
-						
+// 						console.log("성공");
 						$.ajax({
 							type:"post",
 							url:"makeChart",
 							success: function(data){
-								console.log("차트만들기");
-								console.log(data);
+// 								console.log("차트만들기");
+// 								console.log(data);
 								var temp = "";
 
 								for(var i=0; i<10; i++) {
@@ -110,8 +107,6 @@ $(function(){
 							}
 						});
 						
-
-						
 						var temp="";
 						for(var i=0; i<length-1; i++) {
 							if(i%10==0) {
@@ -126,7 +121,6 @@ $(function(){
 							}
 						}
 						$("#tables_1").removeAttr("hidden");
-
 					},
 					error: function(request,status,error){
 						console.log("실패");
@@ -146,16 +140,12 @@ $(function(){
 function openUploadTextForm() {
 	open("<c:url value='/personality/uploadTextForm'/>",
 			"_blank",
-			"width=500, height=700");	
+			"width=600, height=800");	
 }
 </script>
-<title>텍스트 파일을 읽어오는 거</title>
-</head>
-<!-- <body> -->
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">
-            
                 <div class="banner_content text-center">
                     <h2>성향분석</h2>
                 </div>
@@ -163,7 +153,6 @@ function openUploadTextForm() {
         </div>
     </section>
 	<!--================End Home Banner Area =================-->
-
 	<!--================ Start service-2 Area =================-->
 	<section class="service-area-2 section_gap">
 		<div class="container">
@@ -179,7 +168,7 @@ function openUploadTextForm() {
 							위의 두 방법으로 성향분석을 원하실 경우 아래 '파일 업로드'버튼을 눌러주세요.
 							유의미한 결과를 얻기 위해서는 적어도 3,500단어 이상, 이상적으로 6000단어가 필요합니다.
 							100단어 정도로도 성향분석은 가능하지만, 분석 결과가 정확하지 않을 수 있는 점 양해 부탁드립니다.</p>			
-							<button class="primary-btn text-uppercase" onclick="openUploadTextForm()">파일 업로드</button>
+							<button class="genric-btn danger e-large" onclick="openUploadTextForm()">파일 업로드</button>
 						</div>
 					</div>
 				</div>
@@ -187,23 +176,21 @@ function openUploadTextForm() {
 					<div class="service-2-right">
 						<div class="get-know">
 							<p>사용할 텍스트 내용을 확인해 주세요.</p>
-							<textarea rows="20" cols="80" id="revisedContent"></textarea>
+							<textarea rows="20" cols="80" id="revisedContent" style="resize: none;"></textarea>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="card-body" style="padding-top: 85px;">
+			<div  class="row justify-content-center">
+			    <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 15px;">성향분석</a>
+				<table id="insightList" hidden="hidden"></table>
+			</div>
+		</div>
 	</section>
-<br><br><br><br>		
-<div align="center">	
-	<button class="primary-btn text-uppercase" id="searchPe">성향 분석</button>
-	<table id="insightList" hidden="hidden"></table>
-</div>
 
-<br><br><br><br>
 <div id="showChart" class="container"></div>
-<br><br><br><br>
-<br><br><br><br>
 
 <section class="features_area" id="features_counter">
 	<div class="container" id="tables_1" hidden="hidden">
@@ -244,5 +231,4 @@ function openUploadTextForm() {
 	</div>
 </section>
 <br><br><br><br>
-</body>
-</html>
+<jsp:include page="../include/footer.jsp"></jsp:include>

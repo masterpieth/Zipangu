@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <!--================  start footer Area =================-->
     <footer class="footer-area">
         <div class="footer_top section_gap_top">
@@ -22,9 +23,9 @@
                                 <div class="col-5">
                                     <ul class="list">
                                         <li><a href="#">Main</a></li>
-                                        <li><a href="#">Personality</a></li>
-                                        <li><a href="#">Company</a></li>
-                                        <li><a href="#">Entrysheet</a></li>
+                                        <li><a href="<c:url value='/personality/personalityInsight'/>">Personality</a></li>
+                                        <li><a href="<c:url value='/analysis/company'/>">Company</a></li>
+                                        <li><a href="<c:url value='/analysis/entrysheet'/>">Entrysheet</a></li>
                                     </ul>
                                 </div>
                                 <div class="col-5">
@@ -49,14 +50,6 @@
 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
-                    <div class="col-lg-6 col-md-12 text-right">
-                        <div class="social-icons">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                            <a href="#"><i class="fa fa-behance"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -66,21 +59,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="${pageContext.request.contextPath}/resources/template_js/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/template_js/popper.js"></script>
     <script src="${pageContext.request.contextPath}/resources/template_js/bootstrap.min.js"></script>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/stellar.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery.magnific-popup.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.min.js"></script> --%>
-    <script src="${pageContext.request.contextPath}/resources/template_vendors/nice-select/js/jquery.nice-select.min.js"></script>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery-3.2.1.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/popper.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/bootstrap.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/stellar.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery.magnific-popup.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/nice-select/js/jquery.nice-select.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/owl-carousel/owl.carousel.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery.ajaxchimp.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/counter-up/jquery.waypoints.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/counter-up/jquery.counterup.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath}/resources/template_js/mail-script.js"></script> --%>
     </body>
 </html>

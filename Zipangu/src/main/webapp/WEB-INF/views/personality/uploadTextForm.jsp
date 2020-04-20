@@ -83,62 +83,55 @@ function exit2() {
 	};
 
 	fileReader.readAsText(fileToLoad, "UTF-8");
-
 	
 	close();
 }
-	
-
 </script>
 
 
 </head>
 <body>
-	<div class="col-sm-9">
-		<div class="card">
-
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active">
-					<a href="#kakaoFile" aria-controls="kakaoFile" role="tab" data-toggle="tab">카카오톡 파일 업로드</a>
-				</li>
-				<li role="presentation">
-					<a href="#txtFile" aria-controls="txtFile" role="tab" data-toggle="tab">텍스트 파일 업로드</a>
-				</li>
-			</ul>
-
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="kakaoFile">
-					
-						<p>1.아래의 그림을 참조하여 txt 파일을 업로드 해주세요</p>
-						<input type="file" id="kakaoTxtFile" required="required">
-						<img alt="카카오톡txt업로드방법" src="<c:url value='/resources/img/kakaoUpload.JPG'/>" width="500" height="500">
-						
-						<p>2.카카오톡 프로필 상의 나의 이름을 입력해주세요.</p>
-						<img alt="카카오톡이름작성" src="<c:url value='/resources/img/kakaoUpload2.JPG'/>" width="400" height="200">
-									
-						<p>
-							이름 입력 : <input type="text" name="kakaoName" id="kakaoName" required="required">
-									<input type="text" name="kakaoContent" id="kakaoContent" hidden="hidden">
-						</p>
-						<p align="center">
-						<button type="button" class="primary-btn text-uppercase" onclick="exit()">등록하기</button>
- 						</p>
-					
-				</div>
-
-				<div role="tabpanel" class="tab-pane" id="txtFile">							
-					<p>1. 내가 쓴 글이 적혀 있는 txt 파일을 업로드 해주세요.</p>
-					<input type="file" id="textFile1" required="required">
-					<input type="text" id="textContent1" hidden="hidden">					
-					<br><br>
-					<p align="center">
-					<button type="button" class="primary-btn text-uppercase" onclick="exit2()">등록하기</button>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	
+    <div class="container-fluid">
+        <div class="card">
+            <div class="col-sm-9">
+                <div class="card-body">
+		            <ul class="nav nav-tabs" role="tablist">
+		                <li role="presentation" class="nav-item active">
+		                    <a href="#kakaoFile" aria-controls="kakaoFile" role="tab" data-toggle="tab">카카오톡 파일 업로드</a>
+		                </li>
+		                <li role="presentation" class="nav-item">
+		                    <a href="#txtFile" aria-controls="txtFile" role="tab" data-toggle="tab">텍스트 파일 업로드</a>
+		                </li>
+		            </ul>
+		            <div class="tab-content">
+		                <div role="tabpanel" class="tab-pane active" id="kakaoFile">
+		                    <p style="padding-top: 30px; padding-bottom: 25px;">1.아래의 그림을 참조하여 txt 파일을 업로드 해주세요</p>
+		                    <input type="file" id="kakaoTxtFile" required="required">
+		                    <img alt="카카오톡txt업로드방법" src="<c:url value='/resources/img/kakaoUpload.JPG'/>" width="500" height="500">
+		                        
+		                    <p style="padding-top: 30px; padding-bottom: 25px;">2.카카오톡 프로필 상의 나의 이름을 입력해주세요.</p>
+		                    <img alt="카카오톡이름작성" src="<c:url value='/resources/img/kakaoUpload2.JPG'/>" width="400" height="200">
+		                    <div align="center" style="padding-top: 30px;">
+		                        이름 입력 : <input type="text" name="kakaoName" id="kakaoName" required="required">
+		                                    <input type="text" name="kakaoContent" id="kakaoContent" hidden="hidden">
+		                    </div>
+		                    <div align="center" style="padding-top: 30px; padding-bottom: 25px;">
+		                        <button type="button" class="genric-btn danger e-large" onclick="exit()">등록하기</button>
+		                     </div>
+		                </div>
+		                <div role="tabpanel" class="tab-pane" id="txtFile">
+		                    <p style="padding-top: 30px; padding-bottom: 25px;">1. 내가 쓴 글이 적혀 있는 txt 파일을 업로드 해주세요.</p>
+		                    <input type="file" id="textFile1" required="required">
+		                    <input type="text" id="textContent1" hidden="hidden">
+		                    <br><br>
+		                    <p align="center">
+		                    <button type="button" class="genric-btn danger e-large" onclick="exit2()">등록하기</button>
+		                    </p>
+		                </div>
+		            </div>
+                </div>
+             </div>
+        </div>
+    </div>
 </body>
 </html>

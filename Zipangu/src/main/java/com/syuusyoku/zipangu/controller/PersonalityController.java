@@ -68,13 +68,13 @@ public class PersonalityController {
 
 		String textFileName = daoMe.memberInfo(userID).getTextFileName();
 	
-		File file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+		File file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload"+textFileName+".txt");
 		if(file.exists()) file.delete();
 		
 		textFileName = UUID.randomUUID().toString();
 		daoMe.uploadKakaoText(userID, textFileName);	
 
-		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
+		String filePath = "C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
 		try {
 			
 			FileWriter fileWriter = new FileWriter(filePath);
@@ -91,8 +91,7 @@ public class PersonalityController {
 		String result = "";
 		file = null;
 		 try{
-	   
-			 file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+			 file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 			 
 		     FileReader fr = new FileReader(file);
 	         
@@ -108,12 +107,8 @@ public class PersonalityController {
 	        }catch(IOException e){
 	        	e.printStackTrace();
 	        }
-		 
 		 return result;
-
 	}
-	
-	
 	
 	@RequestMapping(value="personality/insertPersonality", method = RequestMethod.POST)
 	@ResponseBody

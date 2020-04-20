@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
+
+<jsp:include page="../include/header.jsp"></jsp:include>
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
@@ -279,5 +282,4 @@ function entrysheetOutput(typeResult, divId){
 	</div>
 <div class="card">
 </div>
-</body>
-</html>
+<jsp:include page="../include/footer.jsp"></jsp:include>

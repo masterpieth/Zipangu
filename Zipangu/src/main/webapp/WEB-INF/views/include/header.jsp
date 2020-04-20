@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,11 +12,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/linericon/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/magnific-popup.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/owl-carousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/nice-select/css/nice-select.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_vendors/animate-css/animate.css">
     <!-- main css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/style.css">
 </head>
@@ -38,17 +32,15 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                            <li class="nav-item active"><a class="nav-link" href="index.html">메인페이지</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="<c:url value="/"/>">메인페이지</a></li>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                  aria-expanded="false">자기분석</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog.html">성향 분석</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="<c:url value="/analysis/company"/>">기업 분석</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/personality/personalityInsight'/>">성향 분석</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/personality/keywordTimeline'/>">성향키워드 타임라인</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">기업 분석</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="blog.html">분석 결과 조회</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/analysis/company'/>">기업 분석</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/analysis/entrysheet'/>">자기소개서 추천</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item submenu dropdown">
@@ -75,40 +67,37 @@
                                     <li class="nav-item"><a class="nav-link" href="single-blog.html">결과조회</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="about-us.html">마이페이지</a></li>
-                            <li class="nav-item"><a class="nav-link" href="about-us.html">로그인</a></li>
+                            <c:choose>
+                                <c:when test="${sessionScope.userID == null}">
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='member/loginTemp'/>">로그인</a></li>
+                                </c:when>
+                                <c:when test="${sessionScope.userID != null}">
+                                    <li class="nav-item"><a class="nav-link" href="about-us.html">마이페이지</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='member/logoutTemp'/>">로그아웃</a></li>
+                                </c:when>
+                            </c:choose>
                         </ul>
                         <ul class="nav navbar-nav ml-auto">
                             <div class="social-icons d-flex align-items-center">
-                                <a href="">
-                                    <li><i class="fa fa-facebook"></i></li>
+                            <section id="msgSection">
+                                <c:choose>
+                                    <c:when test="${sessionScope.authority=='2'}">
+                                        <a href="/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin">
+                                    </c:when>
+                                    <c:when test="${sessionScope.authority=='1'}">
+                                        <a href="/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}">
+                                    </c:when>
+                                </c:choose>
+                                <button id="msgButton">
+                                    <i id="msgFa"class="fa fa-comments-o"></i>
+                                    <label id="msgLabel">Messenger</label>
+                                </button>
                                 </a>
-                                <a href="">
-                                    <li><i class="fa fa-twitter"></i></li>
-                                </a>
-                                <a href="">
-                                    <li><i class="fa fa-dribbble"></i></li>
-                                </a>
-                                <a href="">
-                                    <li><i class="fa fa-behance"></i></li>
-                                </a>
+                            </section>
                             </div>
-                            <li class="nav-item"><a href="#" class="search">
-                                <i class="lnr lnr-magnifier" id="search"></i></a>
-                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-<section id="msgSection">
-	<a href='
-	<c:if test="${sessionScope.authority=='2'}">/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin</c:if>
-	<c:if test="${sessionScope.authority=='1'}">/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}</c:if>
-	'>
-   <button id="msgButton">
-      <i id="msgFa"class="fa fa-comments-o"></i>
-      <label id="msgLabel">Messenger</label>
-   </button>
-   </a>
-</section>        </div>
+        </div>
     </header>

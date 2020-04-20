@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="include/header.jsp"></jsp:include>
     <!--================ Start Home Banner Area =================-->
     <section class="home_banner_area overlay">
         <div class="banner_inner">
@@ -11,10 +13,10 @@
                             일본 취직,,도우미,,대충 홍보멘트 하나<br>
                         </h2>
                         <p>
-                            자기 분석 툴을 써서~~~~ 자소서도 쓰고 기업도 추천받고 멘토링도 하고 면접도 보세요~~~~~~
-                            성향분석부터 시작해보세요 ~~~~ 어쩌고 저쩌고 ~~~~~~~~~~
+                            지팡구는 ~~~하고 ~~~한 ~~~를 대상으로 맞춤형 종합 취업 지원 서비스를 제공하는 팡구입니다. 어쩌고 저쩌고 해서 
+                            성향분석부터 모의면접까지 전반적인 취업준비에 활용이 가능합니다 호호하하
                         </p>
-                        <a class="primary-btn text-uppercase" href="#">시작하기</a>
+                        <a class="primary-btn text-uppercase" href="<c:url value="personality/personalityInsight"/>">시작하기</a>
                     </div>
                 </div>
                 
@@ -210,5 +212,4 @@
         </div>
     </section>
     <!--================ End Blog Area =================-->
-</body>
-</html>
+<jsp:include page="include/footer.jsp"></jsp:include>

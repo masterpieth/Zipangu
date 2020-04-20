@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<jsp:include page="../include/header.jsp"></jsp:include>
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
+
 <script>
 $(function(){
 	analysis();
@@ -193,6 +197,7 @@ function bookmark(){
                         <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 20px;">시작하기</a>
                     </div>
 	        </div>
+	        <div class="container" id=""></div>
 	        <div class="container" id="resultContainer" hidden="hidden">
 	           <div class="section-gap" style="padding-top: 50px;">
                     <h3 class="mb-30 title_color">분석결과 : 추천순위</h3>
@@ -247,3 +252,4 @@ function bookmark(){
 	   </div>
     </section>
     <!--================ End Blog Area =================-->
+<jsp:include page="../include/footer.jsp"></jsp:include>

@@ -2,11 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<jsp:include page="../include/header.jsp"></jsp:include>
 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/timeline.css'/>">
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/datedropper.css'/>">
@@ -66,8 +63,6 @@ function deleteConfirm() {
 
 //검색
 
-
-
 </script>
 
 <c:if test="${requestScope.timelineWriteResult==true}"><script>alert("등록 완료")</script></c:if>
@@ -78,8 +73,6 @@ function deleteConfirm() {
 
 <c:if test="${requestScope.timelineDeleteResult==true}"><script>alert("삭제 완료")</script></c:if>
 <c:if test="${requestScope.timelineDeleteResult==false}"><script>alert("삭제 실패")</script></c:if>
-
-
 
 </head>
 <body>
@@ -93,9 +86,6 @@ function deleteConfirm() {
             </div>
         </div>
     </section>
-    
-    
-
 
 <section class="timeline">
 <br><br>
@@ -125,7 +115,6 @@ function deleteConfirm() {
             </div>
 		</form>
 	</div>
-  	
 
   <h2 align="center">
 	<a href="<c:url value='/personality/timelineWriteForm'/>" style="color: black;"> 
@@ -173,8 +162,5 @@ function deleteConfirm() {
 	    </li>   
     </c:forEach>
   </ul>
-  
 </section>
-
-</body>
-</html>
+<jsp:include page="../include/footer.jsp"></jsp:include>
