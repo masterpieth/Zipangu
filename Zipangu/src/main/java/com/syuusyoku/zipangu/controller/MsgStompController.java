@@ -19,8 +19,8 @@ public class MsgStompController {
 	private static final Logger logger = LoggerFactory.getLogger(MsgStompController.class);
 	
 	
-	@MessageMapping("/chat/{msg_num}")				// stompClient.send("/chat", ...)의 첫번째 파라미터와 동일
-	@SendTo("/subscribe/chat/{msg_num}")				//	stompClient.subscribe("/subscribe/chat", ...)의 첫번쨰 파라미터와 동일
+	@MessageMapping("/chat/{msg_num}")				
+	@SendTo("/subscribe/chat/{msg_num}")			
 	public Sender_MsgVO sendChatMessage(@DestinationVariable("msg_num") String msg_num ,Sender_MsgVO message, SimpMessageHeaderAccessor headerAccessor){
 		logger.info("채팅 컨트롤러 시작");
 		//인터셉터에서 등록해두었던 사용자 정보 가져오기.
@@ -29,7 +29,6 @@ public class MsgStompController {
 		message.setUserID(vo.getUserID());
 		message.setUserName(vo.getUserName());
 		message.setSend_Time(LocalDateTime.now());
-		
 		logger.info("채팅 컨트롤러 종료");
 		return message;
 	}

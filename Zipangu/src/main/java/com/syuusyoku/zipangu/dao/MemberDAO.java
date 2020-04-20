@@ -53,6 +53,8 @@ public class MemberDAO {
 		try {
 			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
 			if (mapper.login(member) > 0) {
+				member = mapper.memberInfo(member.getUserID());
+				
 				session.setAttribute("userID", member.getUserID());
 				session.setAttribute("authority", member.getAuthority());
 				session.setAttribute("userName", member.getUserName());
@@ -69,7 +71,7 @@ public class MemberDAO {
 		vo.setUserID(userID);
 		vo.setTextFileName(textFileName);
 		try {
-			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			mapper.uploadKakaoText(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,7 +81,7 @@ public class MemberDAO {
 	public MemberVO memberInfo(String userID) {
 		MemberVO result = null;
 		try {
-			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			result = mapper.memberInfo(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +93,7 @@ public class MemberDAO {
 	public ArrayList<MemberVO> mentorList() {
 		ArrayList<MemberVO> list = null;
 		try {
-			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			list = mapper.mentorList();
 		} catch (Exception e) {
 			e.printStackTrace();

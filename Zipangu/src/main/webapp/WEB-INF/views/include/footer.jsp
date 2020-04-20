@@ -70,6 +70,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery.magnific-popup.min.js"></script> --%>
 <%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.min.js"></script> --%>
     <script src="${pageContext.request.contextPath}/resources/template_vendors/nice-select/js/jquery.nice-select.min.js"></script>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery-3.2.1.min.js"></script> --%>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_js/popper.js"></script> --%>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_js/bootstrap.min.js"></script> --%>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_js/stellar.js"></script> --%>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery.magnific-popup.min.js"></script> --%>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/lightbox/simpleLightbox.min.js"></script> --%>
+<%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/nice-select/js/jquery.nice-select.min.js"></script> --%>
 <%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/owl-carousel/owl.carousel.min.js"></script> --%>
 <%--     <script src="${pageContext.request.contextPath}/resources/template_js/jquery.ajaxchimp.min.js"></script> --%>
 <%--     <script src="${pageContext.request.contextPath}/resources/template_vendors/counter-up/jquery.waypoints.min.js"></script> --%>

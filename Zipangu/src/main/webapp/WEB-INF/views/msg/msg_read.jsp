@@ -53,9 +53,45 @@
 					str += data.userName+" 님 -> "+data.content;
 					str += '</div>';
 				}
-				$(".chat").append(str);			
-			});	
+				var mentor = $("#mentor_id").val();
+				var mentee = $("#mentee_id").val();
+				$(".chat").append(str);
 				
+				str="";
+				//대화 상대가 admin이면 자동으로 답변 나가게..
+				if(mentor=='admin'||mentee=='admin') {
+					var data = {
+							"chatContent": data.content,
+							"msg_num" : data.msg_num
+						};
+					var jsonData = JSON.stringify(data);
+					$.ajax({
+						url: 'chatBot',
+						type: 'post',
+						data: jsonData,
+						contentType : 'application/json;charaset=utf-8',
+						dataType : "text",
+						success: function(data){
+							console.log(data);
+							str += '<div class="bubble you">';
+							str += data;
+							str += '</div>';
+							$(".chat").append(str);
+					    },
+						error: function(request,status,error){
+							console.log("실패");
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							str += '<div class="bubble you">';
+							str += '일치하는 검색결과가 없습니다,,';
+							str += '</div>';
+							$(".chat").append(str);
+						}	
+					});
+				}
+							
+				console.log("str~~ : "+str);
+			});	
+			
 		});
 	}
 		
@@ -75,13 +111,13 @@
 	function disconnect() {
 		stompClient.disconnect();
 	}
+
 </script>
 	
 	<title>대화 화면</title>
 </head>
 
 <body>
-${requestScope.List_MsgVO.msg_num}
 <div class="wrapper">
     <div class="container">
     	<div class="left">
@@ -90,9 +126,9 @@ ${requestScope.List_MsgVO.msg_num}
                 <a href="javascript:;" class="search"></a>
             </div>
             <ul class="people">
-            	<c:forEach items="${who_user_msg_to_list}" var="list">         	
+          		<c:forEach items="${who_user_msg_to_list}" var="list">         	
             		<a href="/zipangu/msg/msg_start?mentee_id=${list.mentee_id}&mentor_id=${list.mentor_id}">
-	            		<c:if test="${sessionScope.userID==list.mentor_id}">
+            			<c:if test="${sessionScope.userID==list.mentor_id}">
 			                <li class="person" data-chat="person${list.msg_num}">	
 			                     <span class="name">${list.mentee_id}</span>
 			                </li>
@@ -109,6 +145,8 @@ ${requestScope.List_MsgVO.msg_num}
         <div class="right">
 	        <div class="chat" data-chat="person${requestScope.List_MsgVO.msg_num}">
 	            <div id="chatroom"></div>
+	            <input type="hidden" value="${requestScope.List_MsgVO.mentee_id}" name="mentee_id" id="mentee_id">
+            	<input type="hidden" value="${requestScope.List_MsgVO.mentor_id}" name="mentor_id" id="mentor_id">		
         	</div>
           	<div class="write">
                	<input type="text" id="chatbox">

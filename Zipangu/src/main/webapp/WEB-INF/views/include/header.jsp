@@ -45,6 +45,9 @@
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="blog.html">성향 분석</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value="/analysis/company"/>">기업 분석</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/personality/personalityInsight'/>">성향 분석</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/personality/keywordTimeline'/>">성향키워드 타임라인</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">기업 분석</a></li>
                                     <li class="nav-item"><a class="nav-link" href="blog.html">분석 결과 조회</a></li>
                                 </ul>
                             </li>
@@ -97,5 +100,15 @@
                     </div>
                 </div>
             </nav>
-        </div>
+<section id="msgSection">
+	<a href='
+	<c:if test="${sessionScope.authority=='2'}">/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin</c:if>
+	<c:if test="${sessionScope.authority=='1'}">/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}</c:if>
+	'>
+   <button id="msgButton">
+      <i id="msgFa"class="fa fa-comments-o"></i>
+      <label id="msgLabel">Messenger</label>
+   </button>
+   </a>
+</section>        </div>
     </header>

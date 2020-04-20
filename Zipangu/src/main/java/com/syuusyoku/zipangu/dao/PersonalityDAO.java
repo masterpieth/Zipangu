@@ -21,28 +21,27 @@ public class PersonalityDAO {
 	
 	public String textList(String kakaoContent, String kakaoName){	
 		
-		Pattern pattern = Pattern.compile("\\["+kakaoName+"] \\[(?:........|.......)] (.*?)\r\n"); 
-		Matcher matcher = pattern.matcher(kakaoContent);
+		Pattern pattern = Pattern.compile("\\["+kakaoName+"] \\[(?:........|.......)] (.*?)\\["); 
+	      Matcher matcher = pattern.matcher(kakaoContent);
 
+	      String text="";
+	      while(matcher.find()) {
+	         text += matcher.group(1);
+	      }
+	      text = text.replaceAll("....년 (?:..|.)월 (?:..|.)일 .요일","");
+	      text = text.replaceAll("---------------", "");
+	      
+	      String regex = "[^\\p{L}\\p{N}\\p{P}\\p{Z}]";
+	       Pattern emoticons = Pattern.compile(regex, Pattern.UNICODE_CHARACTER_CLASS);
+	       Matcher emoMatcher = emoticons.matcher(text);
+	       
+	       String result = emoMatcher.replaceAll("");
 
-		String text="";
-		
-		while(matcher.find()) {
-			text += matcher.group(1);
-		}
-		
-		String regex = "[^\\p{L}\\p{N}\\p{P}\\p{Z}]";
-	    Pattern emoticons = Pattern.compile(regex, Pattern.UNICODE_CHARACTER_CLASS);
-	    Matcher emoMatcher = emoticons.matcher(text);
-	    
-	    String result = emoMatcher.replaceAll("");
-	    
-		return result;
-		
+	      return result;
+	     
 	} 
 
-	
-	
+
 	public void insertPersonality(Map<String,Object> map) {
 		
 		try {
@@ -86,24 +85,14 @@ public class PersonalityDAO {
 		return true;
 	}
 	
-	public ArrayList<TimelineVO> timelineList(){
-		ArrayList<TimelineVO> list = null;
+	public TimelineVO timelineRead(TimelineVO vo) {
+		TimelineVO result = null;
 		try {
 			PersonalityMapper mapper = sqlSession.getMapper(PersonalityMapper.class);
-			list = mapper.timelineList();
+			result = mapper.timelineRead(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} return list;
-	}
-	
-	public TimelineVO timelineRead(int timeline_Num) {
-		TimelineVO vo = null;
-		try {
-			PersonalityMapper mapper = sqlSession.getMapper(PersonalityMapper.class);
-			vo = mapper.timelineRead(timeline_Num);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} return vo;
+		} return result;
 	}
 	
 	public boolean timelineUpdate(TimelineVO vo) {

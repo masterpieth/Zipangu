@@ -1,7 +1,11 @@
+
 package com.syuusyoku.zipangu.controller;
 
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,9 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +30,8 @@ import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.dao.PersonalityDAO;
 import com.syuusyoku.zipangu.vo.PersonalityVO;
 import com.syuusyoku.zipangu.vo.TimelineVO;
+import com.syuusyoku.zipangu.vo.kakaoVO;
+
 
 
 @Controller
@@ -35,26 +44,36 @@ public class PersonalityController {
 	private MemberDAO daoMe;
 	
 	@RequestMapping(value = "personality/personalityInsight", method = RequestMethod.GET)
-	public String personalityInsight() {
-		
+	public String personalityInsight(HttpSession session, Model model) {
+	
 		return "/personality/personalityInsight";
 	}
+	
+	@RequestMapping(value = "personality/uploadTextForm", method = RequestMethod.GET)
+	public String uploadTextForm() {
+		
+		return "/personality/uploadTextForm";
+	}
 
-	@RequestMapping(value = "personality/sendKakao", method = RequestMethod.POST)
-	public String sendKakao(String kakaoContent, String kakaoName, RedirectAttributes rttr) {
+	@RequestMapping(value = "personality/sendKakao", method = RequestMethod.POST,produces ="application/text; charset=utf8")
+	@ResponseBody
+	public String sendKakao(@RequestBody kakaoVO vo, HttpSession session) {
 		
-		String userID="test";
-		
+		String userID=(String)session.getAttribute("userID");
+		String kakaoContent = vo.getKakaoContent();
+
+		String kakaoName = vo.getKakaoName();
+
 		String text = dao.textList(kakaoContent, kakaoName);
-		
+
 		String textFileName = daoMe.memberInfo(userID).getTextFileName();
-		
+	
 		File file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 		if(file.exists()) file.delete();
 		
 		textFileName = UUID.randomUUID().toString();
 		daoMe.uploadKakaoText(userID, textFileName);	
-		
+
 		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
 		try {
 			
@@ -67,17 +86,39 @@ public class PersonalityController {
 			e.printStackTrace();
 		}
 		
-		rttr.addFlashAttribute("revisedContent", text);
+		textFileName = daoMe.memberInfo(userID).getTextFileName();
 		
-		return "redirect:/personality/personalityInsight";
+		String result = "";
+		file = null;
+		 try{
+	   
+			 file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+			 
+		     FileReader fr = new FileReader(file);
+	         
+		     BufferedReader br = new BufferedReader(fr);
+	            
+		     String line = "";
+	         while((line = br.readLine()) != null){
+	                result += line;
+	         }
+	         br.close();
+	        }catch (FileNotFoundException e) {
+	        	e.printStackTrace();
+	        }catch(IOException e){
+	        	e.printStackTrace();
+	        }
+		 
+		 return result;
+
 	}
 	
 	
 	
 	@RequestMapping(value="personality/insertPersonality", method = RequestMethod.POST)
 	@ResponseBody
-	public void insertPersonality(String[] trait, Double[] rate) {
-		String userID = "test";
+	public void insertPersonality(String[] trait, Double[] rate, HttpSession session) {
+		String userID = (String)session.getAttribute("userID");
 		List<PersonalityVO> list = new ArrayList<>();
 	
 		for(int i=0; i<trait.length; i++) {
@@ -100,6 +141,15 @@ public class PersonalityController {
 		
 	}
 	
+	@RequestMapping(value = "personality/makeChart", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<PersonalityVO> makeChart(Model model, HttpSession session) {
+		
+		String userID=(String)session.getAttribute("userID");
+		ArrayList<PersonalityVO> list = dao.keywordList(userID); //퍼센트 높은 순..
+		
+		return list;
+	}
 	
 	@RequestMapping(value = "personality/keywordTimeline", method = RequestMethod.GET)
 	public String keywordTimeline(@RequestParam(value = "searchItem", defaultValue = "byKeyword") String searchItem,
@@ -113,8 +163,8 @@ public class PersonalityController {
 	}
 	
 	@RequestMapping(value = "personality/timelineWriteForm", method = RequestMethod.GET)
-	public String timelineWriteForm(Model model) {
-		String userID = "test";
+	public String timelineWriteForm(Model model, HttpSession session) {
+		String userID=(String)session.getAttribute("userID");
 		ArrayList<PersonalityVO> list = dao.keywordList(userID);
 		model.addAttribute("keywordList", list);
 		
@@ -122,19 +172,23 @@ public class PersonalityController {
 	}
 	
 	@RequestMapping(value = "personality/timelineWrite", method = RequestMethod.POST)
-	public String timelineWrite(TimelineVO vo, RedirectAttributes rttr) {
-		vo.setUserID("test");
+	public String timelineWrite(TimelineVO vo, RedirectAttributes rttr, HttpSession session) {
+		String userID=(String)session.getAttribute("userID");
+		vo.setUserID(userID);
 		boolean result = dao.timelineWrite(vo);
 		rttr.addFlashAttribute("timelineWriteResult", result);
 		return "redirect:/personality/keywordTimeline";
 	}
 	
 	@RequestMapping(value = "personality/timelineUpdateForm", method = RequestMethod.GET)
-	public String timelineUpdateForm(int timeline_Num, Model model) {
-		String userID = "test";
+	public String timelineUpdateForm(int timeline_Num, Model model, HttpSession session) {
+		String userID=(String)session.getAttribute("userID");
+		TimelineVO vo = new TimelineVO();
+		vo.setUserID(userID);
+		vo.setTimeline_Num(timeline_Num);
 		
-		TimelineVO vo = dao.timelineRead(timeline_Num);
-		model.addAttribute("timelineVO", vo);
+		TimelineVO result = dao.timelineRead(vo);
+		model.addAttribute("timelineVO", result);
 		
 		ArrayList<PersonalityVO> list = dao.keywordList(userID);
 		model.addAttribute("keywordList", list);
@@ -143,8 +197,9 @@ public class PersonalityController {
 	}
 	
 	@RequestMapping(value = "personality/timelineUpdate", method = RequestMethod.POST)
-	public String timelineUpdateForm(TimelineVO vo, RedirectAttributes rttr) {
-		vo.setUserID("test");
+	public String timelineUpdateForm(TimelineVO vo, RedirectAttributes rttr, HttpSession session) {
+		String userID=(String)session.getAttribute("userID");
+		vo.setUserID(userID);
 		
 		boolean result = dao.timelineUpdate(vo);
 		rttr.addFlashAttribute("timelineUpdateResult", result);
@@ -153,8 +208,9 @@ public class PersonalityController {
 	}
 	
 	@RequestMapping(value = "personality/timelineDelete", method = RequestMethod.GET)
-	public String timelineDelete(TimelineVO vo, RedirectAttributes rttr) {
-		vo.setUserID("test");
+	public String timelineDelete(TimelineVO vo, RedirectAttributes rttr, HttpSession session) {
+		String userID=(String)session.getAttribute("userID");
+		vo.setUserID(userID);
 		
 		boolean result = dao.timelineDelete(vo);
 		rttr.addFlashAttribute("timelineDeleteResult", result);

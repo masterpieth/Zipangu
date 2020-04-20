@@ -83,47 +83,66 @@ function deleteConfirm() {
 
 </head>
 <body>
+<jsp:include page="../include/header.jsp"></jsp:include>
 
-<section class="intro">
-  <div class="container">
-    <h1>타임라인  &darr;</h1>
-    <h3><a href="<c:url value="/"/>">메인으로 돌아가기</a></h3> 
-  </div>
-</section>
+	<section class="banner_area ">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">       
+                <div class="banner_content text-center">
+                    <h2>타임라인</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
 
 
 <section class="timeline">
-
-    <!-- 검색 기능 -->
-	  <form action="keywordTimeline" method="get">
-	  <p align="center">
-	  <select name="searchItem" id="searchItem">
-	    <option value="byKeyword">키워드</option>
-	  	<option value="byDate">날짜</option>
-	  </select>
-	 	
-	   <input type="text" name="searchKeyword" id="searchKeyword" data-dd-format="Y/m/d">
-	   <input type="submit" value="검색">
-	   </p>
-	   </form>
-
+<br><br>
+<!-- 검색 기능 -->
+	<div align="center">
+		<form action="keywordTimeline" method="get">
+		<div class="col-md-9">
+            <div class="row justify-content-center align-items-center">
+	            <div class="blog_right_sidebar" style="border: none; padding-right: 10px;">
+	            	<select name="searchItem" id="searchItem" class="form-control">
+						<option value="byKeyword">키워드</option>
+						<option value="byDate">날짜</option>
+					</select>
+	            </div>
+                  <div class="blog_right_sidebar" style="border: none; width: 40%; padding-left: 10px;">
+                        <aside class="single_sidebar_widget search_widget">
+                        	<div class="input-group">
+                                <input type="text" class="form-control" name="searchKeyword" id="searchKeyword" data-dd-format="Y/m/d" placeholder="Search"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="lnr lnr-magnifier"></i></button>
+                                </span>
+                            </div>
+                      </aside>
+            	</div>
+            </div>
+            </div>
+		</form>
+	</div>
   	
-  	
-  <h2 align="right">
-	<a href="<c:url value='/personality/timelineWriteForm'/>">
-		<input type="button" value="글쓰기">
+
+  <h2 align="center">
+	<a href="<c:url value='/personality/timelineWriteForm'/>" style="color: black;"> 
+		에피소드 작성하기 <img src="<c:url value="/resources/img/write.png"/>" alt="글쓰기" width="35" height="35" align="middle">
 	</a>
   </h2>
-  <ul>
+  <ul style="color: black;">
   	<c:forEach items="${requestScope.timelineList}" var="TimelineVO">
   	    <li>
-	      <div>
+	      <div style="background-color: white; border: dashed;" >
 	        <p align="right">
 	          <a href="<c:url value='/personality/timelineUpdateForm?timeline_Num=${TimelineVO.timeline_Num}'/>">
-	      	    <img src="<c:url value="/resources/img/write.png"/>" alt="수정" width="35" height="35" align="right" >
+	      	    <img src="<c:url value="/resources/img/fix.png"/>" alt="수정" width="35" height="35" align="right" >
 	      	  </a>
 	      	</p>
-	      	<table>
+	      	<table style="word-break:break-all;">
 	      	  <tr>
 	      		<td>
                   <time>
@@ -157,6 +176,9 @@ function deleteConfirm() {
   </ul>
   
 </section>
+
+
+<jsp:include page="../include/footer.jsp"></jsp:include>
 
 </body>
 </html>

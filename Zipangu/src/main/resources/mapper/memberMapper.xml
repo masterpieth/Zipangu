@@ -17,17 +17,18 @@
 		VALUES (
 			#{userID},
 			#{userPwd},
-			#{eMail},
+			#{email},
 			#{userName},
 			#{birth},
 			#{address},
 			#{phone},
 			#{sex},
-			DEFAULT,
+			#{authority},
 			#{textFileName},
 			DEFAULT
 		)
 	</insert>
+
 
 	<select id="login" parameterType="member" resultType="int">
 		SELECT
@@ -39,7 +40,6 @@
 		AND
 			userpwd = #{userPwd}
 	</select>
-	
 	
 	<update id="uploadKakaoText" parameterType="member">
 		update member set textFileName=#{textFileName} where userID=#{userID}

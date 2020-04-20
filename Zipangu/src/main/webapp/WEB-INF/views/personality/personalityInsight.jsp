@@ -5,29 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/personalityInsight.css'/>">
+
 <script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script>	
 <script type="text/javascript">
 
 $(function(){
 	
-	$('#contentInput').on("keyup",function(){
-		
-		var fileToLoad = document.getElementById("kakaoFile").files[0];
-		var fileReader = new FileReader();
-
-		fileReader.onload = function(fileLoadedEvent){
-			var textFromFileLoaded = fileLoadedEvent.target.result;
-			document.getElementById("kakaoContent").value = textFromFileLoaded;
-		};
-
-		fileReader.readAsText(fileToLoad, "UTF-8");
-		
-	});
-
-
-
-	$('#search').on("click",function(){
-		
+	$('#searchPe').on("click",function(){
+	
 		var revisedContent = $("#revisedContent").val();
 		
 		$.ajax({
@@ -39,11 +26,9 @@ $(function(){
 	            'Accept': 'application/json',
 	            'Content-Language': 'ko'              
 	        },
-			data : revisedContent,
+			data : revisedContent, 
 			success: function(data){
 
-				$("#db").attr("disabled",false);
-				
 				console.log(data);
 				
 				var resultPersonality = data.personality;
@@ -53,10 +38,10 @@ $(function(){
 				var str = '';
 
 				str += '<tr><th>항목</th><th>퍼센트</th></tr>';
-				
 				$.each(resultPersonality,function(j){
 					
 					str += '<tr><td>'+resultPersonality[j].name+'</td><td>'+resultPersonality[j].percentile+'</td></tr>';
+					
 					str += '<tr><td>'+resultPersonality[j].children[0].name+'</td><td>'+resultPersonality[j].children[0].percentile+'</td></tr>';
 					
 					$.each(resultPersonality,function(i){
@@ -74,6 +59,80 @@ $(function(){
 				})
 
 				$("#insightList").append(str);
+
+				var traitAry = new Array();
+				var rateAry = new Array();
+				var length = $("tr").length;
+
+				for(var i=0; i<length; i++) {
+					traitAry[i] = $("tr:eq("+(i+1)+")>td:eq(0)").html();
+					rateAry[i] = $("tr:eq("+(i+1)+")>td:eq(1)").html();
+				};
+
+				$.ajax({
+					type:"post",
+					url:"insertPersonality",
+					data: {
+						'trait' : traitAry,
+						'rate' : rateAry
+					},
+					traditional: true,						
+					success: function(){
+						console.log("성공");
+						
+						$.ajax({
+							type:"post",
+							url:"makeChart",
+							success: function(data){
+								console.log("차트만들기");
+								console.log(data);
+								var temp = "";
+
+								for(var i=0; i<10; i++) {
+									if(i%5==0) {
+										temp += '<div class="flex-wrapper">';
+									}	
+									temp += '<div class="single-chart" style="font-size: 50%;">';
+									temp += '<svg viewBox="0 0 36 36" class="circular-chart orange">';
+									temp += '<path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>';
+									temp += '<path class="circle" stroke-dasharray="'+Math.round(data[i].rate*100)+', 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>';
+									temp += '<text x="18" y="20.35" class="percentage">'+data[i].trait+' '+Math.round(data[i].rate*100)+'%</text>';
+								    temp += '</svg>';
+							 		temp += '</div>';
+							 		if(i%5==4) {
+							 			temp += '</div>';
+							 		};
+								}
+							 	$("#showChart").append(temp);
+							},error: function(request,status,error){
+									console.log("실패");
+									console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							}
+						});
+						
+
+						
+						var temp="";
+						for(var i=0; i<length-1; i++) {
+							if(i%10==0) {
+								temp += '<table>';
+								temp += '<tr><th>항목</th><th>퍼센트</th></tr>';
+							}
+							temp += '<tr><td>'+traitAry[i]+'</td><td>'+Math.round(rateAry[i]*100)+'</td></tr>';
+							if(i%10==9 || i==length-2) {
+								temp += '</table>';
+								$("#personality_result"+Math.floor(i/10)).append(temp);
+								temp="";
+							}
+						}
+						$("#tables_1").removeAttr("hidden");
+
+					},
+					error: function(request,status,error){
+						console.log("실패");
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
 			
 			},
 			error:function(request,status,error){
@@ -81,82 +140,114 @@ $(function(){
 		        console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		    }
 		});
-		
-	});
-
-
-	$("#db").on("click",function(){
-		var traitAry = new Array();
-		var rateAry = new Array();
-		var length = $("tr").length;
-
-		for(var i=0; i<length; i++) {
-			traitAry[i] = $("tr:eq("+(i+1)+")>td:eq(0)").html();
-			rateAry[i] = $("tr:eq("+(i+1)+")>td:eq(1)").html();
-		}
-
-		$.ajax({
-			type:"post",
-			url:"insertPersonality",
-			data: {
-				'trait' : traitAry,
-				'rate' : rateAry
-			},
-			traditional: true,
-			success: function(){
-				console.log("성공");
-				$("#db").attr("disabled",true);
-			},
-			error: function(request,status,error){
-				console.log("실패");
-				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
-		});
 	});
 });
 
+function openUploadTextForm() {
+	open("<c:url value='/personality/uploadTextForm'/>",
+			"_blank",
+			"width=500, height=700");	
+}
 </script>
 <title>텍스트 파일을 읽어오는 거</title>
 </head>
-<body>
-	<h3><a href="<c:url value="/"/>">메인으로 돌아가기</a></h3> 
-	<h2>api 돌리면 과금되서 성향분석 버튼 disabled하고, 임시로 테이블을 만듬,,</h2>
-	<form action="sendKakao" method="post">
-		<input type="file" id="kakaoFile" required="required">
-		hidden할거<textarea id="kakaoContent" name="kakaoContent"></textarea>
-		<br>
-		이름 입력 : <input type="text" name="kakaoName" id="contentInput" required="required">
-		<input type="submit" value="파일등록">
-		
-	</form>
-	
-	hidden할 거<textarea id="revisedContent">
-		${requestScope.revisedContent}
-	</textarea>	
-	
-	<input type="button" value="성향분석" id="search"  disabled="disabled"> 
-	
+<!-- <body> -->
+	<jsp:include page="../include/header.jsp"></jsp:include>
 
-	<table id="insightList">
-		<tr>
-			<th>성향키워드test</th><th>퍼센트test</th>
-		</tr>
-		<tr>
-			<td>aa</td><td>0.1</td>
-		</tr>
-		<tr>
-			<td>bb</td><td>0.2</td>
-		</tr>
-		<tr>
-			<td>cc</td><td>0.3</td>
-		</tr>
-		<tr>
-			<td>dd</td><td>0.1</td>
-		</tr>
-	</table>
+	<section class="banner_area ">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">
+            
+                <div class="banner_content text-center">
+                    <h2>성향분석</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+	<!--================End Home Banner Area =================-->
 
-	<input type="button" value="db에 저장" id="db"> <!-- disabled="disabled" -->
-	
-	
+	<!--================ Start service-2 Area =================-->
+	<section class="service-area-2 section_gap">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-6">
+					<div class="service-2-left">
+						<div class="get-know">
+							<p class="df-color">성향분석</p>
+							<h1>내가 쓴 텍스트를 통해 성향을 알아보고 키워드들을 통해 타임라인을 만들어보세요,,,,,</h1>
+							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. 
+							나의 경험, 생각 및 반응에 관한 단어가 포함되어 있는 텍스트를 입력 해주세요.
+							직접 텍스트 입력외에도 카카오토 대화내용 또는 txt 파일 업로드를 통해 이용이 가능합니다.
+							위의 두 방법으로 성향분석을 원하실 경우 아래 '파일 업로드'버튼을 눌러주세요.
+							유의미한 결과를 얻기 위해서는 적어도 3,500단어 이상, 이상적으로 6000단어가 필요합니다.
+							100단어 정도로도 성향분석은 가능하지만, 분석 결과가 정확하지 않을 수 있는 점 양해 부탁드립니다.</p>			
+							<button class="primary-btn text-uppercase" onclick="openUploadTextForm()">파일 업로드</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="service-2-right">
+						<div class="get-know">
+							<p>사용할 텍스트 내용을 확인해 주세요.</p>
+							<textarea rows="20" cols="80" id="revisedContent"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<br><br><br><br>		
+<div align="center">	
+	<button class="primary-btn text-uppercase" id="searchPe">성향 분석</button>
+	<table id="insightList" hidden="hidden"></table>
+</div>
+
+<br><br><br><br>
+<div id="showChart" class="container"></div>
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
+
+
+<section class="features_area" id="features_counter">
+	<div class="container" id="tables_1" hidden="hidden">
+		<div class="row counter_wrapper">
+			<!-- single feature -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single_feature" id="personality_result0">
+				</div>
+			</div>
+			<!-- single feature -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single_feature" id="personality_result1">
+				</div>
+			</div>
+			<!-- single feature -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single_feature" id="personality_result2">
+				</div>
+			</div>
+			<!-- single feature -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single_feature" id="personality_result3">
+				</div>
+			</div>
+		</div>
+		<div class="row counter_wrapper">	
+			<!-- single feature -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single_feature" id="personality_result4">
+				</div>
+			</div>
+			<!-- single feature -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single_feature" id="personality_result5">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<br><br><br><br>
+	<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

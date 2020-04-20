@@ -12,8 +12,7 @@ public interface PersonalityMapper {
 	public void updatePersonality(Map<String,Object> map);
 	public ArrayList<PersonalityVO> keywordList(String userID);
 	public int timelineWrite(TimelineVO vo);
-	public ArrayList<TimelineVO> timelineList();
-	public TimelineVO timelineRead(int timeline_Num);
+	public TimelineVO timelineRead(TimelineVO vo);
 	public int timelineUpdate(TimelineVO vo);
 	public int timelineDelete(TimelineVO vo);
 	public ArrayList<TimelineVO> timelineSearch(HashMap<String,String> map);

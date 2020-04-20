@@ -3229,3 +3229,45 @@ h6 {
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
+
+
+#msgSection,
+#msgButton {
+   display: flex;
+   justify-content: right;
+   align-items: right;
+}
+
+#msgSection {
+   width: 155px;
+   justify-content: flex-end;
+}
+#msgButton {
+   font-size: 18px;
+   line-height: 1.5;
+   color: #fff;
+   background-color: #1a73e8;
+   width: 53px;
+   height: 53px;
+   padding: 0 15px;
+   border: none;
+   border-radius: 53px;
+   box-sizing: border-box;
+   box-shadow: none;
+   outline: none;
+   transition: all 0.5s ease-in-out;
+   cursor: pointer;
+   justify-content: flex-start;
+   overflow: hidden;
+}
+#msgFa {
+   font-size: 1.5em;
+   margin-right: 12px;
+}
+#msgLabel {
+   flex: 0 0 auto;
+   cursor: pointer;
+}
+#msgButton:hover {
+   width: 150px;
+}

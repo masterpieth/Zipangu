@@ -3,7 +3,7 @@
 
 <mapper namespace="com.syuusyoku.zipangu.dao.MsgMapper">
 	
-	<!-- 채팅방 리스트 추가 -->
+	<!-- 멘토&멘티 대화하는 채팅방 리스트 추가 -->
 	<insert id="insert_list_msg" parameterType="List_MsgVO">
 		insert into list_msg(mentor_id,mentee_id,msg_num) 
 		values(#{mentor_id},#{mentee_id},#{msg_num})

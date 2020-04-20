@@ -391,3 +391,126 @@ li{
     opacity: 1;
   }
 }
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+.ak-BtnFloating, .ak-BtnFloating * { box-sizing: border-box; }
+.ak-BtnFloating {
+    $z-index: 10;
+    $btn-size: 60px;
+    $content-size: 300px;
+    $offset: 20px;
+    $main-color: #2DB742;
+
+    font-family: 'Roboto';
+    font-size: 16px;
+    position: fixed;
+    bottom: $offset;
+    right: $offset;
+    margin-left: $offset;
+    z-index: $z-index;
+    &-btn {
+        z-index: 1;
+        width: $btn-size;
+        height: $btn-size;
+        text-align: center;
+        line-height: $btn-size;
+        padding: calc(#{$btn-size} * 0.2);
+        background-color: $main-color;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & > svg {
+            position: absolute;
+            color: white;
+            width: 25px;
+            transition: all 0.2s ease 0s, opacity 300ms ease 0s, transform 300ms ease 0s;
+            &:first-child {
+                transform: rotate(0);
+                opacity: 1;
+            } 
+            &:last-child {
+                transform: rotate(360deg);
+                width: 20px;
+                opacity: 0;
+            } 
+        }
+        &:hover, &:focus {
+            cursor: pointer;
+        }
+    }
+    &-content {
+        opacity: 0;
+        z-index: -1;
+        border-radius: 10px;
+        background: #FAFAFA;
+        box-shadow: 0 0 20px rgba(0,0,0,.15);
+        position: fixed;
+        overflow: hidden;
+        width: $content-size;
+        margin-left: $offset;
+        right: calc(#{$offset} + calc(#{$btn-size} / 2));
+        bottom: calc(#{$offset} + calc(#{$btn-size} / 2));
+        transform: translateY(100px);
+        transition: all 0.2s ease 0s, opacity 300ms ease 0s, transform 300ms ease 0s;
+        pointer-events: none;
+    }
+    &-title {
+        background-color: $main-color;
+        padding: 20px;
+        color: white;
+        font-size: 1.2em;
+        & > svg {
+            float: left;
+            width: 34px;
+            margin-right: 15px;
+        }
+        & > span {
+            font-size: .6em;
+            line-height: 1.6em;
+            letter-spacing: 1px;
+            display: block;
+        }
+    }
+    &-body {
+        padding: 0 20px;
+    }
+    &-item {
+        padding: 20px 0;
+        display: block;
+        border-bottom: 1px dashed #DDD;
+        text-decoration: none;
+        &:last-child {
+            border-bottom: 0;
+        }
+        &Title {
+            font-size: 1em;
+            color: #444;
+            line-height: 1.6em;
+        }
+        &:hover &Title {
+            color: $main-color;
+        }
+        &Description {
+            font-size: .8em;
+            color: #AAA;
+        }
+    }
+    &-chk {
+        display: none;
+    }
+    &-chk:checked ~ label > &-btn > svg:first-child {
+        transform: rotate(360deg);
+        opacity: 0;
+    }
+    &-chk:checked ~ label > &-btn > svg:last-child {
+        transform: rotate(0);
+        opacity: 1;
+    }
+    &-chk:checked ~ &-content {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}

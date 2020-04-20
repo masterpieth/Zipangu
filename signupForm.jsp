@@ -80,8 +80,8 @@
 				<label for="sex">역할:</label>
 				<select class="form-control" id="authority" name="authority" required>
 					<option></option>
-					<option value="1">멘토</option>
-					<option value="2">멘티</option>
+					<option value="1">멘티</option>
+					<option value="2">멘토</option>
 				</select>
 				<div class="valid-message" id="sexMessage">당신의 역할을 골라 주세요.</div>
 			</div>
