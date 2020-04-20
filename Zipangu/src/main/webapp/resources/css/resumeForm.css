@@ -1,0 +1,170 @@
+#resume {
+	position: relative;
+}
+
+#resume>input, .career>input, .qualified>input, textarea, #resume>button {
+	position: absolute;
+}
+
+.sidenav {
+	width: 160px;
+	position: fixed;
+	z-index: 1;
+	right: 15%;
+	background-color: transparent;
+	padding-top: 350px;
+}
+
+.sidenav>button {
+	width: inherit;
+	position: relative;
+}
+
+#resume>input[type=text], .career>input, .qualified>input, textarea, #title {
+	background-color: transparent;
+	font-size: 20px;
+}
+
+#resume>input[type=text], .career>input, .qualified>input {
+	width: 47px;
+	text-align: right;
+}
+
+textarea {
+	resize: none;
+}
+
+#resume>#inputYear {
+	bottom: 3008px;
+	right: 650px;
+	width: 69px;
+}
+
+#inputMonth {
+	bottom: 3008px;
+	right: 592px;
+}
+
+#inputDay {
+	bottom: 3008px;
+	right: 533px;
+}
+
+#pic {
+	position: absolute;
+	bottom: 2840px;
+	right: 214px;
+	width: 180px;
+	height: 240px;
+}
+
+#picFile {
+	bottom: 2801px;
+	right: 214px;
+	width: 180px;
+	font-size: 16px;
+}
+
+#resume>#userName {
+	bottom: 2905px;
+	right: 447px;
+	width: 418px;
+	font-size: 30px;
+	text-align: left;
+}
+
+#resume>#birthYear {
+	bottom: 2814px;
+	right: 878px;
+	width: 69px;
+}
+
+#birthMonth {
+	bottom: 2814px;
+	right: 811px;
+}
+
+#birthDay {
+	bottom: 2814px;
+	right: 742px;
+}
+
+#age {
+	bottom: 2814px;
+	right: 604px;
+	width: 55px;
+}
+
+#resume>#sex {
+	bottom: 2814px;
+	right: 447px;
+	width: 116px;
+	text-align: left;
+}
+
+#address {
+	bottom: 2600px;
+	right: 345px;
+}
+
+#resume>#phone {
+	bottom: 2707px;
+	right: 169px;
+	width: 170px;
+	text-align: center;
+}
+
+#email {
+	bottom: 2580px;
+	right: 170px;
+}
+
+#addCareer {
+	bottom: 2502px;
+	right: 190px;
+}
+
+#deleteCareer {
+	bottom: 2502px;
+	right: 165px;
+}
+
+#addQualified {
+	position: absolute;
+	bottom: 1153px;
+	right: 190px;
+}
+
+input[name="careerStartYear"], input[name="careerEndYear"], input[name="qualifiedYear"] {
+	right:891px;
+	width:69px;
+	text-align:center;
+}
+
+input[name="careerStartMonth"], input[name="careerEndMonth"], input[name="qualifiedMonth"] {
+	right:832px;
+	text-align:center;
+}
+
+input[name="qualifiedContent"] {
+	right:160px;
+	width:670px;
+	text-align:left
+}
+#deleteQualified {
+	position: absolute;
+	bottom: 1153px;
+	right: 165px;
+}
+
+#hobbyNSkill {
+	position: absolute;
+	bottom: 500px;
+	right: 165px;
+}
+
+#introduce {
+	position: absolute;
+	bottom: 145px;
+	right: 165px;
+}

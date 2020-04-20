@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +18,6 @@ import com.syuusyoku.zipangu.vo.ScheduleVO;
 public class ScheduleDAO {
 	@Autowired
 	private SqlSession session;
-	@Autowired
-	private JavaMailSender mailSender;
 
 	public ArrayList<ScheduleVO> scheduleList(HttpSession session) {
 		ArrayList<ScheduleVO> scheduleList = null;
@@ -59,5 +56,19 @@ public class ScheduleDAO {
 			e.printStackTrace();
 		}
 		return result == scheduleListSize;
+	}
+
+	public String getMentorID(String menteeID) {
+		String mentorID = null;
+		ScheduleVO schedule = new ScheduleVO();
+		schedule.setMenteeID(menteeID);
+		schedule.setReserveDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		try {
+			ScheduleMapper mapper = session.getMapper(ScheduleMapper.class);
+			mentorID = mapper.getMentorID(schedule);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mentorID;
 	}
 }

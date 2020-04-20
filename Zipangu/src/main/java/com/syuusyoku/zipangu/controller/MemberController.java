@@ -36,15 +36,20 @@ public class MemberController {
 		return "member/signupResult";
 	}
 
+	@RequestMapping(value = "member/loginForm", method = RequestMethod.GET)
+	public String loginForm() {
+		return "member/loginForm";
+	}
+
 	@RequestMapping(value = "member/login", method = RequestMethod.POST)
 	public String login(MemberVO member, HttpSession session) {
 		dao.login(member, session);
-		return "home";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "member/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		dao.logout(session);
-		return "home";
+		return "main";
 	}
 }

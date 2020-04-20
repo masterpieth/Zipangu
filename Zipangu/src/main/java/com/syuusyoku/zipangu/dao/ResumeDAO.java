@@ -4,15 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syuusyoku.zipangu.vo.CareerVO;
+import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.QualifiedVO;
 import com.syuusyoku.zipangu.vo.ResumeVO;
 
@@ -20,33 +19,50 @@ import com.syuusyoku.zipangu.vo.ResumeVO;
 public class ResumeDAO {
 	@Autowired
 	private SqlSession session;
-	@Autowired
-	private JavaMailSender mailSender;
 
 	public boolean saveResume(
-		MultipartFile picFile, ResumeVO resume, HttpSession session,
-		ArrayList<CareerVO> careerList, ArrayList<QualifiedVO> qualifiedList
+		MultipartFile picFile, MemberVO member, ResumeVO resume,
+		String careerList, String qualifiedList
 	) {
 		int result = 0;
 		try {
-			resume.setUserID((String) session.getAttribute("userID"));
-			resume.setPicFileName(picFile.getOriginalFilename());
-			ResumeMapper mapper = this.session.getMapper(ResumeMapper.class);
-			result = mapper.saveResume(resume);
-			int resume_num = resume.getResume_num();
-			if (result > 0)
-				picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
-			for (CareerVO career: careerList) {
-				if (result > 0) {
+			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
+			CareerVO[] careerArray = new ObjectMapper().readValue(careerList, CareerVO[].class);
+			QualifiedVO[] qualifiedArray = new ObjectMapper().readValue(qualifiedList, QualifiedVO[].class);
+			int resume_num = member.getResume_num();
+			boolean picFileExist = !picFile.isEmpty();
+			if (resume_num < 0) {
+				if (picFileExist)
+					resume.setPicFileName(picFile.getOriginalFilename());
+				result = mapper.saveResume(resume);
+				resume_num = resume.getResume_num();
+				if (picFileExist)
+					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
+				member.setResume_num(resume_num);
+				result += mapper.saveResumeMember(member);
+				for (CareerVO career: careerArray) {
 					career.setResume_num(resume_num);
-					result = mapper.saveCareer(career);
+					result += mapper.saveCareer(career);
 				}
-			}
-			for (QualifiedVO qualified : qualifiedList) {
-				if (result > 0) {
+				for (QualifiedVO qualified : qualifiedArray) {
 					qualified.setResume_num(resume_num);
-					result = mapper.saveQualified(qualified);
+					result += mapper.saveQualified(qualified);
 				}
+			} else {
+				if (resume.getPicFileName() != null)
+					new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()).delete();
+				if (picFileExist)
+					resume.setPicFileName(picFile.getOriginalFilename());
+				result = mapper.updateResume(resume);
+				if (picFileExist)
+					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
+				result += mapper.updateResumeMember(member);
+				result += mapper.deleteCareer(resume_num);
+				for (CareerVO career: careerArray)
+					result += mapper.saveCareer(career);
+				result += mapper.deleteQualified(resume_num);
+				for (QualifiedVO qualified : qualifiedArray)
+					result += mapper.saveQualified(qualified);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,30 +70,38 @@ public class ResumeDAO {
 		return result > 0;
 	}
 
-	public ArrayList<ResumeVO> resumeList(HttpSession session) {
+	public ArrayList<ResumeVO> resumeList(String userID) {
 		ArrayList<ResumeVO> resumeList = null;
 		try {
-			ResumeMapper mapper = this.session.getMapper(ResumeMapper.class);
-			resumeList = mapper.resumeList((String) session.getAttribute("userID"));
+			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
+			resumeList = mapper.resumeList(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resumeList;
 	}
 
-	public HashMap<String, Object> getResume(int resume_num, HttpSession session) {
-		HashMap<String, Object> resume = new HashMap<>();
+	public HashMap<String, Object> getResume(MemberVO member) {
+		HashMap<String, Object> resumeForm = new HashMap<>();
 		try {
-			ResumeMapper mapper = this.session.getMapper(ResumeMapper.class);
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("userID", (String) session.getAttribute("userID"));
-			map.put("resume_num", resume_num);
-			resume.put("resume", mapper.getResume(map));
-			resume.put("careerList", mapper.getCareer(resume_num));
-			resume.put("qualifiedList", mapper.getQualified(resume_num));
+			int resume_num = member.getResume_num();
+			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
+			resumeForm.put("resume", mapper.getResume(member));
+			resumeForm.put("careerList", mapper.getCareer(resume_num));
+			resumeForm.put("qualifiedList", mapper.getQualified(resume_num));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return resume;
+		return resumeForm;
+	}
+
+	public MemberVO getResumeMember(MemberVO member) {
+		try {
+			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
+			member = mapper.getResumeMember(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
 	}
 }

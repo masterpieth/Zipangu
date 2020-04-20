@@ -14,19 +14,21 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/uploaded/**" location="file:///C:/Zipangu/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="com.syuusyoku.zipangu" />
 
 	<beans:bean id="interceptor" class="com.syuusyoku.zipangu.interceptor.Interceptor" />
 
 	<interceptors>
 		<interceptor>
+			<mapping path="/resume/resumeList"/>
 			<mapping path="/resume/resumeForm"/>
 			<mapping path="/schedule/scheduleForm"/>
 			<beans:ref bean="interceptor" />

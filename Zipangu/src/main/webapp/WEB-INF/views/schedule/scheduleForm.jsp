@@ -1,52 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
 <head>
-<meta charset="UTF-8">
 <title>예약 현황</title>
-<link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css' />">
-<script src="<c:url value='/resources/js/jquery-3.4.1.min.js' />"></script>
-<script src="<c:url value='/resources/js/popper.min.js' />"></script>
-<script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
+<link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 <style>
 td {
 	text-align: center;
 	font-size: 20px;
 }
+
 .sunday {
 	color: red;
 }
+
 .saturday {
 	color: gray;
 }
 </style>
 </head>
 <body>
-	<div class="container">
-		<table class="table table-bordered">
-			<thead>
-			<tr>
-				<td><button type="button" class="btn" onclick="lastMonth()">&lt;</button></td>
-				<td align="center" id="month" colspan="5"></td>
-				<td><button type="button" class="btn" onclick="nextMonth()">&gt;</button></td>
-			</tr>
-			<tr>
-				<td align="center" class="sunday">일</td>
-				<td align="center">월</td>
-				<td align="center">화</td>
-				<td align="center">수</td>
-				<td align="center">목</td>
-				<td align="center">금</td>
-				<td align="center" class="saturday">토</td>
-			</tr>
-			</thead>
-			<tbody id="calendar"></tbody>
-		</table>
-			<button type="button" class="btn btn-success float-right" onclick="updateSchedule()">저장</button>
+<div class="container">
+	<table class="table table-bordered">
+		<thead>
+		<tr>
+			<td><button type="button" class="btn" onclick="lastMonth()">&lt;</button></td>
+			<td align="center" id="month" colspan="5"></td>
+			<td><button type="button" class="btn" onclick="nextMonth()">&gt;</button></td>
+		</tr>
+		<tr>
+			<td align="center" class="sunday">일</td>
+			<td align="center">월</td>
+			<td align="center">화</td>
+			<td align="center">수</td>
+			<td align="center">목</td>
+			<td align="center">금</td>
+			<td align="center" class="saturday">토</td>
+		</tr>
+		</thead>
+		<tbody id="calendar"></tbody>
+	</table>
+		<button type="button" class="btn btn-success float-right" onclick="updateSchedule()">저장</button>
 		<c:if test="${authority gt 1}">
 			<div class="modal" id="reserveInfo">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title">예약 현황</h4>
@@ -58,7 +53,7 @@ td {
 				</div>
 			</div>
 		</c:if>
-	</div>
+</div>
 </body>
 <script>
 var calendarDate, scheduleList, thisMonth, date;
@@ -268,4 +263,3 @@ $(function() {
 	createCalendar();
 });
 </script>
-</html>

@@ -39,20 +39,23 @@ public class MemberDAO {
 		return result > 0;
 	}
 
-	public void sendSimpleMessage(String address, String title, String text) {
+	public void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(address);
-		message.setSubject(title);
+		message.setTo(to);
+		message.setSubject(subject);
 		message.setText(text);
 		mailSender.send(message);
 	}
 
 	public boolean login(MemberVO member, HttpSession session) {
-		member = getMember(member);
+		int result = 0;
 		try {
-			if (member.getUserID().length() > 0) {
-				session.setAttribute("userID", member.getUserID());
-				session.setAttribute("userPwd", member.getUserPwd());
+			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
+			result = mapper.login(member);
+			if (result > 0) {
+				String userID = member.getUserID();
+				session.setAttribute("userID", userID);
+				member = getMember(userID);
 				session.setAttribute("authority", member.getAuthority());
 				return true;
 			}
@@ -62,17 +65,18 @@ public class MemberDAO {
 		return false;
 	}
 
-	public MemberVO getMember(MemberVO member) {
+	public void logout(HttpSession session) {
+		session.invalidate();
+	}
+
+	public MemberVO getMember(String userID) {
+		MemberVO member = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			member = mapper.getMember(member);
+			member = mapper.getMember(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return member;
-	}
-
-	public void logout(HttpSession session) {
-		session.invalidate();
 	}
 }

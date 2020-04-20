@@ -18,8 +18,8 @@
 </style>
 </head>
 <body>
-	<div class="container">
-		<h2>Form Validation</h2>
+	<div class="container col-6">
+		<h2>Zipangu에 오신 것을 환영합니다.</h2>
 		<p>
 			In this example, we use
 			<code>.needs-validation</code>
@@ -76,16 +76,25 @@
 				</select>
 				<div class="valid-message" id="sexMessage">성별을 골라 주세요.</div>
 			</div>
+			<div class="form-group">
+				<label for="sex">역할:</label>
+				<select class="form-control" id="authority" name="authority" required>
+					<option></option>
+					<option value="1">멘티</option>
+					<option value="2">멘토</option>
+				</select>
+				<div class="valid-message" id="authorityMessage">당신의 역할을 골라 주세요.</div>
+			</div>
 			<button type="submit" class="btn btn-primary" id="signupBtn" onclick="return signup()">가입하기</button>
 		</form>
 	</div>
 </body>
 <script>
-var checkID, checkPwd, checkEMail, checkUserName, checkBirth, checkAddress, checkPhone, checkSex;
-checkID = checkPwd = checkEMail = checkUserName = checkBirth = checkAddress = checkPhone = checkSex = false;
+var checkID, checkPwd, checkEMail, checkUserName, checkBirth, checkAddress, checkPhone, checkSex, checkAuthority;
+checkID = checkPwd = checkEMail = checkUserName = checkBirth = checkAddress = checkPhone = checkSex = checkAuthority = false;
 
 function signup() {
-	return checkID && checkPwd && checkEMail && checkUserName && checkBirth && checkAddress && checkPhone && checkSex;
+	return checkID && checkPwd && checkEMail && checkUserName && checkBirth && checkAddress && checkPhone && checkSex && checkAuthority;
 }
 
 $(function() {
@@ -202,6 +211,17 @@ $(function() {
 		} else {
 			$('#sexMessage').css('color', '#dc3545');
 			checkSex = false;
+		}
+	});
+
+	$('#authority').on('keyup click', function() {
+		var authority = $('#authority').val();
+		if (authority.length > 0) {
+			$('#authorityMessage').css('color', '#28a745');
+			checkAuthority = true;
+		} else {
+			$('#authorityMessage').css('color', '#dc3545');
+			checkAuthority = false;
 		}
 	});
 });

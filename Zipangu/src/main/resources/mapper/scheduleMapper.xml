@@ -32,7 +32,7 @@
 		WHERE
 			mentorid = #{mentorID}
 		AND
-			reserveDate = #{reserveDate}
+			reservedate = #{reserveDate}
 	</update>
 
 	<delete id="deleteSchedule">
@@ -41,7 +41,7 @@
 		WHERE
 			mentorid = #{mentorID}
 		AND
-			reserveDate >= #{date}
+			reservedate >= #{date}
 	</delete>
 
 	<insert id="insertSchedule" parameterType="schedule">
@@ -52,5 +52,16 @@
 			#{menteeID},
 			#{reserveDate}
 		)
-		</insert>
+	</insert>
+
+	<select id="getMentorID" parameterType="schedule" resultType="String">
+		SELECT
+			mentorid
+		FROM
+			schedule
+		WHERE
+			menteeid = #{menteeID}
+		AND
+			reservedate = #{reserveDate}
+	</select>
 </mapper>

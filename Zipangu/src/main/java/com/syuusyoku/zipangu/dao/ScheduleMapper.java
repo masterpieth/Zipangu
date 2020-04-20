@@ -14,4 +14,6 @@ public interface ScheduleMapper {
 	int deleteSchedule(String mentorID, String date);
 
 	int insertSchedule(ScheduleVO schedule);
+
+	String getMentorID(ScheduleVO schedule);
 }

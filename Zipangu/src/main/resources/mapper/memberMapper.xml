@@ -23,15 +23,27 @@
 			#{address},
 			#{phone},
 			#{sex},
-			DEFAULT,
+			#{authority},
 			#{textFileName},
 			DEFAULT
 		)
 	</insert>
 
-	<select id="getMember" parameterType="member" resultType="member">
+	<select id="login" parameterType="member" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			member
+		WHERE
+			userid = #{userID}
+		AND
+			userpwd = #{userPwd}
+	</select>
+
+	<select id="getMember" resultType="member">
 		SELECT
 			userid,
+			userpwd,
 			email,
 			username,
 			TO_CHAR(birth,'YYYY-MM-DD') AS birth,
@@ -44,7 +56,5 @@
 			member
 		WHERE
 			userid = #{userID}
-		AND
-			userpwd = #{userPwd}
 	</select>
 </mapper>

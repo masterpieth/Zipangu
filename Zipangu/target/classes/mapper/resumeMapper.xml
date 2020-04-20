@@ -28,10 +28,24 @@
 			#{userID},
 			#{hobbyNSkill},
 			#{introduce},
-			#{resume_num} || '_' || #{picFileName},
+			#{picFileName},
 			#{title},
-			DEFAULT,
+			#{inputDate},
 			DEFAULT
+		)
+	</insert>
+
+	<insert id="saveResumeMember" parameterType="member">
+		INSERT INTO
+			resume_member
+		VALUES (
+			#{resume_num},
+			#{email},
+			#{userName},
+			#{birth},
+			#{address},
+			#{phone},
+			#{sex}
 		)
 	</insert>
 
@@ -56,7 +70,64 @@
 		)
 	</insert>
 
-	<select id="getResume" parameterType="map" resultType="resume">
+	<select id="getResumeMember" parameterType="member" resultType="member">
+		SELECT
+			resume_num,
+			email,
+			username,
+			TO_CHAR(birth,'YYYY-MM-DD') AS birth,
+			address,
+			phone,
+			sex
+		FROM
+			resume_member
+		WHERE
+			resume_num = #{resume_num}
+	</select>
+
+	<update id="updateResume" parameterType="resume">
+		UPDATE
+			resume
+		SET
+			hobbynskill = #{hobbyNSkill},
+			introduce = #{introduce},
+			picFileName = #{picFileName},
+			title = #{title},
+			inputdate = #{inputDate},
+			DEFAULT
+		WHERE
+			resume_num = #{resume_num}
+	</update>
+
+	<update id="updateResumeMember" parameterType="member">
+		UPDATE
+			member
+		SET
+			email = #{email},
+			username = #{userName},
+			birth = #{birth},
+			address = #{address},
+			phone = #{phone},
+			sex = #{sex}
+		WHERE
+			resume_num = #{resume_num}
+	</update>
+
+	<delete id="deleteCareer">
+		DELETE
+			career
+		WHERE
+			resume_num = #{resume_num}
+	</delete>
+
+	<delete id="deleteQualified">
+		DELETE
+			qualified
+		WHERE
+			resume_num = #{resume_num}
+	</delete>
+
+	<select id="getResume" parameterType="member" resultType="resume">
 		SELECT
 			resume_num,
 			userid,
