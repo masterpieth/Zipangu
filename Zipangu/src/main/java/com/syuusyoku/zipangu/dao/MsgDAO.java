@@ -34,6 +34,7 @@ public class MsgDAO {
 		
 		// 주요 뉴스로 나오는 태그를 찾아서 가져오도록 한다.
 		Elements element = doc.select("div.boxSearchresultEach.corp.label");
+		System.out.println(element.size());
 		
 		// 1. 헤더 부분의 제목을 가져온다.
 		String title = element.select("h3").text().substring(0, 4);	//substring(0, 4)

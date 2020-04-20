@@ -85,14 +85,14 @@ public class PersonalityDAO {
 		return true;
 	}
 	
-	public TimelineVO timelineRead(int timeline_Num) {
-		TimelineVO vo = null;
+	public TimelineVO timelineRead(TimelineVO vo) {
+		TimelineVO result = null;
 		try {
 			PersonalityMapper mapper = sqlSession.getMapper(PersonalityMapper.class);
-			vo = mapper.timelineRead(timeline_Num);
+			result = mapper.timelineRead(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} return vo;
+		} return result;
 	}
 	
 	public boolean timelineUpdate(TimelineVO vo) {

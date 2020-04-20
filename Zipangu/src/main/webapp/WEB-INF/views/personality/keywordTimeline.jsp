@@ -103,15 +103,16 @@ function deleteConfirm() {
 <!-- 검색 기능 -->
 	<div align="center">
 		<form action="keywordTimeline" method="get">
-            <div class="col-lg-5">
-                  <div class="blog_right_sidebar" style="border: none;">
+		<div class="col-md-9">
+            <div class="row justify-content-center align-items-center">
+	            <div class="blog_right_sidebar" style="border: none; padding-right: 10px;">
+	            	<select name="searchItem" id="searchItem" class="form-control">
+						<option value="byKeyword">키워드</option>
+						<option value="byDate">날짜</option>
+					</select>
+	            </div>
+                  <div class="blog_right_sidebar" style="border: none; width: 40%; padding-left: 10px;">
                         <aside class="single_sidebar_widget search_widget">
-                        	<p>
-                        		<select name="searchItem" id="searchItem">
-							   		<option value="byKeyword">키워드</option>
-							  		<option value="byDate">날짜</option>
-								</select>
-	                        </p>
                         	<div class="input-group">
                                 <input type="text" class="form-control" name="searchKeyword" id="searchKeyword" data-dd-format="Y/m/d" placeholder="Search"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
@@ -121,7 +122,8 @@ function deleteConfirm() {
                             </div>
                       </aside>
             	</div>
-        	</div>
+            </div>
+            </div>
 		</form>
 	</div>
   	

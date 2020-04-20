@@ -81,6 +81,10 @@
 						error: function(request,status,error){
 							console.log("실패");
 							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+							str += '<div class="bubble you">';
+							str += '일치하는 검색결과가 없습니다,,';
+							str += '</div>';
+							$(".chat").append(str);
 						}	
 					});
 				}
@@ -114,7 +118,6 @@
 </head>
 
 <body>
-${requestScope.List_MsgVO.msg_num}
 <div class="wrapper">
     <div class="container">
     	<div class="left">

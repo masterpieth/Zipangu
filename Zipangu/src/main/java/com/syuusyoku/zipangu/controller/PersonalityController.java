@@ -183,9 +183,12 @@ public class PersonalityController {
 	@RequestMapping(value = "personality/timelineUpdateForm", method = RequestMethod.GET)
 	public String timelineUpdateForm(int timeline_Num, Model model, HttpSession session) {
 		String userID=(String)session.getAttribute("userID");
+		TimelineVO vo = new TimelineVO();
+		vo.setUserID(userID);
+		vo.setTimeline_Num(timeline_Num);
 		
-		TimelineVO vo = dao.timelineRead(timeline_Num);
-		model.addAttribute("timelineVO", vo);
+		TimelineVO result = dao.timelineRead(vo);
+		model.addAttribute("timelineVO", result);
 		
 		ArrayList<PersonalityVO> list = dao.keywordList(userID);
 		model.addAttribute("keywordList", list);

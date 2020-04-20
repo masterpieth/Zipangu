@@ -27,8 +27,8 @@
 	</insert>
 
 	
-	<select id="timelineRead" parameterType="int" resultType="TimelineVO">
-		select * from timeline where timeline_Num=#{timeline_Num}
+	<select id="timelineRead" parameterType="TimelineVO" resultType="TimelineVO">
+		select * from timeline where timeline_Num=#{timeline_Num} and userID=#{userID}
 	</select>
 	
 	<update id="timelineUpdate" parameterType="TimelineVO">

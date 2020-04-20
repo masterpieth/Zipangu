@@ -26,8 +26,10 @@ $(function(){
 	var temp = document.getElementById("traits_Selected").value;
 	var traitArr = temp.split(",");	
 	
+	console.log(traitArr);
+	
 	for(var i in traitArr) {
-		$("input[name=keywordSelected][value="+traitArr[i]+"]").attr("checked",true);
+		$("input[name=keywordSelected][value='"+traitArr[i]+"']").attr("checked",true);
 	}
 	
 	$("input[name=keywordSelected]").on("click",function(){

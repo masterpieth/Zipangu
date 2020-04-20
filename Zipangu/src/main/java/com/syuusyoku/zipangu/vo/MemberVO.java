@@ -2,9 +2,11 @@ package com.syuusyoku.zipangu.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class MemberVO {
 	private String userID;
 	private String userPwd;
@@ -17,9 +19,4 @@ public class MemberVO {
 	private int authority;
 	private String textFileName;
 	private String singupDate;
-	public MemberVO() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
 }
