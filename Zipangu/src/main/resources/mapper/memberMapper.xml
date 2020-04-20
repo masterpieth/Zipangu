@@ -17,7 +17,7 @@
 		VALUES (
 			#{userID},
 			#{userPwd},
-			#{eMail},
+			#{email},
 			#{userName},
 			#{birth},
 			#{address},
