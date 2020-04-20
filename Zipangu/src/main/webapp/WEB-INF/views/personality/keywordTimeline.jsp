@@ -83,7 +83,6 @@ function deleteConfirm() {
 
 </head>
 <body>
-<jsp:include page="../include/header.jsp"></jsp:include>
 
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
@@ -176,9 +175,6 @@ function deleteConfirm() {
   </ul>
   
 </section>
-
-
-<jsp:include page="../include/footer.jsp"></jsp:include>
 
 </body>
 </html>
