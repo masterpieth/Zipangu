@@ -71,7 +71,6 @@ $(function(){
 </script>
 </head>
 <body>
-<jsp:include page="../include/header.jsp"></jsp:include>
 <br><br>
 <section class="features_area" id="features_counter">
 	<div class="container" id="tables_1">
@@ -124,6 +123,5 @@ $(function(){
 		<input type="button" value="취소">
 		</a>
 	</form>
-<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

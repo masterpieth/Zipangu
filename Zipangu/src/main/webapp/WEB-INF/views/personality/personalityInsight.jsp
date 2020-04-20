@@ -204,8 +204,6 @@ function openUploadTextForm() {
 <div id="showChart" class="container"></div>
 <br><br><br><br>
 <br><br><br><br>
-<br><br><br><br>
-
 
 <section class="features_area" id="features_counter">
 	<div class="container" id="tables_1" hidden="hidden">

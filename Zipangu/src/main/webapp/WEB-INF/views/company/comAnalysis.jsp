@@ -18,8 +18,8 @@ function analysis(){
         var jsonData = JSON.stringify(data);
         $.ajax({
             //서버컴 IP 주소
-//             url : "http://10.10.17.117:5000/analysis",
-            url : "http://192.168.0.8:5000/analysis",
+            url : "http://10.10.17.117:5000/analysis",
+//             url : "http://192.168.0.8:5000/analysis",
             type: "post",
             contentType : "application/json; charset=UTF-8",
             data: jsonData,
@@ -54,8 +54,8 @@ function comList(inputText){
         }
         var jsonData = JSON.stringify(data);
         $.ajax({
-//             url : "http://10.10.17.117:5000/comlist",
-            url : "http://192.168.0.8:5000/comlist",
+            url : "http://10.10.17.117:5000/comlist",
+//             url : "http://192.168.0.8:5000/comlist",
             type: "post",
             contentType : "application/json; charset=UTF-8",
             data: jsonData,
