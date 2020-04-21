@@ -57,10 +57,10 @@ public class ResumeController {
 	@RequestMapping(value = "resume/saveResume", method = RequestMethod.POST)
 	public String saveResume(
 		MultipartFile picFile, MemberVO member, ResumeVO resume, 
-		String careerList, String qualifiedList, HttpSession session
+		String careerJSON, String qualifiedJSON, HttpSession session
 	) {
 		resume.setUserID((String) session.getAttribute("userID"));
-		dao.saveResume(picFile, member, resume, careerList, qualifiedList);
+		dao.saveResume(picFile, member, resume, careerJSON, qualifiedJSON);
 		return "redirect:/resume/resumeList";
 	}
 

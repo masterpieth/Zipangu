@@ -1,5 +1,10 @@
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 <head>
+<meta charset="UTF-8">
 <title>이력서 작성</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 <link rel="stylesheet" href="<c:url value='/resources/css/resumeForm.css' />">
@@ -36,11 +41,11 @@
 		<button type="button" class="btn btn-success btn-sm" id="addCareer">+</button>
 		<button type="button" class="btn btn-danger btn-sm" id="deleteCareer">-</button>
 		<div id="career"></div>
-		<input type="hidden" name="careerList" id="careerList">
+		<input type="hidden" name="careerJSON" id="careerList">
 		<button type="button" class="btn btn-success btn-sm" id="addQualified">+</button>
 		<button type="button" class="btn btn-danger btn-sm" id="deleteQualified">-</button>
 		<div id="qualified"></div>
-		<input type="hidden" name="qualifiedList" id="qualifiedList">
+		<input type="hidden" name="qualifiedJSON" id="qualifiedList">
 		<textarea rows="8" cols="87" name="hobbyNSkill" id="hobbyNSkill">${resume.hobbyNSkill}</textarea>
 		<textarea rows="10" cols="87" name="introduce" id="introduce">${resume.introduce}</textarea>
 	</div>
@@ -97,8 +102,10 @@ $(function() {
 		$('#inputYear').val(inputDate[0]);
 		$('#inputMonth').val(Number(inputDate[1]));
 		$('#inputDay').val(Number(inputDate[2]));
-		var path = '<c:url value="/uploaded/img/picFile/' + resume_num + '_${resume.picFileName}" />';
-		$('#pic').attr('src', path);
+		if (${resume.picFileName ne null}) {
+			var path = '<c:url value="/uploaded/img/picFile/' + resume_num + '_${resume.picFileName}" />';
+			$('#pic').attr('src', path);
+		}
 	}
 
 	if (${mentorID eq null})
@@ -372,3 +379,5 @@ $(function() {
 	});
 });
 </script>
+</html>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />

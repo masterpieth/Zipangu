@@ -8,7 +8,7 @@
 		FROM
 			member
 		WHERE
-			userid = #{userID}
+			LOWER(userid) = LOWER(#{userID})
 	</select>
 
 	<insert id="signup" parameterType="member">
@@ -35,7 +35,7 @@
 		FROM
 			member
 		WHERE
-			userid = #{userID}
+			LOWER(userid) = LOWER(#{userID})
 		AND
 			userpwd = #{userPwd}
 	</select>
@@ -55,6 +55,6 @@
 		FROM
 			member
 		WHERE
-			userid = #{userID}
+			LOWER(userid) = LOWER(#{userID})
 	</select>
 </mapper>

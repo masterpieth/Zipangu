@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syuusyoku.zipangu.vo.ScheduleVO;
@@ -36,6 +37,7 @@ public class ScheduleDAO {
 		return scheduleList;
 	}
 
+	@Transactional
 	public boolean updateSchedule(HttpSession session, String scheduleList) {
 		int result = 0;
 		int scheduleListSize = 0;

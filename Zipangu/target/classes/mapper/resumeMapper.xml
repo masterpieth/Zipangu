@@ -94,14 +94,14 @@
 			picFileName = #{picFileName},
 			title = #{title},
 			inputdate = #{inputDate},
-			DEFAULT
+			correcteddate = SYSTIMESTAMP
 		WHERE
 			resume_num = #{resume_num}
 	</update>
 
 	<update id="updateResumeMember" parameterType="member">
 		UPDATE
-			member
+			resume_member
 		SET
 			email = #{email},
 			username = #{userName},

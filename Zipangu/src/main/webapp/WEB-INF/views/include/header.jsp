@@ -22,7 +22,7 @@
 </head>
 <body>
 <!--================ Start Header Menu Area =================-->
-<header class="header_area" style="z-index: -1">
+<header class="header_area">
 	<div class="main_menu">
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<div class="container">
@@ -82,19 +82,24 @@
 								</li>
 							</ul>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="about-us.html">마이페이지</a>
-						</li>
-						<li class="nav-item">
-							<c:choose>
-								<c:when test="${empty userID}">
+						<c:choose>
+							<c:when test="${empty userID}">
+								<li class="nav-item">
+									<a class="nav-link" href="<c:url value='/member/signupForm' />">회원가입</a>
+								</li>
+								<li class="nav-item">
 									<a class="nav-link" href="<c:url value='/member/loginForm' />">로그인</a>
-								</c:when>
-								<c:otherwise>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="nav-item">
+									<a class="nav-link" href="about-us.html">마이페이지</a>
+								</li>
+								<li class="nav-item">
 									<a class="nav-link" href="<c:url value='/member/logout' />">로그아웃</a>
-								</c:otherwise>
-							</c:choose>
-						</li>
+								</li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 					<ul class="nav navbar-nav ml-auto">
 						<div class="social-icons d-flex align-items-center">
@@ -112,6 +117,5 @@
 		</nav>
 	</div>
 </header>
-<br>
-<br>
 </body>
+</html>

@@ -1,6 +1,11 @@
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 <!--================ Start Home Banner Area =================-->
 <head>
+<meta charset="UTF-8">
 <title>Zipangu</title>
 </head>
 <body>
@@ -217,3 +222,5 @@
 </section>
 <!--================ End Blog Area =================-->
 </body>
+</html>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />

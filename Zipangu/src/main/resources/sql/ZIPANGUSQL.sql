@@ -172,4 +172,18 @@ INSERT INTO SCHEDULE VALUES('Mentor3', null, '2020-05-03');
 INSERT INTO SCHEDULE VALUES('Mentor3', null, '2020-05-04');
 INSERT INTO SCHEDULE VALUES('Mentor3', 'Mentee2', '2020-05-05');
 
+INSERT INTO RESUME VALUES(resume_seq.NEXTVAL, 'Mentee3', '취미, 특기', '자기소개', null, '이력서1', '2020-04-27', DEFAULT);
+INSERT INTO RESUME VALUES(resume_seq.NEXTVAL, 'Mentee3', '취미, 특기', '자기소개', null, '이력서2', '2020-04-28', DEFAULT);
+INSERT INTO RESUME VALUES(resume_seq.NEXTVAL, 'Mentee3', '취미, 특기', '자기소개', null, '이력서3', '2020-04-29', DEFAULT);
+
+INSERT INTO RESUME_MEMBER VALUES(1, 'zipangu@zipangu', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
+INSERT INTO RESUME_MEMBER VALUES(2, 'zipangu@zipangu', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
+INSERT INTO RESUME_MEMBER VALUES(3, 'zipangu@zipangu', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
+
+INSERT INTO CAREER VALUES(3, '1998-03-02', '2004-02-13', '학력1');
+INSERT INTO CAREER VALUES(3, '2005-04-05', '2008-12-25', '경력1');
+
+INSERT INTO QUALIFIED VALUES(3, '2009-08-15', '면허1');
+INSERT INTO QUALIFIED VALUES(3, '2015-10-05', '자격1');
+
 COMMIT;

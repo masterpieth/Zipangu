@@ -37,6 +37,7 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
 	<!-- 문자 인코딩 시작 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -57,12 +58,4 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<!-- 문자 인코딩 끝 -->
-
-	<jsp-config>
-		<jsp-property-group>
-			<url-pattern>*.jsp</url-pattern>
-			<include-prelude>/WEB-INF/views/include/header.jsp</include-prelude>
-			<include-coda>/WEB-INF/views/include/footer.jsp</include-coda>
-		</jsp-property-group> 
-	</jsp-config>
 </web-app>

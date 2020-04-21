@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
 <body>
-<br>
-<br>
 <!--================  start footer Area =================-->
-<footer class="footer-area" style="z-index: -1">
+<footer class="footer-area">
 	<div class="footer_top section_gap_top">
 		<div class="container">
 			<div class="row">

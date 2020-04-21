@@ -1,5 +1,10 @@
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
 <head>
+<meta charset="UTF-8">
 <title>예약 현황</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 <style>
@@ -263,3 +268,5 @@ $(function() {
 	createCalendar();
 });
 </script>
+</html>
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />
