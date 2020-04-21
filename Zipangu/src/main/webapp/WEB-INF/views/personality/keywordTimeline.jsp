@@ -79,7 +79,14 @@ function deleteConfirm() {
 
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
-            <div class="container">       
+            <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/personality/keywordTimeline"/>">성향키워드 타임라인</a>
+                    </div>
+                </div>
                 <div class="banner_content text-center">
                     <h2>타임라인</h2>
                 </div>

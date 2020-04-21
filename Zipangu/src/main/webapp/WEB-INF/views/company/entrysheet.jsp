@@ -174,23 +174,23 @@ function entrysheetOutput(typeResult, divId){
 	str += '<table class="table paginated">';
 	
 	if(typeResult.length != 0){
-		str += '<tr><th>COMSIZE</th></tr>';
+		str += '<tr><th>규모</th></tr>';
 		str += '<tr><th>' + typeResult[0].COMSIZE + '</th></tr>';
-		str += '<tr><th>JOBTYPE</th></tr>';
+		str += '<tr><th>업종</th></tr>';
 	    str += '<tr><th>' + typeResult[0].JOBTYPE + '</th></tr>';
-	    str += '<tr><th>COMLOCATION</th></tr>';
+	    str += '<tr><th>위치</th></tr>';
 	    str += '<tr><th>' + typeResult[0].COMLOCATION + '</th></tr>';
-	    str += '<tr><th>QUALIFICATION</th></tr>';
+	    str += '<tr><th>자격사항</th></tr>';
 	    str += '<tr><th>' + typeResult[0].QUALIFICATION + '</th></tr>';
-	    str += '<tr><th>HOBBYNSKILL</th></tr>';
+	    str += '<tr><th>취미/특기</th></tr>';
 	    str += '<tr><th>' + typeResult[0].HOBBYNSKILL + '</th></tr>';
-	    str += '<tr><th>STUDY</th></tr>';
+	    str += '<tr><th>공부/연구</th></tr>';
 	    str += '<tr><th>' + typeResult[0].STUDY + '</th></tr>';
 	    str += '<tr><th>PR</th></tr>';
 	    str += '<tr><th>' + typeResult[0].PR + '</th></tr>';
-	    str += '<tr><th>ABSORPTION</th></tr>';
+	    str += '<tr><th>몰두했던 것</th></tr>';
 	    str += '<tr><th>' + typeResult[0].ABSORPTION + '</th></tr>';
-	    str += '<tr><th>ADVICE</th></tr>';
+	    str += '<tr><th>조언</th></tr>';
 	    str += '<tr><th>' + typeResult[0].ADVICE + '</th></tr>';
 	} else {
 		str += '<tr><th>검색결과가 없습니다.</th></tr>';
@@ -222,6 +222,14 @@ function entrysheetOutput(typeResult, divId){
 
 	<div class="container-fluid">
 	    <br>
+	    <div class="row justify-content-center align-items-center">
+	        <div class="card-body" align="center">
+	            <h1>합격자소서 추천</h1>
+	            <hr>
+	            <p>기업 분석에서 즐겨찾기 해놓은거랑,,,맞는,, 587건의 자소서를 바탕으로 해당 분야의 합격 자소서를 추천합니다.</p>
+	        </div>
+	    </div>
+	    <br>
 		<div class="row">
 			<div class="container">
 				<div class="col-md-6" style="float: right;">
@@ -241,8 +249,8 @@ function entrysheetOutput(typeResult, divId){
 		                        <tr>
 		                            <th style="width: 10%;">#</th>
 		                            <th style="width: 20%;">기업명</th>
-		                            <th style="width: 10%;">위치</th>
-		                            <th style="width: 60%;">연락처</th>
+		                            <th style="width: 15%;">위치</th>
+		                            <th style="width: 55%;">연락처</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody id="bookmark_tbody">
@@ -283,3 +291,6 @@ function entrysheetOutput(typeResult, divId){
 <div class="card">
 </div>
 <jsp:include page="../include/footer.jsp"></jsp:include>
+<script src="/zipangu/resources/template_js/jquery-3.2.1.min.js"></script>
+<script src="/zipangu/resources/template_js/popper.js"></script>
+<script src="/zipangu/resources/template_js/bootstrap.min.js"></script>

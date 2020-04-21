@@ -14,7 +14,9 @@ $(function(){
 	$('#searchPe').on("click",function(){
 	
 		var revisedContent = $("#revisedContent").val();
-		
+		if(revisedContent.length == 0) {
+			alert('텍스트 파일을 업로드해주세요.');
+		}
 		$.ajax({
 			url : "https://gateway.aibril-watson.kr/personality-insights/api/v3/profile?version=2017-10-13",
 			type : "post",
@@ -147,7 +149,14 @@ function openUploadTextForm() {
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">
                 <div class="banner_content text-center">
-                    <h2>성향분석</h2>
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/personality/personalityInsight"/>">성향 분석</a>
+                    </div>
+                </div>
+                <div class="banner_content text-center">
+                    <h2>성향 분석</h2>
                 </div>
             </div>
         </div>
@@ -162,6 +171,7 @@ function openUploadTextForm() {
 						<div class="get-know">
 							<p class="df-color">성향분석</p>
 							<h1>내가 쓴 텍스트를 통해 성향을 알아보고 키워드들을 통해 타임라인을 만들어보세요,,,,,</h1>
+							<hr>
 							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. 
 							나의 경험, 생각 및 반응에 관한 단어가 포함되어 있는 텍스트를 입력 해주세요.
 							직접 텍스트 입력외에도 카카오토 대화내용 또는 txt 파일 업로드를 통해 이용이 가능합니다.

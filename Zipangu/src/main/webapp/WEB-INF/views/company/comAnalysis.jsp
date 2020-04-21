@@ -15,6 +15,10 @@ function analysis(){
 	$('#startBtn').on('click', function(){
         var value = $('#revisedContent').val();
         var selValue = $('#listnumSel').val();
+        if(value.length == 0){
+            alert('텍스트 파일을 업로드해주세요.');
+            return;
+        }
         var data = {
             inputText : value,
             listnum : selValue
@@ -187,13 +191,17 @@ function openUploadTextForm() {
                 <table id="insightList" hidden="hidden"></table>
             </div>
         </div>
-                    <div class="container" id="resultContainer" hidden="hidden">
-               <div class="section-gap" style="padding-top: 50px;">
-                    <h3 class="mb-30 title_color">분석결과 : 추천순위</h3>
-                    <p>사용자와 가장 유사한 업종을 순위별로 표시하였습니다. 해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
-                    </p>
-                    <hr>
-                    <table class="table-bordered table-hover table-responsive">
+            <div class="container text-center" id="resultContainer" hidden="hidden">
+               <div class="card-body" style="padding-top: 50px;" align="center">
+                    <div class="col-md-7">
+                        <h2 class="mb-30 title_color">분석결과 : 추천순위</h2>
+                        <p>사용자와 가장 유사한 기업 종류를 순위별로 표시하였습니다. 
+                            <br>
+                            해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
+                        </p>
+                        <hr>
+                    </div>
+                    <table class="table-bordered table-hover">
                         <thead>
                            <tr>
                                <th style="width: 10%;">순위</th>
