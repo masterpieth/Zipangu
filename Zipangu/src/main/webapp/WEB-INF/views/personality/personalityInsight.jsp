@@ -144,7 +144,7 @@ $(function(){
 });
 
 function openUploadTextForm() {
-	open("<c:url value='/personality/uploadTextForm'/>",
+	open("<c:url value='/popup/uploadTextForm'/>",
 			"_blank",
 			"width=500, height=700");	
 }
@@ -152,8 +152,7 @@ function openUploadTextForm() {
 <title>텍스트 파일을 읽어오는 거</title>
 </head>
 <!-- <body> -->
-	<jsp:include page="../include/header.jsp"></jsp:include>
-
+<jsp:include page="../include/header.jsp"></jsp:include>
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">
@@ -248,6 +247,6 @@ function openUploadTextForm() {
 	</div>
 </section>
 <br><br><br><br>
-	<jsp:include page="../include/footer.jsp"></jsp:include>
+<jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

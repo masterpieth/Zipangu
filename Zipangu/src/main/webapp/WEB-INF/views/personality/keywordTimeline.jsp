@@ -84,7 +84,6 @@ function deleteConfirm() {
 </head>
 <body>
 <jsp:include page="../include/header.jsp"></jsp:include>
-
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">       
@@ -94,12 +93,8 @@ function deleteConfirm() {
             </div>
         </div>
     </section>
-    
-    
-
-
+    <!--================End Home Banner Area =================--> 
 <section class="timeline">
-<br><br>
 <!-- 검색 기능 -->
 	<div align="center">
 		<form action="keywordTimeline" method="get">
@@ -174,11 +169,7 @@ function deleteConfirm() {
 	    </li>   
     </c:forEach>
   </ul>
-  
 </section>
-
-
 <jsp:include page="../include/footer.jsp"></jsp:include>
-
 </body>
 </html>

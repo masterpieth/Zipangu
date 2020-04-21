@@ -78,35 +78,21 @@
                         </ul>
                         <ul class="nav navbar-nav ml-auto">
                             <div class="social-icons d-flex align-items-center">
-                                <a href="">
-                                    <li><i class="fa fa-facebook"></i></li>
-                                </a>
-                                <a href="">
-                                    <li><i class="fa fa-twitter"></i></li>
-                                </a>
-                                <a href="">
-                                    <li><i class="fa fa-dribbble"></i></li>
-                                </a>
-                                <a href="">
-                                    <li><i class="fa fa-behance"></i></li>
-                                </a>
+                                <section id="msgSection">
+									<a href='
+									<c:if test="${sessionScope.authority=='2'}">/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin</c:if>
+									<c:if test="${sessionScope.authority=='1'}">/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}</c:if>
+									'>
+								   <button id="msgButton">
+								      <i id="msgFa"class="fa fa-comments-o"></i>
+								      <label id="msgLabel">Messenger </label>
+								   </button>
+								   </a>
+								</section>  
                             </div>
-                            <li class="nav-item"><a href="#" class="search">
-                                <i class="lnr lnr-magnifier" id="search"></i></a>
-                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-<section id="msgSection">
-	<a href='
-	<c:if test="${sessionScope.authority=='2'}">/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin</c:if>
-	<c:if test="${sessionScope.authority=='1'}">/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}</c:if>
-	'>
-   <button id="msgButton">
-      <i id="msgFa"class="fa fa-comments-o"></i>
-      <label id="msgLabel">Messenger</label>
-   </button>
-   </a>
-</section>        </div>
+      </div>
     </header>

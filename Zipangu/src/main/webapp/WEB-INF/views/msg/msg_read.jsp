@@ -15,6 +15,16 @@
 	
 <script type="text/javascript">
 	$(function(){
+		var mentor = $("#mentor_id").val();
+		var mentee = $("#mentee_id").val();
+		if(mentor=='admin'||mentee=='admin') {
+			var str = "";
+			str += '<div class="bubble you">';
+			str += '검색하고자 하는 기업명을 입력해 주세요.';
+			str += '</div>';
+			$(".chat").append(str);
+		}
+		
 		connect();
 
 		$("#send").on("click",function(){
@@ -66,7 +76,7 @@
 						};
 					var jsonData = JSON.stringify(data);
 					$.ajax({
-						url: 'chatBot',
+						url: 'chatAnswer',
 						type: 'post',
 						data: jsonData,
 						contentType : 'application/json;charaset=utf-8',
@@ -76,13 +86,20 @@
 							str += '<div class="bubble you">';
 							str += data;
 							str += '</div>';
+							str += '<div class="bubble you">';
+							str += '검색하고자 하는 기업명을 입력해 주세요.';
+							str += '</div>';
 							$(".chat").append(str);
+							
 					    },
 						error: function(request,status,error){
 							console.log("실패");
 							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 							str += '<div class="bubble you">';
 							str += '일치하는 검색결과가 없습니다,,';
+							str += '</div>';
+							str += '<div class="bubble you">';
+							str += '검색하고자 하는 기업명을 입력해 주세요.';
 							str += '</div>';
 							$(".chat").append(str);
 						}	
@@ -148,9 +165,10 @@
 	            <input type="hidden" value="${requestScope.List_MsgVO.mentee_id}" name="mentee_id" id="mentee_id">
             	<input type="hidden" value="${requestScope.List_MsgVO.mentor_id}" name="mentor_id" id="mentor_id">		
         	</div>
+        	<br><br>
           	<div class="write">
-               	<input type="text" id="chatbox">
-               	<input type="button" id="send" value="전송">
+               	<input type="text" id="chatbox" style="width: 80%">
+               	<input type="button" id="send" value="전송" style="width: 20%">
            	</div>
 	   	</div>
     </div>

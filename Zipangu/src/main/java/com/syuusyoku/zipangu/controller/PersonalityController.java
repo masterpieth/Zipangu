@@ -49,10 +49,10 @@ public class PersonalityController {
 		return "/personality/personalityInsight";
 	}
 	
-	@RequestMapping(value = "personality/uploadTextForm", method = RequestMethod.GET)
+	@RequestMapping(value = "popup/uploadTextForm", method = RequestMethod.GET)
 	public String uploadTextForm() {
 		
-		return "/personality/uploadTextForm";
+		return "/popup/uploadTextForm";
 	}
 
 	@RequestMapping(value = "personality/sendKakao", method = RequestMethod.POST,produces ="application/text; charset=utf8")
