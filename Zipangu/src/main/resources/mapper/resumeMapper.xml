@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.syuusyoku.zipangu.dao.ResumeMapper">
+	<select id="resumeList" resultType="resume">
+		SELECT
+			resume_num,
+			userid,
+			title,
+			TO_CHAR(inputdate,'YYYY-MM-DD') AS inputDate,
+			TO_CHAR(correcteddate,'YYYY-MM-DD') AS correctedDate
+		FROM
+			resume
+		WHERE
+			userid = #{userID}
+		ORDER BY
+			resume_num DESC
+	</select>
+
+	<insert id="saveResume" parameterType="resume">
+		<selectKey keyProperty="resume_num" resultType="int" order="BEFORE">
+			SELECT resume_seq.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO
+			resume
+		VALUES (
+			#{resume_num},
+			#{userID},
+			#{hobbyNSkill},
+			#{introduce},
+			#{picFileName},
+			#{title},
+			#{inputDate},
+			DEFAULT
+		)
+	</insert>
+
+	<insert id="saveResumeMember" parameterType="member">
+		INSERT INTO
+			resume_member
+		VALUES (
+			#{resume_num},
+			#{email},
+			#{userName},
+			#{birth},
+			#{address},
+			#{phone},
+			#{sex}
+		)
+	</insert>
+
+	<insert id="saveCareer" parameterType="career">
+		INSERT INTO
+			career
+		VALUES (
+			#{resume_num},
+			#{start_period},
+			#{end_period},
+			#{content}
+		)
+	</insert>
+
+	<insert id="saveQualified" parameterType="qualified">
+		INSERT INTO
+			qualified
+		VALUES (
+			#{resume_num},
+			#{period},
+			#{content}
+		)
+	</insert>
+
+	<select id="getResumeMember" parameterType="member" resultType="member">
+		SELECT
+			resume_num,
+			email,
+			username,
+			TO_CHAR(birth,'YYYY-MM-DD') AS birth,
+			address,
+			phone,
+			sex
+		FROM
+			resume_member
+		WHERE
+			resume_num = #{resume_num}
+	</select>
+
+	<update id="updateResume" parameterType="resume">
+		UPDATE
+			resume
+		SET
+			hobbynskill = #{hobbyNSkill},
+			introduce = #{introduce},
+			picFileName = #{picFileName},
+			title = #{title},
+			inputdate = #{inputDate},
+			DEFAULT
+		WHERE
+			resume_num = #{resume_num}
+	</update>
+
+	<update id="updateResumeMember" parameterType="member">
+		UPDATE
+			member
+		SET
+			email = #{email},
+			username = #{userName},
+			birth = #{birth},
+			address = #{address},
+			phone = #{phone},
+			sex = #{sex}
+		WHERE
+			resume_num = #{resume_num}
+	</update>
+
+	<delete id="deleteCareer">
+		DELETE
+			career
+		WHERE
+			resume_num = #{resume_num}
+	</delete>
+
+	<delete id="deleteQualified">
+		DELETE
+			qualified
+		WHERE
+			resume_num = #{resume_num}
+	</delete>
+
+	<select id="getResume" parameterType="member" resultType="resume">
+		SELECT
+			resume_num,
+			userid,
+			hobbynskill,
+			introduce,
+			picfilename,
+			title,
+			TO_CHAR(inputdate,'YYYY-MM-DD') AS inputDate,
+			TO_CHAR(correcteddate,'YYYY-MM-DD') AS correctedDate
+		FROM
+			resume
+		WHERE
+			resume_num = #{resume_num}
+		AND
+			userid = #{userID}
+	</select>
+
+	<select id="getCareer" resultType="career">
+		SELECT
+			resume_num,
+			TO_CHAR(start_period,'YYYY-MM-DD') AS start_period,
+			TO_CHAR(end_period,'YYYY-MM-DD') AS end_period,
+			content
+		FROM
+			career
+		WHERE
+			resume_num = #{resume_num}
+	</select>
+
+	<select id="getQualified" resultType="qualified">
+		SELECT
+			resume_num,
+			TO_CHAR(period,'YYYY-MM-DD') AS period,
+			content
+		FROM
+			qualified
+		WHERE
+			resume_num = #{resume_num}
+	</select>
+</mapper>

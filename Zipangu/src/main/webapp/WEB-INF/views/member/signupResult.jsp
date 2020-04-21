@@ -11,6 +11,7 @@
 <script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 	<div class="jumbotron jumbotron-fluid">
 		<div class="container">
 			<c:choose>
@@ -31,9 +32,9 @@
 <script>
 $(function() {
 	if (${sessionScope.userID == null})
-		setTimeout(function() { $(location).attr('href', '<c:url value="/" />') }, 5000);
-	else
 		setTimeout(function() { $(location).attr('href', '<c:url value="/member/signupForm" />') }, 5000);
+	else
+		setTimeout(function() { $(location).attr('href', '<c:url value="/" />') }, 5000);
 });
 </script>
 </html>

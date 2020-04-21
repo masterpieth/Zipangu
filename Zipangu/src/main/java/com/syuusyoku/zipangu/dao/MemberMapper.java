@@ -18,4 +18,5 @@ public interface MemberMapper {
 	
 	public ArrayList<MemberVO> mentorList();
 	
+	MemberVO getMember(String userID);
 }

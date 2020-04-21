@@ -51,5 +51,21 @@
 	
 	<select id="mentorList" resultType="member">
 		select * from member where authority = '1'
+	<select id="getMember" resultType="member">
+		SELECT
+			userid,
+			userpwd,
+			email,
+			username,
+			TO_CHAR(birth,'YYYY-MM-DD') AS birth,
+			address,
+			phone,
+			sex,
+			authority,
+			textfilename
+		FROM
+			member
+		WHERE
+			userid = #{userID}
 	</select>
 </mapper>

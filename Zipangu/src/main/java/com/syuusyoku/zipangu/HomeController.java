@@ -19,8 +19,18 @@ public class HomeController {
 	public String header() {
 		return "include/header";
 	}
+
 	@RequestMapping(value = "/footer", method = RequestMethod.GET)
 	public String footer() {
 		return "include/footer";
+	}
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String main() {
+		return "main";
+	}
+
+	@RequestMapping(value = "/alert", method = RequestMethod.GET)
+	public String alert() {
+		return "alert";
 	}
 }
