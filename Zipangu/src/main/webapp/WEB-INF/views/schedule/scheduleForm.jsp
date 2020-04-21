@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<head>
-<title>예약 현황</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 <style>
 td {
@@ -263,3 +263,4 @@ $(function() {
 	createCalendar();
 });
 </script>
+<jsp:include page="../include/footer.jsp"></jsp:include>

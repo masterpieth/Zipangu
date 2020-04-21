@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="../include/header.jsp"></jsp:include>
 <head>
 <title>이력서 조회</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
@@ -81,3 +83,4 @@ $(function() {
 	});
 });
 </script>
+<jsp:include page="../include/footer.jsp"></jsp:include>

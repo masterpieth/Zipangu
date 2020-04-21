@@ -61,15 +61,15 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                  aria-expanded="false">이력서</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog.html">새 이력서</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">이력서 목록</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/resume/resumeForm'/>">새 이력서</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value="/resume/resumeList"/>">이력서 목록</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                  aria-expanded="false">멘토링</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="blog.html">예약하기</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/schedule/scheduleForm'/>">예약하기</a></li>
                                     <li class="nav-item"><a class="nav-link" href="single-blog.html">마이스케줄</a></li>
                                 </ul>
                             </li>
@@ -88,6 +88,7 @@
                                 <c:when test="${sessionScope.userID != null}">
                                     <li class="nav-item"><a class="nav-link" href="about-us.html">마이페이지</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/member/logout'/>">로그아웃</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#">${sessionScope.userID}님 반갑습니다.</a></li>
                                 </c:when>
                             </c:choose>
                         </ul>
