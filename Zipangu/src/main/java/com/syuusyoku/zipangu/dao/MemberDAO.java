@@ -60,14 +60,15 @@ public class MemberDAO {
 				session.setAttribute("authority", member.getAuthority());
 				session.setAttribute("userName", member.getUserName());
 			result = mapper.login(member);
-			if (result > 0) {
-				String userID = member.getUserID();
-				session.setAttribute("userID", userID);
-				member = getMember(userID);
-				session.setAttribute("authority", member.getAuthority());
-				return true;
-			}
-		} catch (Exception e) {
+				if (result > 0) {
+					String userID = member.getUserID();
+					session.setAttribute("userID", userID);
+					member = getMember(userID);
+					session.setAttribute("authority", member.getAuthority());
+					return true;
+				}
+			} 
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -94,8 +95,6 @@ public class MemberDAO {
 			e.printStackTrace();
 		} return result;
 	}
-
-	
 	
 	public ArrayList<MemberVO> mentorList() {
 		ArrayList<MemberVO> list = null;
@@ -105,6 +104,8 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} return list;
+	}
+	
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}

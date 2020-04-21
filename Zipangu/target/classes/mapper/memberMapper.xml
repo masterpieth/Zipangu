@@ -51,6 +51,8 @@
 	
 	<select id="mentorList" resultType="member">
 		select * from member where authority = '1'
+	</select>
+	
 	<select id="getMember" resultType="member">
 		SELECT
 			userid,

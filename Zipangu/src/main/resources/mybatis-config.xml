@@ -8,32 +8,23 @@
 	</settings>
     <typeAliases>
 		<typeAlias type="com.syuusyoku.zipangu.vo.MemberVO" alias="member" />
-<<<<<<< HEAD
 		<typeAlias type="com.syuusyoku.zipangu.vo.CompanyVO" alias="companyVO" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.PersonalityVO" alias="PersonalityVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.TimelineVO" alias="TimelineVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.List_MsgVO" alias="List_MsgVO"/>
 		<typeAlias type="com.syuusyoku.zipangu.vo.Sender_MsgVO" alias="Sender_MsgVO"/>
-=======
 		<typeAlias type="com.syuusyoku.zipangu.vo.ResumeVO" alias="resume" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.CareerVO" alias="career" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.QualifiedVO" alias="qualified" />
 		<typeAlias type="com.syuusyoku.zipangu.vo.ScheduleVO" alias="schedule" />
->>>>>>> LeeChangJu
 	</typeAliases>
 	
 	<mappers>
-<<<<<<< HEAD
        <mapper resource="mapper/memberMapper.xml" />
        <mapper resource="mapper/companyMapper.xml" />
        <mapper resource="mapper/personalityMapper.xml" />
        <mapper resource="mapper/msgMapper.xml" />
-    </mappers>
-</configuration>
-=======
-		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/resumeMapper.xml" />
 		<mapper resource="mapper/scheduleMapper.xml" />
-	</mappers>
+    </mappers>
 </configuration>
->>>>>>> LeeChangJu

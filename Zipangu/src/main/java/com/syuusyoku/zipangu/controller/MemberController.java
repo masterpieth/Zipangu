@@ -91,15 +91,15 @@ public class MemberController {
 		return "member/loginForm";
 	}
 
-	@RequestMapping(value = "member/login", method = RequestMethod.POST)
-	public String login(MemberVO member, HttpSession session) {
-		dao.login(member, session);
-		return "redirect:/";
-	}
-
-	@RequestMapping(value = "member/logout", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
-		dao.logout(session);
-		return "main";
-	}
+//	@RequestMapping(value = "member/login", method = RequestMethod.POST)
+//	public String login(MemberVO member, HttpSession session) {
+//		dao.login(member, session);
+//		return "redirect:/";
+//	}
+//
+//	@RequestMapping(value = "member/logout", method = RequestMethod.GET)
+//	public String logout(HttpSession session) {
+//		dao.logout(session);
+//		return "main";
+//	}
 }
