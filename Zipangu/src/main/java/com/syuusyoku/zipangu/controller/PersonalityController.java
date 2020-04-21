@@ -66,7 +66,7 @@ public class PersonalityController {
 
 		String text = dao.textList(kakaoContent, kakaoName);
 
-		String textFileName = daoMe.memberInfo(userID).getTextFileName();
+		String textFileName = daoMe.getMember(userID).getTextFileName();
 	
 		File file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload"+textFileName+".txt");
 		if(file.exists()) file.delete();
@@ -86,7 +86,7 @@ public class PersonalityController {
 			e.printStackTrace();
 		}
 		
-		textFileName = daoMe.memberInfo(userID).getTextFileName();
+		textFileName = daoMe.getMember(userID).getTextFileName();
 		
 		String result = "";
 		file = null;

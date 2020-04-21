@@ -65,13 +65,11 @@ public class MemberController {
 		return "member/signupResult";
 	}
 	
-	//임시 로그인 페이지로 이동
-	@RequestMapping(value = "member/loginTemp", method = RequestMethod.GET)
-	public String loginTemp() {
-		return "member/loginTemp";
+	@RequestMapping(value = "member/loginForm", method = RequestMethod.GET)
+	public String loginForm() {
+		return "member/loginForm";
 	}
-	
-	//임시 로그인
+
 	@RequestMapping(value = "member/login", method = RequestMethod.POST)
 	public String login(MemberVO member, HttpSession session, RedirectAttributes rttr) {
 		boolean result = dao.login(member, session);
@@ -79,27 +77,11 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	//임시 로그아웃,, dao안만듬
-	@RequestMapping(value = "member/logoutTemp", method = RequestMethod.GET)
-	public String logoutTemp(HttpSession session) {
-		session.invalidate();
-		return "redirect:/";
+	@RequestMapping(value = "member/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		dao.logout(session);
+		return "main";
 	}
-
-	@RequestMapping(value = "member/loginForm", method = RequestMethod.GET)
-	public String loginForm() {
-		return "member/loginForm";
-	}
-
-//	@RequestMapping(value = "member/login", method = RequestMethod.POST)
-//	public String login(MemberVO member, HttpSession session) {
-//		dao.login(member, session);
-//		return "redirect:/";
-//	}
-//
-//	@RequestMapping(value = "member/logout", method = RequestMethod.GET)
-//	public String logout(HttpSession session) {
-//		dao.logout(session);
-//		return "main";
-//	}
+	
+	
 }

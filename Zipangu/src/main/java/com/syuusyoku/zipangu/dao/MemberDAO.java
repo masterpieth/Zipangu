@@ -50,25 +50,17 @@ public class MemberDAO {
 	}
 
 	public boolean login(MemberVO member, HttpSession session) {
-		int result = 0;
 		try {
 			MemberMapper mapper = this.session.getMapper(MemberMapper.class);
 			if (mapper.login(member) > 0) {
-				member = mapper.memberInfo(member.getUserID());
+				member = mapper.getMember(member.getUserID());
 				
 				session.setAttribute("userID", member.getUserID());
 				session.setAttribute("authority", member.getAuthority());
 				session.setAttribute("userName", member.getUserName());
-			result = mapper.login(member);
-				if (result > 0) {
-					String userID = member.getUserID();
-					session.setAttribute("userID", userID);
-					member = getMember(userID);
-					session.setAttribute("authority", member.getAuthority());
-					return true;
-				}
-			} 
-		}catch (Exception e) {
+				return true;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -86,11 +78,11 @@ public class MemberDAO {
 		}
 	}
 	
-	public MemberVO memberInfo(String userID) {
+	public MemberVO getMember(String userID) {
 		MemberVO result = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			result = mapper.memberInfo(userID);
+			result = mapper.getMember(userID);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} return result;
@@ -105,19 +97,8 @@ public class MemberDAO {
 			e.printStackTrace();
 		} return list;
 	}
-	
+
 	public void logout(HttpSession session) {
 		session.invalidate();
-	}
-
-	public MemberVO getMember(String userID) {
-		MemberVO member = null;
-		try {
-			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			member = mapper.getMember(userID);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return member;
 	}
 }

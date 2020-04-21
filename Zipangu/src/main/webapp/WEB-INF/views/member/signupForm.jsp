@@ -84,10 +84,6 @@
 					<option value="2">멘티</option>
 				</select>
 				<div class="valid-message" id="sexMessage">당신의 역할을 골라 주세요.</div>
-					<option value="1">멘티</option>
-					<option value="2">멘토</option>
-				</select>
-				<div class="valid-message" id="authorityMessage">당신의 역할을 골라 주세요.</div>
 			</div>
 			<button type="submit" class="btn btn-primary" id="signupBtn" onclick="return signup()">가입하기</button>
 		</form>
@@ -225,13 +221,10 @@ $(function() {
 			checkAuthority = true;
 		} else {
 			$('#sexMessage').css('color', '#dc3545');
-			$('#authorityMessage').css('color', '#28a745');
-			checkAuthority = true;
-		} else {
-			$('#authorityMessage').css('color', '#dc3545');
 			checkAuthority = false;
 		}
 	});
+
 });
 </script>
 </html>

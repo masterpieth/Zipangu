@@ -45,15 +45,11 @@
 		update member set textFileName=#{textFileName} where userID=#{userID}
 	</update>
 	
-	<select id="memberInfo" parameterType="String" resultType="member">
-		select * from member where userID=#{userID}
-	</select>
-	
 	<select id="mentorList" resultType="member">
 		select * from member where authority = '1'
 	</select>
 	
-	<select id="getMember" resultType="member">
+	<select id="getMember" parameterType="String" resultType="member">
 		SELECT
 			userid,
 			userpwd,

@@ -14,8 +14,6 @@ public interface MemberMapper {
 	
 	public void uploadKakaoText(MemberVO vo);
 	
-	public MemberVO memberInfo(String userID);
-	
 	public ArrayList<MemberVO> mentorList();
 	
 	MemberVO getMember(String userID);
