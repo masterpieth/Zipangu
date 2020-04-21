@@ -14,6 +14,20 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/font-awesome.min.css">
     <!-- main css -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/template_css/style.css">
+    <script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script> 
+    <script>
+        $(function (){
+            $('#msgButton').on('click',function(){
+                var hiddenVal = $('input.msg_location').val();
+	        	openUploadMessenger(hiddenVal);
+            })
+        })
+        function openUploadMessenger(hiddenVal) {
+            open('<c:url value="/msg/msg_start?' + hiddenVal + '"/>',
+                    "_blank",
+                    "width=1000, height=800");   
+        }
+    </script>
 </head>
 <body>
 <!--================ Start Header Menu Area =================-->
@@ -82,10 +96,10 @@
                             <section id="msgSection">
                                 <c:choose>
                                     <c:when test="${sessionScope.authority=='2'}">
-                                        <a href="/zipangu/msg/msg_start?mentee_id=${sessionScope.userID}&mentor_id=admin">
+                                        <input type="hidden" class="msg_location" value="mentee_id=${sessionScope.userID}&mentor_id=admin">
                                     </c:when>
                                     <c:when test="${sessionScope.authority=='1'}">
-                                        <a href="/zipangu/msg/msg_start?mentee_id=admin&mentor_id=${sessionScope.userID}">
+                                        <input type="hidden" class="msg_location" value="mentee_id=admin&mentor_id=${sessionScope.userID}">
                                     </c:when>
                                 </c:choose>
                                 <button id="msgButton">

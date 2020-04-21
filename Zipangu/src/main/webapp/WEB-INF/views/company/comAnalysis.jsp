@@ -13,7 +13,7 @@ $(function(){
 
 function analysis(){
 	$('#startBtn').on('click', function(){
-        var value = $('#inputText').val();
+        var value = $('#revisedContent').val();
         var selValue = $('#listnumSel').val();
         var data = {
             inputText : value,
@@ -120,6 +120,11 @@ function bookmark(){
 		$(this).attr('value','등록됨');
 	})
 }
+function openUploadTextForm() {
+    open("<c:url value='/personality/uploadTextForm'/>",
+            "_blank",
+            "width=600, height=800");   
+}
 </script>
     <!--================Home Banner Area =================-->
     <section class="banner_area">
@@ -140,82 +145,66 @@ function bookmark(){
     </section>
     <!--================End Home Banner Area =================-->
      <!--================ Start Blog Area =================-->
-    <section class="section_gap">
-        <div class="container-fluid">
-	        <div class="row justify-content-center">
-	            <div class="col-lg-7">
-	                <div class="main_title">
-	                    <h2>개인 맞춤형 기업 추천 서비스</h2>
-	                    <hr>
-	                    <p>업로드한 텍스트 파일과 기업정보의 유사도를 비교하여, 개인에게 맞는 기업 리스트를 추천합니다.
-	                    사용방법에 대한 자세한 매뉴얼 들어가야 함(아래쪽에 있는 div에)
-	                    전체 22612개의 기업 정보를 바탕으로 분석을 제공합니다.
-	                    </p>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="container" id="inputContainer">
-	             <ul class="nav nav-tabs">
-	                <li class="nav-item">
-	                    <a class="nav-link active" data-toggle="tab" href="#qwe">파일업로드</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" data-toggle="tab" href="#asd">직접입력</a>
-	                </li>
-	            </ul>
-	                <div class="tab-content">
-	                   <br>
-	                   <div class="col-lg-12">
-		                   <select class="form-control" id="listnumSel">
-	                            <option value="10">10위까지</option>
-	                            <option value="20">20위까지</option>
-	                            <option value="30">30위까지</option>
-	                            <option value="126">전부</option>
-	                        </select>
-	                   </div>
-	                    <div class="tab-pane fade show active" id="qwe">
-	                       <div class="section-top-border">
-	                               <div class="col-lg-12">
-                                       <form>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input form-control-file" id="customFile">
-                                                <label class="custom-file-label" for="customFile">파일선택</label>
-                                            </div>
-                                        </form>
-	                               </div>
-	                       </div>
-	                   </div>
-	                    <div class="tab-pane fade" id="asd">
-	                        <div class="section-top-border">
-	                           <div class="col-lg-12">
-	                               <textarea rows="10" cols="100%" class="form-control single-textarea" id="inputText" placeholder="여기에 텍스트를 입력해주세요."></textarea>
-	                           </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="row justify-content-center">
-                        <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 20px;">시작하기</a>
+     <section class="service-area-2 section_gap">
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6">
+                    <div class="service-2-left">
+                        <div class="get-know">
+                            <p class="df-color">기업분석</p>
+                            <h1>개인 맞춤형 기업 추천 서비스</h1>
+                            <hr>
+                            <p>업로드한 텍스트 파일과 기업정보의 유사도를 비교하여, 개인에게 맞는 기업 리스트를 추천합니다.
+                               사용방법에 대한 자세한 매뉴얼 들어가야 함(아래쪽에 있는 div에)
+                               전체 22612개의 기업 정보를 바탕으로 분석을 제공합니다.</p>            
+                            <button class="genric-btn danger e-large" onclick="openUploadTextForm()">파일 업로드</button>
+                        </div>
                     </div>
-	        </div>
-	        <div class="container" id=""></div>
-	        <div class="container" id="resultContainer" hidden="hidden">
-	           <div class="section-gap" style="padding-top: 50px;">
+                </div>
+                <div class="col-lg-6">
+                    <div class="service-2-right">
+                        <div class="get-know">
+                            <p>아래의 텍스트를 바탕으로 기업정보와의 유사도를 비교하여, 
+                                <br>선택한 순위만큼의 기업 종류를 추천합니다.
+                                <br>분석 전 텍스트의 내용을 확인해주세요.
+                            </p>
+                            <select class="form-control" id="listnumSel">
+                                <option value="10">10위까지</option>
+                                <option value="20">20위까지</option>
+                                <option value="30">30위까지</option>
+                                <option value="126">전부</option>
+                            </select>
+                            <br>
+                            <textarea rows="20" cols="74" id="revisedContent" style="resize: none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" style="padding-top: 85px;">
+            <div  class="row justify-content-center">
+                <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 15px;">시작하기</a>
+                <table id="insightList" hidden="hidden"></table>
+            </div>
+        </div>
+                    <div class="container" id="resultContainer" hidden="hidden">
+               <div class="section-gap" style="padding-top: 50px;">
                     <h3 class="mb-30 title_color">분석결과 : 추천순위</h3>
                     <p>사용자와 가장 유사한 업종을 순위별로 표시하였습니다. 해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
                     </p>
                     <hr>
                     <table class="table-bordered table-hover table-responsive">
                         <thead>
-	                       <tr>
-	                           <th style="width: 10%;">순위</th>
-	                           <th style="width: 50%;">분류</th>
-	                           <th style="width: 20%;">추천도</th>
-	                           <th style="width: 20%;">상세순위</th>
-	                       </tr>
-	                   </thead>
-	                   <tbody id="tbody">
-	                   </tbody>
-	               </table>
+                           <tr>
+                               <th style="width: 10%;">순위</th>
+                               <th style="width: 50%;">분류</th>
+                               <th style="width: 20%;">추천도</th>
+                               <th style="width: 20%;">상세순위</th>
+                           </tr>
+                       </thead>
+                       <tbody id="tbody">
+                       </tbody>
+                   </table>
                 </div>
             </div>
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -231,17 +220,17 @@ function bookmark(){
                             <table class="table-bordered table-hover">
                                 <thead>
                                     <tr>
-	                                    <th style="width: 5%;">순위</th>
-	                                    <th style="width: 30%;">회사명</th>
-	                                    <th style="width: 15%;">지역</th>
-	                                    <th style="width: 40%;">연락처</th>
-	                                    <th style="width: 10%;">추천도</th>
-	                                    <th style="width: 10%;">즐겨찾기</th>
+                                        <th style="width: 5%;">순위</th>
+                                        <th style="width: 30%;">회사명</th>
+                                        <th style="width: 15%;">지역</th>
+                                        <th style="width: 40%;">연락처</th>
+                                        <th style="width: 10%;">추천도</th>
+                                        <th style="width: 10%;">즐겨찾기</th>
                                     </tr>
-	                           </thead>
-	                           <tbody id="modalTbody">
-	                           </tbody>
-	                       </table>
+                               </thead>
+                               <tbody id="modalTbody">
+                               </tbody>
+                           </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="genric-btn danger e-large" data-dismiss="modal">닫기</button>
@@ -249,7 +238,9 @@ function bookmark(){
                     </div>
                 </div>
             </div>
-	   </div>
     </section>
     <!--================ End Blog Area =================-->
 <jsp:include page="../include/footer.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/resources/template_js/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/template_js/popper.js"></script>
+<script src="${pageContext.request.contextPath}/resources/template_js/bootstrap.min.js"></script>
