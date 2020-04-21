@@ -9,7 +9,8 @@ import com.syuusyoku.zipangu.vo.QuestionVO;
 public interface InterviewMapper {
 
 	public ArrayList<QuestionVO> selectList();
-	public void startInterview(InterviewVO vo);
-	public void insertInterview(InterviewResultVO vo);
-//	public ArrayList<InterviewResultVO> resultList();
+	public int startInterview(InterviewVO vo);
+	public int insertInterview(InterviewResultVO vo);
+	public ArrayList<InterviewResultVO> selectInterview(InterviewResultVO vo);
+	public ArrayList<InterviewResultVO> resultList();
 }

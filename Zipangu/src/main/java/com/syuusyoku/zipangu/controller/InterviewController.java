@@ -39,11 +39,11 @@ public class InterviewController {
 	//모의 면접 시작
 	@ResponseBody
 	@RequestMapping(value = "interview/startInterview", method = RequestMethod.POST)
-	public String startInterview(InterviewVO vo, HttpSession session, RedirectAttributes rttr) {
+	public int startInterview(InterviewVO vo, HttpSession session, RedirectAttributes rttr) {
 		boolean result = false;
 		if(dao.startInterview(vo, session) == 1) result = true;
 		rttr.addFlashAttribute("startInterview", result);
-		return "data";
+		return vo.getInterview_num();
 	}
 	
 	//모의면접 녹음 파일
@@ -62,15 +62,27 @@ public class InterviewController {
 
 	//각 각 모의 면접 결과 저장
 	@ResponseBody
-	@RequestMapping(value = "insertInterview", method = RequestMethod.POST)
-	public String replyBoardWrite(InterviewResultVO vo, HttpSession session) {
-		dao.insertInterview(vo, session);
-		return "redirect:/interview/startInterview?interview_num=" + vo.getInterview_num();
+	@RequestMapping(value = "interview/insertInterview", method = RequestMethod.POST)
+	public int insertInterview(InterviewResultVO vo) {
+		int result = dao.insertInterview(vo);
+		System.out.println(vo.toString()+"controller");
+		return result;
 	}
 	
-//	//모의 면접 결과 화면
-//	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
-//	public String getinterviewResult() {
-//		return "interview/interviewResult";
-//	}
+	// 1회차 모의 면접 결과 화면
+	@RequestMapping(value = "interview/selectInterview", method = RequestMethod.GET)
+	public String selectInterview(InterviewResultVO vo, Model model) {
+		ArrayList<InterviewResultVO> list = dao.selectInterview(vo);
+		model.addAttribute("list", list);
+		return "interview/interviewSelect";
+	}
+	
+	//모의 면접 결과 화면
+	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
+	public String resultList(Model model) {
+		ArrayList<InterviewResultVO> list = dao.resultList();
+		model.addAttribute("list", list);
+		return "interview/interviewResult";
+	}
+	
 }

@@ -47,7 +47,6 @@ public class InterviewDAO {
 	public int startInterview(InterviewVO vo, HttpSession session){
 		String userID = (String)session.getAttribute("userID");
 		vo.setUserID(userID);
-		int result = 0;
 
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
@@ -55,7 +54,8 @@ public class InterviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return result;
+		System.out.println(vo.toString()+"StartinterviewDAO");
+		return vo.getInterview_num();
 	}
 	
 	//음성파일 저장
@@ -81,31 +81,43 @@ public class InterviewDAO {
 	      }
 	    return dTime;
 	}
-
+	
 	//각 모의 면접 결과 저장 
-	public void insertInterview(InterviewResultVO vo, HttpSession session){
-		int interview_num = (int)session.getAttribute("interview_num");
-		vo.setInterview_num(interview_num);
+	public int insertInterview(InterviewResultVO vo){
+		int result = 0;
 		
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-			mapper.insertInterview(vo);
+			result = mapper.insertInterview(vo);
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
+		System.out.println(vo.toString()+"insertinterviewDAO");	
+		return result;
 	}
 
 	//모의 면접 완료 후 리스트 표시
-//	public ArrayList<InterviewVO> selectinterview(){
-//		ArrayList<InterviewVO> list = null;
-//		try {
-//			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-//			list = mapper.selectinterview();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return list;
-//	}
+	public ArrayList<InterviewResultVO> selectInterview(InterviewResultVO vo){
+		ArrayList<InterviewResultVO> list = null;
+		try {
+			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
+			list = mapper.selectInterview(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
-	//모의 면접 결과 화면에서 전체 리스트 표시
+	//결과 전체 표시
+	public ArrayList<InterviewResultVO> resultList(){
+		ArrayList<InterviewResultVO> list = null;
+		
+		try {
+			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
+			list = mapper.resultList();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

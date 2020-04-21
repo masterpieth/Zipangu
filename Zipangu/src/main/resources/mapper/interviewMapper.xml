@@ -13,45 +13,61 @@
 	
 <!-- 			아이디에 면접 결과 저장 -->
 	<insert id="startInterview" parameterType="ivo">
+		
+		<selectKey keyProperty="interview_num" order="BEFORE" resultType="int">
+			select interview_seq.nextval from dual
+		</selectKey>
+	
 		INSERT INTO
 			interview
 			(INTERVIEW_NUM
 			,USERID
 			,INPUTDATE
 		) VALUES (
-			interview_seq.nextval
+			#{interview_num}
 			,#{userID}
 			,SYSDATE)
 	</insert>
+
 	
 <!-- 	면접 완료 결과 저장 -->
-	<insert id="insertInterview" parameterType="ivo">
+	<insert id="insertInterview" parameterType="rvo">
 		INSERT INTO
-			insertview_result
+			interview_result
 			(interview_num
 			, question_num
 			, voicefilename
 			, result
-
 		) VALUES (
-			interview_num
-			, question_num
+			#{interview_num}
+			, #{question_num}
 			, #{voicefilename}
 			, #{result}
 			)
 	</insert>
+	
+<!-- 	<selcet id="selectInterview"> -->
+<!-- 		select  -->
+	
+<!-- 	</selcet> -->
 
-<!-- 	interview_num 중복된 값이 5개인 경우 테이블 출력 -->
-	<select id="select_result" parameterType="ivo" resultType="rvo">
+<!-- 	interviewresult -->
+	<select id="resultList" parameterType="ivo" resultType="rvo">
 SELECT 
-	A.INTERVIEW_NUM, A.USERID, 
-	A.INPUTDATE, B.QUESTION_NUM, 
-	B.VOICEFILENAME, B.RESULT
+	A.INTERVIEW_NUM,
+	A.USERID, 
+	A.INPUTDATE,
+	B.QUESTION_NUM, 
+	B.VOICEFILENAME,
+	B.RESULT,
+	C.QUESTION_TEXT
 FROM 
 	INTERVIEW A, 
-	INTERVIEW_RESULT B
+	INTERVIEW_RESULT B,
+	QUESTION C
 WHERE 
-	A.INTERVIEW_NUM = B.INTERVIEW_NUM;
+	A.INTERVIEW_NUM = B.INTERVIEW_NUM AND C.QUESTION_NUM = B.QUESTION_NUM
+ORDER BY A.INPUTDATE DESC
 	</select>
 	
 </mapper>

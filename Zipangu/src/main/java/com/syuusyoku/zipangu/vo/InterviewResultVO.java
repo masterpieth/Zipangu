@@ -6,7 +6,11 @@ import lombok.Data;
 public class InterviewResultVO {
 
 	private int interview_num;
+	private String userID;
+	private String inputdate;
 	private int question_num;
-	private String voiceFileName;
+	
+	private String voicefilename;
 	private String result;
+	private String question_text;
 }

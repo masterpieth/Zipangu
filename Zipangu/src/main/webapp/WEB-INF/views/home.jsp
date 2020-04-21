@@ -21,7 +21,7 @@
 
 <!-- 면접 -->
 <a href="<c:url value='/interview/getinterview' />">모의 면접 시작</a>
-<a href="<c:url value='/interview/getinterviewResult' />">모의 면접 결과 조회(테이블만)</a>
+<a href="<c:url value='/interview/getinterviewResult' />">모의 면접 결과 조회</a>
 <a href="<c:url value='/header' />">헤더확인</a>
 <a href="<c:url value='/footer' />">푸터확인</a>
 <a href="<c:url value='/maintemp' />">메인화면(작업중)</a>
