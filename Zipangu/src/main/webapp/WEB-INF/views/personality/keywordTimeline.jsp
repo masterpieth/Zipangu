@@ -88,7 +88,6 @@ function deleteConfirm() {
     </section>
 
 <section class="timeline">
-<br><br>
 <!-- 검색 기능 -->
 	<div align="center">
 		<form action="keywordTimeline" method="get">

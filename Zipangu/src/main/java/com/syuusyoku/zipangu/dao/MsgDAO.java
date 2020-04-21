@@ -2,7 +2,6 @@ package com.syuusyoku.zipangu.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
@@ -20,10 +19,9 @@ public class MsgDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public String chatBot(String chatContent) {
+	public String chatAnswer(String chatContent) {
 
-		String url = "https://job.mynavi.jp/21/pc/corpinfo/searchCorpListByGenCond/index?actionMode=searchFw&srchWord="+chatContent+"&q="+chatContent+"&SC=corp";
-		System.out.println("주소"+url);
+		String url = "https://www.vorkers.com/company_list?field=&pref=&src_str="+chatContent+"&sort=1&ct=top";
 		Document doc = null;
 		
 		try {
@@ -32,25 +30,43 @@ public class MsgDAO {
 			e.printStackTrace();
 		}
 		
-		// 주요 뉴스로 나오는 태그를 찾아서 가져오도록 한다.
-		Elements element = doc.select("div.boxSearchresultEach.corp.label");
-		System.out.println(element.size());
+		Elements element = doc.select("div.searchCompanyName");
+		Element temp = element.get(0);
 		
-		// 1. 헤더 부분의 제목을 가져온다.
-		String title = element.select("h3").text().substring(0, 4);	//substring(0, 4)
-
-		System.out.println("============================================================");
-		System.out.println(title);
-		chatContent = title;
-		System.out.println("============================================================");
+		//첫번째로 나오는 회사 url로 
+		String url2 = "https://www.vorkers.com" + temp.select("h3 > a").attr("href");
+		System.out.println(url2);
+		Document doc2 = null;
 		
-//		for(Element el : element.select("li")) {	// 하위 뉴스 기사들을 for문 돌면서 출력
-//			chatContent +=el.text();
-//			System.out.println(el.text());
-//		}
+		try {
+			doc2 = Jsoup.connect(url2).get();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		System.out.println("============================================================");
-		return chatContent;
+		Elements element2 = doc2.select("div#mainTitle");
+		String companyName = "会社名 : "+ element2.get(0).select("h2").text();
+		System.out.println(companyName);
+		
+		
+		Elements element3 = doc2.select("div.jsCompanyInfo > dl > dd"); 
+		
+		String businessType = "業種 : "+ element3.get(0).select("li > a").text();
+		System.out.println(businessType);
+		String companyURL = "URL : "+element3.get(1).select("a").text();
+		System.out.println(companyURL);
+		String companyLocation = "所在地 : "+element3.get(2).select("dd").text();
+		System.out.println(companyLocation);
+		String employeeNum = "社員数 : "+element3.get(3).select("dd").text();
+		System.out.println(employeeNum);
+		String yearofEstablishment = "設立年 : "+element3.get(4).select("dd").text();
+		System.out.println(yearofEstablishment);
+		String companyCapital = "資本金 : "+element3.get(5).select("dd").text();
+		System.out.println(companyCapital);
+		String companyRepresentative = "代表者 : " +element3.get(6).select("dd").text();
+		System.out.println(companyRepresentative);
+		String answer= companyName+", "+businessType+", "+companyURL+", "+companyLocation+", "+employeeNum+", "+yearofEstablishment+", "+companyCapital+", "+companyRepresentative;
+		return answer;
 	}
 
 	public void insert_list_msg(List_MsgVO vo) {

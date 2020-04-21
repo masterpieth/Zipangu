@@ -29,17 +29,13 @@ public class MsgController {
 	@Autowired
 	private MemberDAO daoMe;
 	
-	
-	//chatBot ajax
-	@RequestMapping(value = "msg/chatBot", method = RequestMethod.POST,produces ="application/text; charset=utf8")
+	@RequestMapping(value = "msg/chatAnswer", method = RequestMethod.POST,produces ="application/text; charset=utf8")
 	@ResponseBody
-	public String sendKakao(@RequestBody ChatBotVO vo) {
-		String chatContent="";
-		System.out.println("채팅내용~~"+vo.getChatContent());
-		chatContent = dao.chatBot(vo.getChatContent());
-		return "챗봇답변내용~~"+chatContent;
+	public String chatAnswer(@RequestBody ChatBotVO vo) {
+		String chatContent= vo.getChatContent();
+		String result = dao.chatAnswer(chatContent);
+		return result;
 	}
-	
 	
 	//멘티가 보는 화면
 	//멘토 목록 + 멘토 선택하면 대화창(msg/msg_read) 나오게

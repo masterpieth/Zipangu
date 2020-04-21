@@ -138,7 +138,7 @@ $(function(){
 });
 
 function openUploadTextForm() {
-	open("<c:url value='/personality/uploadTextForm'/>",
+	open("<c:url value='/popup/uploadTextForm'/>",
 			"_blank",
 			"width=600, height=800");	
 }

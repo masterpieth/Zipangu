@@ -54,9 +54,6 @@ $(function(){
 </script>
 </head>
 <body>
-
-db에 저장된 성향분석 키워드 목록
-
 	<table>
 		<tr>
 			<th>항목</th><th>퍼센트</th><th>선택</th>
