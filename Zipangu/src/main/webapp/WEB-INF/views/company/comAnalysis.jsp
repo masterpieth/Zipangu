@@ -43,7 +43,7 @@ function output(data){
     $.each(data, function(index,item){
         str += '<tr><td style="text-align: center;">' + (index+1) + '</td>';
         str += '<td class="typename">' + item['type'] + '</td>';
-        str += '<td style="text-align: center;">' + (item['score'].toFixed(2)*100) + '%</td>';
+        str += '<td style="text-align: center;">' + (Math.round(item['score']*100)) + '%</td>';
         str += '<td><input type="button" value="상세" class="detailBtn genric-btn danger e-large" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
     })
     return str
@@ -84,7 +84,7 @@ function modalOutput(data){
         str += '<td>' + item['coname'] + '</td>';
         str += '<td>' + item['location'] + '</td>';
         str += '<td>' + item['contact'] + '</td>';
-        str += '<td>' + (item['score'].toFixed(2)*100) + '%</td>';
+        str += '<td>' + (Math.round(item['score']*100)) + '%</td>';
         str += '<td><input type="button" value="선택" class="selectBtn genric-btn info e-large"/>';
         str += '<input type="hidden" class="type" value="'+item['type'] + '"/>';
         str += '<input type="hidden" class="company_num" value="'+item['company_num'] + '"/></td></tr>';
@@ -148,7 +148,7 @@ function bookmark(){
 	                    <h2>개인 맞춤형 기업 추천 서비스</h2>
 	                    <hr>
 	                    <p>업로드한 텍스트 파일과 기업정보의 유사도를 비교하여, 개인에게 맞는 기업 리스트를 추천합니다.
-	                    사용방법에 대한 자세한 매뉴얼 들어가야 함
+	                    사용방법에 대한 자세한 매뉴얼 들어가야 함(아래쪽에 있는 div에)
 	                    전체 22612개의 기업 정보를 바탕으로 분석을 제공합니다.
 	                    </p>
 	                </div>
@@ -204,13 +204,13 @@ function bookmark(){
                     <p>사용자와 가장 유사한 업종을 순위별로 표시하였습니다. 해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
                     </p>
                     <hr>
-                    <table class="table table-bordered table-hover table-responsive">
+                    <table class="table-bordered table-hover table-responsive">
                         <thead>
 	                       <tr>
-	                           <th>순위</th>
-	                           <th>분류</th>
-	                           <th>추천도</th>
-	                           <th>상세순위</th>
+	                           <th style="width: 10%;">순위</th>
+	                           <th style="width: 50%;">분류</th>
+	                           <th style="width: 20%;">추천도</th>
+	                           <th style="width: 20%;">상세순위</th>
 	                       </tr>
 	                   </thead>
 	                   <tbody id="tbody">
@@ -228,15 +228,15 @@ function bookmark(){
                             </button>
                         </div>
                         <div class="modal-body">
-                            <table class="table-bordered table-hover table-responsive">
+                            <table class="table-bordered table-hover">
                                 <thead>
                                     <tr>
-	                                    <th>순위</th>
-	                                    <th>회사명</th>
-	                                    <th>지역</th>
-	                                    <th style="width:100px;">연락처</th>
-	                                    <th>추천도</th>
-	                                    <th>즐겨찾기</th>
+	                                    <th style="width: 5%;">순위</th>
+	                                    <th style="width: 30%;">회사명</th>
+	                                    <th style="width: 15%;">지역</th>
+	                                    <th style="width: 40%;">연락처</th>
+	                                    <th style="width: 10%;">추천도</th>
+	                                    <th style="width: 10%;">즐겨찾기</th>
                                     </tr>
 	                           </thead>
 	                           <tbody id="modalTbody">

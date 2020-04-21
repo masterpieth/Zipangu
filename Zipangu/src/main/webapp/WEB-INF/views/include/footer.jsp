@@ -54,10 +54,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             </div>
         </div>
     </footer>
-    <!--================ End footer Area =================-->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="${pageContext.request.contextPath}/resources/template_js/jquery-3.2.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/template_js/popper.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/template_js/bootstrap.min.js"></script>
     </body>
 </html>

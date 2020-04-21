@@ -69,11 +69,11 @@
                             </li>
                             <c:choose>
                                 <c:when test="${sessionScope.userID == null}">
-                                    <li class="nav-item"><a class="nav-link" href="<c:url value='member/loginTemp'/>">로그인</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/member/loginTemp'/>">로그인</a></li>
                                 </c:when>
                                 <c:when test="${sessionScope.userID != null}">
                                     <li class="nav-item"><a class="nav-link" href="about-us.html">마이페이지</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="<c:url value='member/logoutTemp'/>">로그아웃</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/member/logoutTemp'/>">로그아웃</a></li>
                                 </c:when>
                             </c:choose>
                         </ul>
@@ -90,7 +90,7 @@
                                 </c:choose>
                                 <button id="msgButton">
                                     <i id="msgFa"class="fa fa-comments-o"></i>
-                                    <label id="msgLabel">Messenger</label>
+                                    <label id="msgLabel" class="col-form-label" style="font-size: 10px;">메신저/기업검색</label>
                                 </button>
                                 </a>
                             </section>

@@ -138,7 +138,7 @@ $(function(){
 });
 
 function openUploadTextForm() {
-	open("<c:url value='/popup/uploadTextForm'/>",
+	open("<c:url value='/personality/uploadTextForm'/>",
 			"_blank",
 			"width=600, height=800");	
 }
@@ -184,7 +184,7 @@ function openUploadTextForm() {
 		</div>
 		<div class="card-body" style="padding-top: 85px;">
 			<div  class="row justify-content-center">
-			    <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 15px;">성향분석</a>
+			    <a href="#" class="genric-btn danger e-large" id="searchPe" style="width: 300px; font-size: 15px;">성향분석</a>
 				<table id="insightList" hidden="hidden"></table>
 			</div>
 		</div>
