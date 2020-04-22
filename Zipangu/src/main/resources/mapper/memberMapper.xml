@@ -36,7 +36,6 @@
 		FROM
 			member
 		WHERE
-			userID = #{userID}
 			LOWER(userid) = LOWER(#{userID})
 		AND
 			userpwd = #{userPwd}

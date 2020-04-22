@@ -70,7 +70,6 @@
                                  aria-expanded="false">멘토링</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/schedule/scheduleForm'/>">예약하기</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="single-blog.html">마이스케줄</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item submenu dropdown">

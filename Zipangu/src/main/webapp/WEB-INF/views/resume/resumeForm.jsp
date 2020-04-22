@@ -1,13 +1,30 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="../include/header.jsp"></jsp:include>
 <head>
 <title>이력서 작성</title>
 <link rel="stylesheet" href="/zipangu/resources/template_css/bootstrap.min.css">
 <link rel="stylesheet" href="/zipangu/resources/css/resumeForm.css">
 </head>
 <body>
+
+    <section class="banner_area ">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/resume/resumeForm"/>">이력서 작성</a>
+                    </div>
+                </div>
+                <div class="banner_content text-center">
+                    <h2>이력서 작성</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <div class="sidenav fixed-right">
 	<button type="button" class="btn btn-warning btn-lg" onclick="TogetherJS(this); return false;" id="startMentoring">멘토링</button><br><br>
 	<button type="button" class="btn btn-secondary btn-lg" id="border">테두리 없애기</button><br><br>

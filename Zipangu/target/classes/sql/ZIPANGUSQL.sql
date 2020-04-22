@@ -137,7 +137,6 @@ CREATE TABLE ENTRYSHEET(
 	USERID VARCHAR2(100) REFERENCES MEMBER(USERID),
 	RESULTDATE TIMESTAMP DEFAULT SYSTIMESTAMP
 );
-
 INSERT INTO MEMBER VALUES('Administrator', '12345678', 'zipangu@zipangu', '관리자', '1970-01-01', '서울 모동', '010-1234-5678', '남성', 0, null, DEFAULT);
 INSERT INTO MEMBER VALUES('Mentor1', '12345678', 'zipangu@zipangu', '일멘토', '1980-02-02', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
 INSERT INTO MEMBER VALUES('Mentor2', '12345678', 'zipangu@zipangu', '이멘토', '1981-04-10', '서울 모동', '010-1234-5678', '여성', 1, null, DEFAULT);
