@@ -30,10 +30,17 @@
                                 </div>
                                 <div class="col-5">
                                     <ul class="list">
-                                        <li><a href="#">Mentoring</a></li>
+                                        <li><a href="<c:url value="/resume/resumeForm"/>">Resume</a></li>
+                                        <li><a href="<c:url value="/schedule/scheduleForm"/>">Mentoring</a></li>
                                         <li><a href="#">Interview</a></li>
-                                        <li><a href="#">Resume</a></li>
-                                        <li><a href="#">Contact</a></li>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.userID == null}">
+                                                <li><a href="<c:url value="/member/loginForm"/>">Login</a></li>
+                                            </c:when>
+                                            <c:when test="${sessionScope.userID != null}">
+                                                <li><a href="<c:url value="/member/logout"/>">Logout</a></li>
+                                            </c:when>
+                                        </c:choose>
                                     </ul>
                                 </div>
                             </div>
