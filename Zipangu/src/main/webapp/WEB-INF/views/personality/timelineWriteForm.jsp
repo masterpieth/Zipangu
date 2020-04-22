@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<jsp:include page="../include/header.jsp"></jsp:include>
 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/datedropper.css'/>">
 
@@ -30,7 +27,7 @@ $(function(){
 					temp += '<table>';
 					temp += '<tr><th>항목</th><th>퍼센트</th><th>선택</th></tr>';
 				}
-				temp += '<tr><td>'+data[i].trait+'</td><td>'+Math.round(data[i].rate*100)+'</td>';
+				temp += '<tr><td>'+data[i].trait+'</td><td>'+data[i].rate+'</td>';
 				temp += '<td><div class="primary-checkbox"><input type="checkbox" name="keywordSelected" id="default-checkbox['+i+']"><label for="default-checkbox['+i+']"></label></div></td></tr>';
 				if(i%10==9 || i==length-2) {
 					temp += '</table>';
@@ -70,32 +67,7 @@ $(function(){
 })
 
 </script>
-</head>
-<body>
-<br><br>
-<section class="features_area" id="features_counter">
-	<div class="container" id="tables_1">
-		<div class="row counter_wrapper">
-			<!-- single feature -->
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="single_feature" id="personality_result0">
-				</div>
-			</div>
-			<!-- single feature -->
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="single_feature" id="personality_result1">
-				</div>
-			</div>
-			<!-- single feature -->
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="single_feature" id="personality_result2">
-				</div>
-			</div>
-			<!-- single feature -->
-			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="single_feature" id="personality_result3">
-				</div>
-			</div>
+
 <form action="timelineWrite" method="post">
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
@@ -109,15 +81,20 @@ $(function(){
    	<!--================End Home Banner Area =================--> 
    	<br><br>
 	<div class="container">
-		<div class="card-body">
-			<p>1. 작성하고 싶은 에피소드의 날짜를 입력해주세요.</p>
-			<p>처음 시작한 날짜 : <input type="text" id="start_Date" name="start_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode">
-				~ 끝난 날짜 : <input type="text" id="finish_Date" name="finish_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode">  
-			</p>
-			<p>2. 작성하고 싶은 에피소드의 키워드를 아래 표에서 선택해주세요.</p>
-			<p>내가 고른 키워드들 : <input type="text" id="traits_Selected" name="traits_Selected" readonly="readonly"><p>
+		<div class="card-body" style="padding-bottom: 0px;">
+			<table>
+				<tr>
+					<th colspan="2">1. 작성하고 싶은 에피소드의 날짜를 입력해주세요.</th>
+				</tr>
+				<tr>
+					<th colspan="2">처음 시작한 날짜 : <input type="text" id="start_Date" name="start_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode" required="required">~ 끝난 날짜 : <input type="text" id="finish_Date" name="finish_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode" required="required"></th>
+				</tr>
+				<tr>
+					<th colspan="2">2. 작성하고 싶은 에피소드의 키워드를 아래 표에서 선택해주세요.
+				</tr>
+			</table>
 		</div>
-		<div class="container" id="tables_1">
+		<div class="container">
 			<div class="card-body" style="border: gray;">
 				<div class="row">
 					<!-- single feature -->
@@ -161,29 +138,27 @@ $(function(){
 			</div>
 		</div>
 		<div class="card-body">
-			<p>에피소드 제목 : <input type="text" name="episode_Title"></p>
-			<p>에피소드 내용 : <textarea rows="" cols="" name="episode_Content"></textarea></p>
+			<table>
+				<tr>
+					<th>내가 고른 키워드들 :</th><td><input type="text" id="traits_Selected" name="traits_Selected" readonly="readonly" style="width: 100%;"></td>
+				</tr>
+				<tr>
+					<th>에피소드 제목 : </th><td><input type="text" name="episode_Title" style="width: 100%;" required="required"></td>
+				</tr>
+				<tr>
+					<th>에피소드 내용 : </th><td><textarea rows="10" cols="120" name="episode_Content" required="required"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" class="genric-btn danger e-large" value="에피소드 등록" style="text-align: center;">
+						<a href="<c:url value='/personality/keywordTimeline'/>">
+							<input type="button" class="genric-btn danger e-large" value="취소">
+						</a>
+					</td>
+				</tr>
+			</table>
 			<br>
-			<p><input type="submit" value="에피소드 등록">
-			<a href="<c:url value='/personality/keywordTimeline'/>">
-				<input type="button" value="취소">
-			</a>
-			</p>
 		</div>
 	</div>
-</section>
-	<form action="timelineWrite" method="post">
-		처음 시작한 날짜 : <input type="text" id="start_Date" name="start_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode">
-		<br>끝난 날짜 : <input type="text" id="finish_Date" name="finish_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode">
-		
-		<br>내가 고른 키워드들 : <input type="text" id="traits_Selected" name="traits_Selected" readonly="readonly">
-		<br>에피소드 제목 : <input type="text" name="episode_Title">
-		<br>에피소드 내용 : <textarea rows="" cols="" name="episode_Content"></textarea>
-		
-		<br><input type="submit" value="에피소드 등록">
-		<a href="<c:url value='/personality/keywordTimeline'/>">
-		<input type="button" value="취소">
-		</a>
-	</form>
-</body>
-</html>
+</form>
+<jsp:include page="../include/footer.jsp"></jsp:include>

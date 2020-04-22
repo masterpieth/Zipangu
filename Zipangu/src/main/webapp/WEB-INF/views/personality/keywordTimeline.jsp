@@ -121,16 +121,19 @@ function deleteConfirm() {
             </div>
 		</form>
 	</div>
-
-  <h2 align="center">
-	<a href="<c:url value='/personality/timelineWriteForm'/>" style="color: black;"> 
-		에피소드 작성하기 <img src="<c:url value="/resources/img/write.png"/>" alt="글쓰기" width="35" height="35" align="middle">
-	</a>
-  </h2>
+	<section class="service-area-2 section_gap" style="padding-top: 0px; padding-bottom: 0px">
+	<div class="container">
+		<div class="card-body" align="center" style="font-size: 120%;">
+			<a href="<c:url value='/personality/timelineWriteForm'/>" style="color: black;"> 
+				에피소드 작성하기 <img src="<c:url value="/resources/img/write.png"/>" alt="글쓰기" width="35" height="35" align="middle">
+			</a>
+		</div>
+	</div>
+	</section>
   <ul style="color: black;">
   	<c:forEach items="${requestScope.timelineList}" var="TimelineVO">
   	    <li>
-	      <div style="background-color: white; border: dashed;" >
+	      <div style="background-color: white; border : black; margin-bottom: 0px" >
 	        <p align="right">
 	          <a href="<c:url value='/personality/timelineUpdateForm?timeline_Num=${TimelineVO.timeline_Num}'/>">
 	      	    <img src="<c:url value="/resources/img/fix.png"/>" alt="수정" width="35" height="35" align="right" >

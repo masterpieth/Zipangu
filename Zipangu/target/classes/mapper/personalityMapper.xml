@@ -18,7 +18,7 @@
 	</update>
 
 	<select id="keywordList" parameterType="String" resultType="PersonalityVO">
-		select * from personality where userID=#{userID} order by rate desc
+		select userid, trait, round(rate*100,1) as rate from personality where userID=#{userID} order by rate desc
 	</select>
 	
 	<insert id="timelineWrite" parameterType="TimelineVO">
