@@ -55,6 +55,9 @@ public class MemberDAO {
 			if (mapper.login(member) > 0) {
 				member = mapper.getMember(member.getUserID());
 				
+			result = mapper.login(member);
+			if (result > 0) {
+				member = getMember(member.getUserID());
 				session.setAttribute("userID", member.getUserID());
 				session.setAttribute("authority", member.getAuthority());
 				session.setAttribute("userName", member.getUserName());

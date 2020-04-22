@@ -25,7 +25,7 @@ public class ScheduleController {
 
 	@ResponseBody
 	@RequestMapping(value = "schedule/updateSchedule", method = RequestMethod.POST)
-	public boolean updateSchedule(HttpSession session, String scheduleList) {
-		return dao.updateSchedule(session, scheduleList);
+	public boolean updateSchedule(HttpSession session, String scheduleJSON) {
+		return dao.updateSchedule(session, scheduleJSON);
 	}
 }

@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.syuusyoku.zipangu.dao.MemberDAO;
+import com.syuusyoku.zipangu.dao.PageNavigator;
 import com.syuusyoku.zipangu.dao.ResumeDAO;
 import com.syuusyoku.zipangu.dao.ScheduleDAO;
 import com.syuusyoku.zipangu.vo.MemberVO;
@@ -49,28 +51,30 @@ public class ResumeController {
 	}
 
 	@RequestMapping(value = "resume/resumeList", method = RequestMethod.GET)
-	public String resumeList(HttpSession session, Model model) {
-		model.addAttribute("resumeList", dao.resumeList((String) session.getAttribute("userID")));
+	public String resumeList(HttpSession session, Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+		String userID = (String) session.getAttribute("userID");
+		PageNavigator navi = dao.navi(userID, page);
+		model.addAttribute("navi", navi);
+		model.addAttribute("resumeList", dao.resumeList(userID, navi));
 		return "resume/resumeList";
 	}
 
 	@RequestMapping(value = "resume/saveResume", method = RequestMethod.POST)
 	public String saveResume(
 		MultipartFile picFile, MemberVO member, ResumeVO resume, 
-		String careerList, String qualifiedList, HttpSession session
+		String careerJSON, String qualifiedJSON, HttpSession session
 	) {
 		resume.setUserID((String) session.getAttribute("userID"));
-		dao.saveResume(picFile, member, resume, careerList, qualifiedList);
+		dao.saveResume(picFile, member, resume, careerJSON, qualifiedJSON);
 		return "redirect:/resume/resumeList";
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "resume/shareUrl", method = RequestMethod.POST)
-	public String shareUrl(String mentorID, String shareUrl, HttpSession session) {
+	public void shareUrl(String mentorID, String shareUrl, HttpSession session) {
 		MemberVO member = memberDao.getMember(mentorID);
 		String menteeID = (String) session.getAttribute("userID");
 		String subject = menteeID + "님이 멘토링을 원하고 있습니다.";
 		memberDao.sendSimpleMessage(member.getEmail(), subject, shareUrl);
-		return mentorID;
 	}
 }

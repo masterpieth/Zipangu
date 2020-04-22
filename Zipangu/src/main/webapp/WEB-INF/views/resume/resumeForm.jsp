@@ -1,3 +1,4 @@
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="../include/header.jsp"></jsp:include>
@@ -8,7 +9,7 @@
 </head>
 <body>
 <div class="sidenav fixed-right">
-	<button type="button" class="btn btn-warning btn-lg" onclick="startMentoring(this); return false;" id="startMentoring">멘토링 시작</button><br><br>
+	<button type="button" class="btn btn-warning btn-lg" onclick="TogetherJS(this); return false;" id="startMentoring">멘토링</button><br><br>
 	<button type="button" class="btn btn-secondary btn-lg" id="border">테두리 없애기</button><br><br>
 	<button type="button" class="btn btn-info btn-lg" id="language">日本語</button><br><br>
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="checkResume">이력서 저장</button>
@@ -38,11 +39,11 @@
 		<button type="button" class="btn btn-success btn-sm" id="addCareer">+</button>
 		<button type="button" class="btn btn-danger btn-sm" id="deleteCareer">-</button>
 		<div id="career"></div>
-		<input type="hidden" name="careerList" id="careerList">
+		<input type="hidden" name="careerJSON" id="careerList">
 		<button type="button" class="btn btn-success btn-sm" id="addQualified">+</button>
 		<button type="button" class="btn btn-danger btn-sm" id="deleteQualified">-</button>
 		<div id="qualified"></div>
-		<input type="hidden" name="qualifiedList" id="qualifiedList">
+		<input type="hidden" name="qualifiedJSON" id="qualifiedList">
 		<textarea rows="8" cols="87" name="hobbyNSkill" id="hobbyNSkill">${resume.hobbyNSkill}</textarea>
 		<textarea rows="10" cols="87" name="introduce" id="introduce">${resume.introduce}</textarea>
 	</div>
@@ -65,20 +66,9 @@
 	</div>
 </form>
 </body>
-<%-- <script src="<c:url value='/resources/js/togetherjs-min.js' />"></script> --%>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
 <script>
 TogetherJSConfig_hubBase = "https://togetherjs-hub.glitch.me/";
-var mentoring = false;
-
-function startMentoring(button) {
-	mentoring = !mentoring;
-	TogetherJS(button);
-	if (mentoring)
-		$('#startMentoring').text('멘토링 시작');
-	else
-		$('#startMentoring').text('멘토링 종료');
-};
 
 $(function() {
 	var today = new Date();
@@ -93,37 +83,31 @@ $(function() {
 		$('#inputYear').val(year);
 		$('#inputMonth').val(month);
 		$('#inputDay').val(day);
-		$('#startMentoring').remove();
 	} else {
 		inputDate = '${resume.inputDate}'.split('-');
 		$('#inputYear').val(inputDate[0]);
 		$('#inputMonth').val(Number(inputDate[1]));
 		$('#inputDay').val(Number(inputDate[2]));
-		var path = '<c:url value="/uploaded/img/picFile/' + resume_num + '_${resume.picFileName}" />';
-		$('#pic').attr('src', path);
+		if (${resume.picFileName ne null}) {
+			var path = '<c:url value="/uploaded/img/picFile/' + resume_num + '_${resume.picFileName}" />';
+			$('#pic').attr('src', path);
+		}
 	}
 
-	if (${mentorID eq null})
-		$('#startMentoring').remove();
-	else {
-		var mentorID = '${mentorID}';
-		TogetherJSConfig_on_ready = function () {
-			$.ajax({
-				url : "<c:url value='/resume/shareUrl' />",
-				type : "post",
-				data : {
-					mentorID : mentorID,
-					shareUrl : TogetherJS.shareUrl()
-				},
-				success : function(result) {
-					console.log(result);
-				},
-				error : function(e) {
-					console.log(e);
-				}
-			});
-		};
-	}
+	var mentorID = '${mentorID}';
+	TogetherJSConfig_on_ready = function () {
+		$.ajax({
+			url : "<c:url value='/resume/shareUrl' />",
+			type : "post",
+			data : {
+				mentorID : mentorID,
+				shareUrl : TogetherJS.shareUrl()
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	};
 
 	$('#inputYear, #inputMonth, #inputDay').change(function() {
 		var inputYear = $('#inputYear').val();

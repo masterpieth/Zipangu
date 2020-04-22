@@ -17,6 +17,15 @@
 			resume_num DESC
 	</select>
 
+	<select id="resumeCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			resume
+		WHERE
+			userid = #{userID}
+	</select>
+
 	<insert id="saveResume" parameterType="resume">
 		<selectKey keyProperty="resume_num" resultType="int" order="BEFORE">
 			SELECT resume_seq.NEXTVAL FROM DUAL
@@ -94,14 +103,14 @@
 			picFileName = #{picFileName},
 			title = #{title},
 			inputdate = #{inputDate},
-			DEFAULT
+			correcteddate = SYSTIMESTAMP
 		WHERE
 			resume_num = #{resume_num}
 	</update>
 
 	<update id="updateResumeMember" parameterType="member">
 		UPDATE
-			member
+			resume_member
 		SET
 			email = #{email},
 			username = #{userName},

@@ -1,7 +1,8 @@
 package com.syuusyoku.zipangu.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import org.apache.ibatis.session.RowBounds;
 
 import com.syuusyoku.zipangu.vo.CareerVO;
 import com.syuusyoku.zipangu.vo.MemberVO;
@@ -28,7 +29,9 @@ public interface ResumeMapper {
 	
 	MemberVO getResumeMember(MemberVO member);
 
-	ArrayList<ResumeVO> resumeList(String userID);
+	ArrayList<ResumeVO> resumeList(String userID, RowBounds rowBounds);
+
+	int resumeCount(String userID);
 
 	ResumeVO getResume(MemberVO member);
 
