@@ -94,8 +94,8 @@ $(function(){
 									temp += '<div class="single-chart" style="font-size: 50%;">';
 									temp += '<svg viewBox="0 0 36 36" class="circular-chart orange">';
 									temp += '<path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>';
-									temp += '<path class="circle" stroke-dasharray="'+Math.round(data[i].rate*100)+', 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>';
-									temp += '<text x="18" y="20.35" class="percentage">'+data[i].trait+' '+Math.round(data[i].rate*100)+'%</text>';
+									temp += '<path class="circle" stroke-dasharray="'+ data[i].rate +', 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>';
+									temp += '<text x="18" y="20.35" class="percentage">'+data[i].trait+' '+ data[i].rate +'%</text>';
 								    temp += '</svg>';
 							 		temp += '</div>';
 							 		if(i%5==4) {
@@ -112,10 +112,10 @@ $(function(){
 						var temp="";
 						for(var i=0; i<length-1; i++) {
 							if(i%10==0) {
-								temp += '<table>';
-								temp += '<tr><th>항목</th><th>퍼센트</th></tr>';
+								temp += '<table class="table-responsive">';
+								temp += '<tr><th style="width: 70%;">항목</th><th style="width: 30%;">퍼센트</th></tr>';
 							}
-							temp += '<tr><td>'+traitAry[i]+'</td><td>'+Math.round(rateAry[i]*100)+'</td></tr>';
+							temp += '<tr><td>'+traitAry[i]+'</td><td>'+Math.round(rateAry[i]*100)+'%</td></tr>';
 							if(i%10==9 || i==length-2) {
 								temp += '</table>';
 								$("#personality_result"+Math.floor(i/10)).append(temp);
