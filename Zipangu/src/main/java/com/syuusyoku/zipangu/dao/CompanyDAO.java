@@ -28,6 +28,18 @@ public class CompanyDAO {
 		}
 		return result > 0;
 	}
+	public boolean deleteBookmark(CompanyVO vo, HttpSession httpSession) {
+		int result = 0;
+		String userID = (String)httpSession.getAttribute("userID");
+		vo.setUserID(userID);
+		try {
+			CompanyMapper mapper = session.getMapper(CompanyMapper.class);
+			result = mapper.deleteBookmark(vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result > 0;
+	}
 	public ArrayList<CompanyVO> getBookmarkCount(HttpSession httpSession) {
 		String userID = (String)httpSession.getAttribute("userID");
 		ArrayList<CompanyVO> result = null;

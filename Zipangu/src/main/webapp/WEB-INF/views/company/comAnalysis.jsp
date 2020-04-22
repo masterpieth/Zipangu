@@ -164,6 +164,11 @@ function openUploadTextForm() {
                             <button class="genric-btn danger e-large" onclick="openUploadTextForm()">파일 업로드</button>
                         </div>
                     </div>
+                    <h4>기업분석 사용 가이드</h4>
+                    <p>
+                        상세 버튼을 누르고 등록 버튼을 눌러서 관심기업을 즐겨찾기 하세요 ㄱㄱㄱ
+                    </p>
+                    <img class="img-fluid" src="${pageContext.request.contextPath}/resources/template_img/service/comanalysis.jpg" style="width: 625px;">
                 </div>
                 <div class="col-lg-6">
                     <div class="service-2-right">
@@ -179,7 +184,7 @@ function openUploadTextForm() {
                                 <option value="126">전부</option>
                             </select>
                             <br>
-                            <textarea rows="20" cols="74" id="revisedContent" style="resize: none;"></textarea>
+                            <textarea rows="23" cols="74" id="revisedContent" style="resize: none;"></textarea>
                         </div>
                     </div>
                 </div>

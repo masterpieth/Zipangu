@@ -14,6 +14,13 @@
             #{contact}
         )
     </insert>
+    <delete id="deleteBookmark" parameterType="companyVO">
+        delete from company_result
+        where
+            company_num = #{company_num}
+            and
+            userid = #{userID}
+    </delete>
     <select id="getBookmarkCount" parameterType="string" resultType="companyVO">
         select
             type,

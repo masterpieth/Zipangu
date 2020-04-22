@@ -17,7 +17,12 @@ var type_arr;
 
 $(function(){
 	getBookmarkCount();
-	getBookmarkList();
+	bookmarkList = getBookmarkList();
+	if(bookmarkList.length == 0) {
+		$('#resultDiv').attr('hidden','hidden');
+		$('#resultDivIfnoResult').removeAttr('hidden','hidden');
+		return;
+	}
 	getTotalEntrysheet();
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
@@ -42,17 +47,19 @@ function getBookmarkCount() {
 	});
 }
 function getBookmarkList(){
+	var result;
 	$.ajax({
         url : "/zipangu/analysis/getBookmarkList",
         type: "post",
         async: false,
         success: function(data){
-        	bookmarkList = data;
+        	result = data;
         },
         error: function(e){
             console.log(e);
         }
     });
+    return result;
 }
 function getTotalEntrysheet() {
     $.ajax({
@@ -140,7 +147,7 @@ function setEntrysheet(){
 		
 		var tbodyStr = bookmarkOutput(type);
 		$('#bookmark_tbody').html(tbodyStr);
-		$('#currentBookmarkTitle').html('즐겨찾기 상세 : ' + type)
+		$('#currentBookmarkTitle').html('즐겨찾기 상세 : ' + type);
 	});
 }
 function searchEntrysheet(type){
@@ -161,7 +168,7 @@ function bookmarkOutput(type) {
         if(item.type.indexOf(type) !== -1) {
             typeResult.push(item);
             str += '<tr><td>' + (num++) + '</td>';
-            str += '<td>'+ item.coname + '</td>';
+            str += '<td><a href="<c:url value="/analysis/deleteBookmark"/>?company_num=' + item.company_num + '">'+ item.coname + '</a></td>';
             str += '<td>' + item.location + '</td>';
             str += '<td>' + item.contact + '</td></tr>';
         }
@@ -230,7 +237,7 @@ function entrysheetOutput(typeResult, divId){
 	        </div>
 	    </div>
 	    <br>
-		<div class="row">
+		<div class="row" id="resultDiv">
 			<div class="container">
 				<div class="col-md-6" style="float: right;">
 				    <div class="card">
@@ -243,8 +250,9 @@ function entrysheetOutput(typeResult, divId){
 			       <div class="card">
 		                <h4 class="card-title" id="currentBookmarkTitle">즐겨찾기 상세</h4>
 		                <hr>
+		                <p>즐겨찾기 해제를 원하는 경우 해당 기업명을 클릭해주세요.</p>
 		                <div class="card-body pre-scrollable" style="height: 100%;">
-		                <table class="table" id="testTable">
+		                <table class="table table-hover" id="testTable">
 		                    <thead>
 		                        <tr>
 		                            <th style="width: 10%;">#</th>
@@ -261,28 +269,22 @@ function entrysheetOutput(typeResult, divId){
 			    </div>
 			</div>
 		</div>
+		<div class="row justify-content-center align-items-center" id="resultDivIfnoResult" hidden="hidden">
+		    <div class="jumbotron" align="center">
+		        <div class="card-body col-md-9">
+	                <h2>등록된 즐겨찾기가 없습니다.</h2>
+	                <hr>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <p>먼저 기업분석을 진행해주세요.</p>
+                </div>
+                <a href="<c:url value="/analysis/company"/>" class="genric-btn danger e-large" style="width: 300px; font-size: 15px;">기업분석 페이지로 이동</a>
+		    </div>
+		</div>
 		<div class="row">
 		   <div class="container" id="inputContainer">
 		       <ul class="nav nav-tabs">
 	            </ul>
-	            <nav class="blog-pagination justify-content-center d-flex" style="padding-bottom: 10px;">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Previous">
-                                <span aria-hidden="true">
-                                    <span class="lnr lnr-chevron-left"></span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Next">
-                                <span aria-hidden="true">
-                                    <span class="lnr lnr-chevron-right"></span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
 	            <div class="tab-content">
 	            </div>
 	        </div>
@@ -290,6 +292,18 @@ function entrysheetOutput(typeResult, divId){
 	</div>
 <div class="card">
 </div>
+<c:choose>
+    <c:when test="${requestScope.deleteResult == true}">
+        <script>
+            alert('즐겨찾기가 해제되었습니다.');
+        </script>
+    </c:when>
+    <c:when test="${requestScope.deleteResult == false}">
+        <script>
+        alert('즐겨찾기가 해제에 실패하였습니다.');
+        </script>
+    </c:when>
+</c:choose>
 <jsp:include page="../include/footer.jsp"></jsp:include>
 <script src="/zipangu/resources/template_js/jquery-3.2.1.min.js"></script>
 <script src="/zipangu/resources/template_js/popper.js"></script>
