@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.syuusyoku.zipangu.vo.ScheduleVO;
 
 @Repository
@@ -38,22 +39,27 @@ public class ScheduleDAO {
 	}
 
 	@Transactional
-	public boolean updateSchedule(HttpSession session, String scheduleList) {
+	public boolean updateSchedule(HttpSession session, String scheduleJSON) {
 		int result = 0;
 		int scheduleListSize = 0;
 		try {
 			ScheduleMapper mapper = this.session.getMapper(ScheduleMapper.class);
-			ScheduleVO[] schedules = new ObjectMapper().readValue(scheduleList, ScheduleVO[].class);
+			ArrayList<ScheduleVO> scheduleList = new Gson().fromJson(scheduleJSON, new TypeToken<ArrayList<ScheduleVO>>(){}.getType());
 			int authority = (int) session.getAttribute("authority");
-			if (authority < 2)
-				mapper.deleteSchedule(schedules[0].getMentorID(), (String) session.getAttribute("date"));
-			for (ScheduleVO schedule : schedules) {
-				if (authority > 1)
+			if (authority < 2) {
+				HashMap<String, String> map = new HashMap<>();
+				map.put("mentorID", (String) session.getAttribute("userID"));
+				map.put("date", (String) session.getAttribute("date"));
+				mapper.deleteSchedule(map);
+			}
+			if (authority > 1) {
+				for (ScheduleVO schedule : scheduleList)
 					result += mapper.updateSchedule(schedule);
-				else
+			} else {
+				for (ScheduleVO schedule : scheduleList)
 					result += mapper.insertSchedule(schedule);
 			}
-			scheduleListSize = schedules.length;
+			scheduleListSize = scheduleList.size();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

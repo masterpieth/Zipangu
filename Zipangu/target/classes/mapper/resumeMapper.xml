@@ -17,6 +17,15 @@
 			resume_num DESC
 	</select>
 
+	<select id="resumeCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			resume
+		WHERE
+			userid = #{userID}
+	</select>
+
 	<insert id="saveResume" parameterType="resume">
 		<selectKey keyProperty="resume_num" resultType="int" order="BEFORE">
 			SELECT resume_seq.NEXTVAL FROM DUAL

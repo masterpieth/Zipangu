@@ -6,10 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 가입</title>
-<link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.min.css' />">
-<script src="<c:url value='/resources/js/jquery-3.4.1.min.js' />"></script>
-<script src="<c:url value='/resources/js/popper.min.js' />"></script>
-<script src="<c:url value='/resources/js/bootstrap.min.js' />"></script>
+<link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 <style>
 .valid-message {
 	width:100%;
@@ -17,6 +14,7 @@
 	font-size:80%;
 }
 </style>
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
 </head>
 <body>
 <div class="container" style="height:100px;"></div>
@@ -85,11 +83,13 @@
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary" id="signupBtn" onclick="return signup()">가입하기</button>
+		<button onclick="TogetherJS(this); return false;">Start TogetherJS</button>
 	</form>
 </div>
 <div class="container" style="height:100px;"></div>
 </body>
 <script>
+TogetherJSConfig_hubBase = "https://togetherjs-hub.glitch.me/";
 var checkID, checkPwd, checkEMail, checkUserName, checkBirth, checkAddress, checkPhone, checkSex, checkAuthority;
 checkID = checkPwd = checkEMail = checkUserName = checkBirth = checkAddress = checkPhone = checkSex = checkAuthority = false;
 

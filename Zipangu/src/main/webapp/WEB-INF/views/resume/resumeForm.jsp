@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="sidenav fixed-right">
-	<button type="button" class="btn btn-warning btn-lg" onclick="startMentoring(this); return false;" id="startMentoring">멘토링 시작</button><br><br>
+	<button type="button" class="btn btn-warning btn-lg" onclick="TogetherJS(this); return false;" id="startMentoring">멘토링</button><br><br>
 	<button type="button" class="btn btn-secondary btn-lg" id="border">테두리 없애기</button><br><br>
 	<button type="button" class="btn btn-info btn-lg" id="language">日本語</button><br><br>
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="checkResume">이력서 저장</button>
@@ -68,20 +68,9 @@
 	</div>
 </form>
 </body>
-<%-- <script src="<c:url value='/resources/js/togetherjs-min.js' />"></script> --%>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
 <script>
 TogetherJSConfig_hubBase = "https://togetherjs-hub.glitch.me/";
-var mentoring = false;
-
-function startMentoring(button) {
-	mentoring = !mentoring;
-	TogetherJS(button);
-	if (mentoring)
-		$('#startMentoring').text('멘토링 시작');
-	else
-		$('#startMentoring').text('멘토링 종료');
-};
 
 $(function() {
 	var today = new Date();
@@ -96,7 +85,6 @@ $(function() {
 		$('#inputYear').val(year);
 		$('#inputMonth').val(month);
 		$('#inputDay').val(day);
-		$('#startMentoring').remove();
 	} else {
 		inputDate = '${resume.inputDate}'.split('-');
 		$('#inputYear').val(inputDate[0]);
@@ -108,27 +96,20 @@ $(function() {
 		}
 	}
 
-	if (${mentorID eq null})
-		$('#startMentoring').remove();
-	else {
-		var mentorID = '${mentorID}';
-		TogetherJSConfig_on_ready = function () {
-			$.ajax({
-				url : "<c:url value='/resume/shareUrl' />",
-				type : "post",
-				data : {
-					mentorID : mentorID,
-					shareUrl : TogetherJS.shareUrl()
-				},
-				success : function(result) {
-					console.log(result);
-				},
-				error : function(e) {
-					console.log(e);
-				}
-			});
-		};
-	}
+	var mentorID = '${mentorID}';
+	TogetherJSConfig_on_ready = function () {
+		$.ajax({
+			url : "<c:url value='/resume/shareUrl' />",
+			type : "post",
+			data : {
+				mentorID : mentorID,
+				shareUrl : TogetherJS.shareUrl()
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	};
 
 	$('#inputYear, #inputMonth, #inputDay').change(function() {
 		var inputYear = $('#inputYear').val();

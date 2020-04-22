@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>이력서 조회</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
-<%-- <script src="<c:url value='/resources/js/togetherjs-min.js' />"></script> --%>
 </head>
 <style>
 th, td {
@@ -31,99 +30,100 @@ input[type="radio"] {
 	<form action="<c:url value="/resume/resumeForm" />" method="get" id="resumeList">
 		<table class="table table-striped" border="1">
 			<thead><tr>
-				<th width="40%">제목</th>
-				<th width="30%">작성일</th>
-				<th width="30%">수정일</th>
+				<th width="50%">제목</th>
+				<th width="25%">작성일</th>
+				<th width="25%">수정일</th>
 			</tr></thead>
-			<tbody id="tbody"></tbody>
-			<tfoot>
-				<tr><td colspan="3"><ul class="pagination justify-content-center">
-					<li class="page-item"><button type="button" class="page-link" onclick="prevPage()">이전</button></li>
-					<li class="page-item"><button type="button" class="page-link">1</button></li>
-					<li class="page-item active"><button type="button" class="page-link">2</button></li>
-					<li class="page-item"><button type="button" class="page-link">3</button></li>
-					<li class="page-item"><button type="button" class="page-link" onclick="nextPage()">다음</button></li>
-				</ul></td></tr>
-			</tfoot>
+			<tbody id="tbody">
+				<c:forEach items="${resumeList}" var="resume">
+					<tr>
+						<td style="text-align:left;"><div class="form-check">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="resume_num" value="${resume.resume_num}">
+								${resume.title}
+							</label>
+						</div></td>
+						<td>${resume.inputDate}</td>
+						<td>${resume.correctedDate}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+			<tfoot><tr><td colspan="3">
+				<ul class="pagination justify-content-center">
+					<c:if test="${navi.totalPageCount gt navi.pagePerGroup}">
+						<li class="page-item">
+							<a class="page-link" href="javascript:pageProc(1)"
+							<c:if test="${navi.currentPage eq 1}"> style="visibility:hidden;"</c:if>
+							>처음</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="javascript:pageProc(${navi.startPageGroup - 1})">
+								<c:choose>
+									<c:when test="${navi.currentPage eq 1}">처음</c:when>
+									<c:otherwise>이전</c:otherwise>
+								</c:choose>
+							</a>
+						</li>
+					</c:if>
+					<c:forEach var="page" begin="${navi.startPageGroup}" end="${navi.endPageGroup}">
+						<li class="page-item <c:if test="${page == navi.currentPage}">active</c:if>">
+							<a class="page-link" href="javascript:pageProc(${page})">${page}</a>
+						</li>
+					</c:forEach>
+					<c:if test="${navi.totalPageCount gt navi.pagePerGroup}">
+						<li class="page-item">
+							<a class="page-link" href="javascript:pageProc(${navi.endPageGroup + 1})">
+								<c:choose>
+									<c:when test="${navi.currentPage eq navi.totalPageCount}">&nbsp;끝&nbsp;</c:when>
+									<c:otherwise>다음</c:otherwise>
+								</c:choose>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="javascript:pageProc(${navi.totalPageCount})"
+							<c:if test="${navi.currentPage eq navi.totalPageCount}"> style="visibility:hidden;"</c:if>
+							>&nbsp;끝&nbsp;</a>
+						</li>
+					</c:if>
+				</ul>
+			</td></tr></tfoot>
 		</table>
 	</form>
-		<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#inputTitle">새 이력서</button>
-		<p class="float-right">&nbsp;&nbsp;</p>
-		<button type="button" class="btn btn-info float-right" id="updateResume">수정하기</button>
-		<div class="modal" id="inputTitle">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<form action="<c:url value='/resume/resumeForm' />" method="get">
-						<div class="modal-body">
-								<input class="form-control" type="text" name="title" required>
-								<input type="hidden" name="resume_num" value="-1">
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-danger">작성</button>
-							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-						</div>
-					</form>
+	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#inputTitle">새 이력서</button>
+	<p class="float-right">&nbsp;&nbsp;</p>
+	<button type="button" class="btn btn-info float-right" id="updateResume">수정하기</button>
+	<div class="modal" id="inputTitle">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
+				<form action="<c:url value='/resume/resumeForm' />" method="get">
+					<div class="modal-body">
+						<input class="form-control" type="text" name="title" required>
+						<input type="hidden" name="resume_num" value="-1">
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger">작성</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
 </div>
 <div class="container" style="height:100px;"></div>
 </body>
 <script>
-var resumeList = [];
-
-function prevPage() {
-	var page = Number($('.pagination>.active').text());
-	createPagination(page - 1);
-};
-
-function nextPage() {
-	var page = Number($('.pagination>.active').text());
-	createPagination(page + 1);
-};
-
-function createPagination(page) {
-	var	pagination = '<li class="page-item"><button type="button" class="page-link" onclick="prevPage()"';
-	if (page === 1)
-		pagination += ' style="visibility:hidden;"'
-	pagination += '>이전</button></li>';
-	for (var i = page > 1 ? page - 1 : page; i < (resumeList.length - 1) / 5 + 1 && i < page + 2; i++) {
-		pagination += '<li class="page-item';
-		if (page === i)
-			pagination += ' active';
-		pagination += '"><button type="button" class="page-link" onclick="createPagination(';
-		pagination += i + ')">' + i + '</button></li>';
-	}
-	pagination += '<li class="page-item"><button type="button" class="page-link" onclick="nextPage()"';
-	if (page === resumeList.length / 5)
-		pagination += ' style="visibility:hidden;"'
-	pagination += '>다음</button></li>';
-	$('.pagination').html(pagination);
-	createResumeList(page);
-};
-
-function createResumeList(page) {
-	var resumeListHtml = '';
-	for (var i = (page - 1) * 5; i < resumeList.length && i < page * 5; i++) {
-		resumeListHtml += '<tr><td style="text-align:left;">';
-		resumeListHtml += '<div class="form-check">';
-		resumeListHtml += '<label class="form-check-label" for="'; + resumeList[i].resume_num + '">';
-		resumeListHtml += '<input type="radio" class="form-check-input" name="resume_num" ';
-		resumeListHtml += 'id="' + resumeList[i].resume_num + '" value="' + resumeList[i].resume_num + '">';
-		resumeListHtml += resumeList[i].title + '</label></div></td><td>' + resumeList[i].inputDate;
-		resumeListHtml += '</td><td>' + resumeList[i].correctedDate + '</td></tr>';
-	}
-	$('#tbody').html(resumeListHtml);
+function pageProc(page) {
+	location.href = '<c:url value="/resume/resumeList?page=" />' + page;
 };
 
 $(function() {
 	if (${empty resumeList}) {
 		$('#updateResume').css('visibility', 'hidden');
-		$('#tbody').html('<tr><td colspan="5" style="text-align:left;"><h4>작성된 이력서가 없습니다.</h4></td></tr>')
+		$('#tbody').html('<tr><td colspan="5"><h4>작성된 이력서가 없습니다.</h4></td></tr>')
 	}
 
 	$('#updateResume').click(function() {
@@ -132,19 +132,6 @@ $(function() {
 		else
 			alert('수정하실 이력서를 선택해 주세요.');
 	});
-
-	var resume;
-	<c:forEach items="${resumeList}" var="resume">
-		resume = {};
-		resume.resume_num = '${resume.resume_num}';
-		resume.userID = '${resume.userID}';
-		resume.title = '${resume.title}';
-		resume.inputDate = '${resume.inputDate}';
-		resume.correctedDate = '${resume.correctedDate}';
-		resumeList.push(resume);
-	</c:forEach>
-	createResumeList(1);
-	createPagination(1);
 });
 </script>
 </html>

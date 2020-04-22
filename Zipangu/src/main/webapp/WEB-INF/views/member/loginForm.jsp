@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
+<link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 </head>
 <body>
 <div class="container" style="height:100px;"></div>

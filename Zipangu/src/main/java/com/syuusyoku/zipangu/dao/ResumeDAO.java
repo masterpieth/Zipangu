@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,6 +20,8 @@ import com.syuusyoku.zipangu.vo.ResumeVO;
 
 @Repository
 public class ResumeDAO {
+	private final int countPerPage = 5;
+	private final int pagePerGroup = 3;
 	@Autowired
 	private SqlSession session;
 
@@ -71,15 +74,29 @@ public class ResumeDAO {
 		return result > 0;
 	}
 
-	public ArrayList<ResumeVO> resumeList(String userID) {
+	public ArrayList<ResumeVO> resumeList(String userID, PageNavigator navi) {
 		ArrayList<ResumeVO> resumeList = null;
+		RowBounds rowBounds = new RowBounds(navi.getStartRecord(), navi.getCountPerPage());
 		try {
 			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
-			resumeList = mapper.resumeList(userID);
+			resumeList = mapper.resumeList(userID, rowBounds);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resumeList;
+	}
+
+	public PageNavigator navi(String userID, int page) {
+		int resumeCount = 0;
+		try {
+			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
+			resumeCount = mapper.resumeCount(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, resumeCount);
+
+		return navi;
 	}
 
 	public HashMap<String, Object> getResume(MemberVO member) {

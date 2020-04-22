@@ -23,11 +23,12 @@ td {
 </style>
 </head>
 <body>
+<div class="container" style="height:100px;"></div>
 <div class="container">
 	<table class="table table-bordered">
 		<thead>
 		<tr>
-			<td><button type="button" class="btn" onclick="lastMonth()">&lt;</button></td>
+			<td><button type="button" class="btn" onclick="prevMonth()">&lt;</button></td>
 			<td align="center" id="month" colspan="5"></td>
 			<td><button type="button" class="btn" onclick="nextMonth()">&gt;</button></td>
 		</tr>
@@ -59,6 +60,7 @@ td {
 			</div>
 		</c:if>
 </div>
+<div class="container" style="height:100px;"></div>
 </body>
 <script>
 var calendarDate, scheduleList, thisMonth, date;
@@ -79,21 +81,12 @@ function createCalendar() {
 	for (var i = 1; i <= lastDate.getDate(); i++) {
 		if (day % 7 === 0) {
 			calendarBody += '<tr><td><button type="button" class="btn sunday date" ';
-			<c:if test="${authority gt 1}">
-				calendarBody += 'data-toggle="modal" data-target="#reserveInfo "'
-			</c:if>
 			calendarBody += 'onclick="checkDate(this)">' + i + '</button></td>';
 		} else if (day % 7 === 6) {
 			calendarBody += '<td><button type="button" class="btn saturday date" ';
-			<c:if test="${authority gt 1}">
-				calendarBody += 'data-toggle="modal" data-target="#reserveInfo "'
-			</c:if>
 			calendarBody += 'onclick="checkDate(this)">' + i + '</button></td></tr>';
 		} else {
 			calendarBody += '<td><button type="button" class="btn date" ';
-			<c:if test="${authority gt 1}">
-				calendarBody += 'data-toggle="modal" data-target="#reserveInfo "'
-			</c:if>
 			calendarBody += 'onclick="checkDate(this)">' + i + '</button></td>';
 		}
 		++day;
@@ -104,6 +97,12 @@ function createCalendar() {
 			calendarBody += '</tr>';
 	}
 	$('#calendar').html(calendarBody);
+	<c:if test="${authority gt 1}">
+		$('.date').each(function() {
+			$(this).attr('data-toggle', 'modal');
+			$(this).attr('data-target', '#reserveInfo');
+		})
+	</c:if>
 	var yearMonth = year + (month < 10 ? '0' + month : String(month));
 	for (var i = 0; i < scheduleList.length; i++) {
 		var reserveDate = scheduleList[i].reserveDate.split('-');
@@ -111,36 +110,35 @@ function createCalendar() {
 		if (yearMonth === reserveDate) {
 			var index = Number(scheduleList[i].reserveDate.substr(8, 2)) - 1
 			$('.date').eq(index).closest('td').css('background-color', 'lightgray');
+			if (yearMonth == thisMonth)
+				$('.date').eq(new Date().getDate() - 1).closest('td').css('background-color', 'beige');
 			if (scheduleList[i].menteeID !== null)
 				$('.date').eq(index).css('background-color', 'skyblue');
 		}
 	}
 };
 
-function lastMonth() {
-	calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() - 1, 1);
-	var month = calendarDate.getMonth() + 1;
-	var lastMonth = Number(calendarDate.getFullYear() + (month < 10 ? '0' + month : String(month)));
-	if (thisMonth > lastMonth)
+function prevMonth() {
+	var newCalendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() - 1, 1);
+	var month = newCalendarDate.getMonth() + 1;
+	var prevMonth = Number(newCalendarDate.getFullYear() + (month < 10 ? '0' + month : String(month)));
+	if (thisMonth > prevMonth)
 		alert("더 이상 앞으로 갈 수 없습니다.");
-	else
+	else {
+		calendarDate = newCalendarDate;
 		createCalendar();
+	}
 };
 
 function nextMonth() {
-	calendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1);
-	var month = calendarDate.getMonth() + 1;
-	var nextMonth = Number(calendarDate.getFullYear() + (month < 10 ? '0' + month : String(month)));
+	var newCalendarDate = new Date(calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1);
+	var month = newCalendarDate.getMonth() + 1;
+	var nextMonth = Number(newCalendarDate.getFullYear() + (month < 10 ? '0' + month : String(month)));
 	if (nextMonth > thisMonth + 100)
 		alert("1년 후 까지만 예약이 가능합니다.");
 	else {
+		calendarDate = newCalendarDate;
 		createCalendar();
-		<c:if test="${authority gt 1}">
-			$('.date').each(function() {
-				$(this).attr('data-toggle', 'modal');
-				$(this).attr('data-target', '#reserveInfo');
-			})
-		</c:if>
 	}
 };
 
@@ -151,6 +149,11 @@ function checkDate(button) {
 	var day = $(button).text();
 	day = day < 10 ? '0' + day : day;
 	date = year + '-' + month + '-' + day;
+	if (thisMonth == String(year) + month && day <= new Date().getDate()) {
+		alert('내일 이후의 일정만 예약 가능합니다.');
+		$(button).removeAttr('data-target');
+		return;
+	}
 	<c:if test="${authority gt 1}">
 		var mentorList = '<div class="form-check">';
 	</c:if>
@@ -241,7 +244,7 @@ function updateSchedule() {
 		url : "<c:url value='/schedule/updateSchedule' />",
 		type : "post",
 		data : {
-			scheduleList : JSON.stringify(scheduleList)
+			scheduleJSON : JSON.stringify(scheduleList)
 		},
 		success : function(result) {
 			alert(result ? "스케쥴이 변경되었습니다." : "스케쥴 변경에 실패하였습니다.");
