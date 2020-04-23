@@ -52,7 +52,7 @@
 					]]>
 				</when>
 			</choose>
-			order by start_date desc
+			and userID= #{userID} order by start_date desc
 	</select>
 	
 </mapper>

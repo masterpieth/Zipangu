@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -118,13 +120,14 @@ public class PersonalityDAO {
 		return true;
 	}
 	
-	public ArrayList<TimelineVO> timelineSearch(String searchItem, String searchKeyword) {
-		
+	public ArrayList<TimelineVO> timelineSearch(String searchItem, String searchKeyword, HttpSession session) {
+		String userID = (String)session.getAttribute("userID");
 		ArrayList<TimelineVO> list = null;
 		
 		HashMap<String,String> map = new HashMap<>();
 		map.put("searchItem", searchItem);
 		map.put("searchKeyword", searchKeyword);
+		map.put("userID",userID);
 		
 		try {
 			PersonalityMapper mapper = sqlSession.getMapper(PersonalityMapper.class);

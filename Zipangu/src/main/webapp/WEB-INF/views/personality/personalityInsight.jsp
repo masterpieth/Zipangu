@@ -123,6 +123,7 @@ $(function(){
 							}
 						}
 						$("#tables_1").removeAttr("hidden");
+						$("#ment1").removeAttr("hidden");
 					},
 					error: function(request,status,error){
 						console.log("실패");
@@ -185,7 +186,7 @@ function openUploadTextForm() {
 				<div class="col-lg-6">
 					<div class="service-2-right">
 						<div class="get-know">
-							<p>사용할 텍스트 내용을 확인해 주세요.</p>
+							<p>사용할 텍스트 내용을 확인해 주세요. 텍스트를 업로드 하지 않고 아래에 직접 내용을 입력하셔도 됩니다.</p>
 							<textarea rows="20" cols="80" id="revisedContent" style="resize: none;"></textarea>
 						</div>
 					</div>
@@ -194,15 +195,19 @@ function openUploadTextForm() {
 		</div>
 		<div class="card-body" style="padding-top: 85px;">
 			<div  class="row justify-content-center">
-			    <a href="#" class="genric-btn danger e-large" id="searchPe" style="width: 300px; font-size: 15px;">성향분석</a>
+			    <a href="#" class="genric-btn danger e-large" id="searchPe" style="width: 300px; font-size: 15px;">
+			    	성향분석
+			    </a>
 				<table id="insightList" hidden="hidden"></table>
 			</div>
 		</div>
 	</section>
-
-<div id="showChart" class="container"></div>
-
-<section class="features_area" id="features_counter">
+	<div  class="row justify-content-center" id="ment1" hidden="hidden">
+		나와 가장 관련 있는 키워드 (10개)<br>
+	</div>
+	<div id="showChart" class="container"></div>
+	<br><br><br><br>
+<!-- <section class="features_area" id="features_counter"> -->
 	<div class="container" id="tables_1" hidden="hidden">
 		<div class="row counter_wrapper">
 			<!-- single feature -->
@@ -238,7 +243,13 @@ function openUploadTextForm() {
 				</div>
 			</div>
 		</div>
+		<br><br>
+		<div align="center">
+			<a href="<c:url value='/personality/keywordTimeline'/>">
+				<button class="genric-btn danger e-large">타임라인 작성하러 가기</button>
+			</a>
+		</div>
 	</div>
-</section>
 <br><br><br><br>
+<!-- </section> -->
 <jsp:include page="../include/footer.jsp"></jsp:include>

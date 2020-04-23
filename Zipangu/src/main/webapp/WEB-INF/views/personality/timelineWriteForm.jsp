@@ -140,13 +140,13 @@ $(function(){
 		<div class="card-body">
 			<table>
 				<tr>
-					<th>내가 고른 키워드들 :</th><td><input type="text" id="traits_Selected" name="traits_Selected" readonly="readonly" style="width: 100%;"></td>
+					<th>3. 내가 고른 키워드들 :</th><td><input type="text" id="traits_Selected" name="traits_Selected" readonly="readonly" style="width: 100%;"></td>
 				</tr>
 				<tr>
-					<th>에피소드 제목 : </th><td><input type="text" name="episode_Title" style="width: 100%;" required="required"></td>
+					<th>4. 에피소드 제목 : </th><td><input type="text" name="episode_Title" style="width: 100%;" required="required"></td>
 				</tr>
 				<tr>
-					<th>에피소드 내용 : </th><td><textarea rows="10" cols="120" name="episode_Content" required="required"></textarea></td>
+					<th>5. 에피소드 내용 : </th><td><textarea rows="10" cols="120" name="episode_Content" required="required"></textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">

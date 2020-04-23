@@ -14,7 +14,7 @@
 }
 
 body {
-  background-color: var(--bg);
+  background-color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -350,6 +350,7 @@ li{
 .container .right .conversation-start span:after {
   right: 0;
 }
+
 
 @keyframes slideFromLeft {
   0% {

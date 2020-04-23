@@ -67,14 +67,20 @@ public class PersonalityController {
 		String text = dao.textList(kakaoContent, kakaoName);
 
 		String textFileName = daoMe.getMember(userID).getTextFileName();
-	
-		File file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload"+textFileName+".txt");
+		
+//		나영상꺼		
+//		File file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload"+textFileName+".txt");
+//		최나은 주소
+		File file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+		
 		if(file.exists()) file.delete();
 		
 		textFileName = UUID.randomUUID().toString();
 		daoMe.uploadKakaoText(userID, textFileName);	
-
-		String filePath = "C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
+//		나영상꺼
+//		String filePath = "C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
+//		최나은 주소
+		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
 		try {
 			
 			FileWriter fileWriter = new FileWriter(filePath);
@@ -91,8 +97,10 @@ public class PersonalityController {
 		String result = "";
 		file = null;
 		 try{
-			 file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
-			 
+//				나영상꺼
+//			 file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+//				최나은 주소			 
+			 file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 		     FileReader fr = new FileReader(file);
 	         
 		     BufferedReader br = new BufferedReader(fr);
@@ -148,9 +156,9 @@ public class PersonalityController {
 	
 	@RequestMapping(value = "personality/keywordTimeline", method = RequestMethod.GET)
 	public String keywordTimeline(@RequestParam(value = "searchItem", defaultValue = "byKeyword") String searchItem,
-			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword,
+			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword, HttpSession session,
 			Model model) {
-		ArrayList<TimelineVO> list = dao.timelineSearch(searchItem, searchKeyword);
+		ArrayList<TimelineVO> list = dao.timelineSearch(searchItem, searchKeyword, session);
 
 		model.addAttribute("timelineList", list);
 		

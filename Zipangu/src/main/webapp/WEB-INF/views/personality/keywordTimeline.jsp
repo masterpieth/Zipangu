@@ -13,8 +13,23 @@
 
 <script type="text/javascript">
 
+var personalityCount;
 $(function() {
-
+	$.ajax({
+		type:"post",
+		url:"makeChart",
+		success: function(data){
+			personalityCount = data;
+			if(personalityCount.length==0) {
+				$('#resultDiv').attr('hidden','hidden');
+				$('#resultDivIfnoResult').removeAttr('hidden','hidden');
+				return;
+			}
+		},error: function(request,status,error){
+			console.log("실패");
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})	
 	  'use strict';
 
 	  var items = document.querySelectorAll(".timeline li");
@@ -76,7 +91,30 @@ function deleteConfirm() {
 
 </head>
 <body>
-
+<div class="row justify-content-center align-items-center" id="resultDivIfnoResult" hidden="hidden">
+	<div class="container-fluid">
+	<br>
+	    <div class="row justify-content-center align-items-center">
+	        <div class="card-body" align="center">
+	            <h1>타임 라인 작성</h1>
+	            <hr>
+	            <p>성향분석을 통해 찾은 키워드로 타임라인을 작성합니다.</p>
+	        </div>
+	    </div>
+	<br>
+	</div>
+	<div class="jumbotron" align="center">
+		<div class="card-body col-md-9">
+			<h2>등록된 성향분석이 없습니다.</h2>
+			<hr>
+		</div>
+		<div class="row justify-content-center align-items-center">
+			<p>먼저 성향분석을 진행해주세요.</p>
+		</div>
+		<a href="<c:url value="/personality/personalityInsight"/>" class="genric-btn danger e-large" style="width: 300px; font-size: 15px;">성향분석 페이지로 이동</a>
+	</div>
+</div>
+<div id="resultDiv">
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">
@@ -133,7 +171,7 @@ function deleteConfirm() {
   <ul style="color: black;">
   	<c:forEach items="${requestScope.timelineList}" var="TimelineVO">
   	    <li>
-	      <div style="background-color: white; border : black; margin-bottom: 0px" >
+	      <div style="background-color: white; border : pink; border-width : 1px; border-style : dashed; margin-bottom: 0px" >
 	        <p align="right">
 	          <a href="<c:url value='/personality/timelineUpdateForm?timeline_Num=${TimelineVO.timeline_Num}'/>">
 	      	    <img src="<c:url value="/resources/img/fix.png"/>" alt="수정" width="35" height="35" align="right" >
@@ -161,7 +199,7 @@ function deleteConfirm() {
 		        <td>내용 : ${TimelineVO.episode_Content}</td>
 		      </tr>
 		    </table>
-		    <p align="right">
+		    <p align="right" style="margin-bottom: 0px">
 		      <a href="<c:url value='/personality/timelineDelete?timeline_Num=${TimelineVO.timeline_Num}'/>" onclick="return deleteConfirm()">
 	      	    <img src="<c:url value="/resources/img/delete.png"/>" alt="삭제" width="35" height="35" align="right" >
 	      	  </a>
@@ -172,4 +210,5 @@ function deleteConfirm() {
     </c:forEach>
   </ul>
 </section>
+</div>
 <jsp:include page="../include/footer.jsp"></jsp:include>

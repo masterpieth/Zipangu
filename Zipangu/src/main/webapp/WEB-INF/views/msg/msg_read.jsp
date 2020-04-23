@@ -156,6 +156,16 @@
             </ul>
         </div>
         <div class="right">
+        	<c:if test="${sessionScope.userID==requestScope.List_MsgVO.mentee_id}">
+			   <div class="top">
+			   		<span>To: <span class="name">${requestScope.List_MsgVO.mentor_id}</span></span>
+			   </div>
+		    </c:if>
+		    <c:if test="${sessionScope.userID==requestScope.List_MsgVO.mentor_id}">
+			   <div class="top">
+			   		<span>To: <span class="name">${requestScope.List_MsgVO.mentee_id}</span></span>
+			   </div>
+		    </c:if>
 	        <div class="chat" data-chat="person${requestScope.List_MsgVO.msg_num}">
 	            <div id="chatroom"></div>
 	            <input type="hidden" value="${requestScope.List_MsgVO.mentee_id}" name="mentee_id" id="mentee_id">
