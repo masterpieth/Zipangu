@@ -1,10 +1,9 @@
+<jsp:include page="../include/header.jsp"></jsp:include>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
-
-<jsp:include page="../include/header.jsp"></jsp:include>
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -70,6 +69,14 @@ function getTotalEntrysheet() {
             totalEntrysheet = data;
         }, error: function(e){
             console.log(e);
+        },beforeSend: function(){
+            $('#loadingDiv').show();
+            $('#resultDiv').hide();
+            $('#resultDiv2').hide();
+        },complete: function(){
+        	$('#loadingDiv').hide();
+            $('#resultDiv').show();
+            $('#resultDiv2').show();
         }
     });
 }
@@ -230,13 +237,16 @@ function entrysheetOutput(typeResult, divId){
 	<div class="container-fluid">
 	    <br>
 	    <div class="row justify-content-center align-items-center">
-	        <div class="card-body" align="center">
+	        <div class="card-body col-md-6" align="center">
 	            <h1>합격자소서 추천</h1>
 	            <hr>
 	            <p>기업 분석에서 즐겨찾기 해놓은거랑,,,맞는,, 587건의 자소서를 바탕으로 해당 분야의 합격 자소서를 추천합니다.</p>
 	        </div>
 	    </div>
 	    <br>
+	    <div id="loadingDiv" class="row justify-content-center align-items-center" style="padding-top: 100px; padding-bottom: 200px;">
+	       <img src="<c:url value="/resources/img/loading.gif"/>">
+	    </div>
 		<div class="row" id="resultDiv">
 			<div class="container">
 				<div class="col-md-6" style="float: right;">
@@ -247,7 +257,7 @@ function entrysheetOutput(typeResult, divId){
 			        </div>
 				</div>
 			    <div class="col-md-6">
-			       <div class="card">
+			       <div class="card-body">
 		                <h4 class="card-title" id="currentBookmarkTitle">즐겨찾기 상세</h4>
 		                <hr>
 		                <p>즐겨찾기 해제를 원하는 경우 해당 기업명을 클릭해주세요.</p>
@@ -281,7 +291,7 @@ function entrysheetOutput(typeResult, divId){
                 <a href="<c:url value="/analysis/company"/>" class="genric-btn danger e-large" style="width: 300px; font-size: 15px;">기업분석 페이지로 이동</a>
 		    </div>
 		</div>
-		<div class="row">
+		<div class="row" id="resultDiv2">
 		   <div class="container" id="inputContainer">
 		       <ul class="nav nav-tabs">
 	            </ul>
@@ -305,6 +315,3 @@ function entrysheetOutput(typeResult, divId){
     </c:when>
 </c:choose>
 <jsp:include page="../include/footer.jsp"></jsp:include>
-<script src="/zipangu/resources/template_js/jquery-3.2.1.min.js"></script>
-<script src="/zipangu/resources/template_js/popper.js"></script>
-<script src="/zipangu/resources/template_js/bootstrap.min.js"></script>
