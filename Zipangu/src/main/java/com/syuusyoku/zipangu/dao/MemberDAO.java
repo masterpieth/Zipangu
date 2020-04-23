@@ -104,6 +104,5 @@ public class MemberDAO {
 
 	public void logout(HttpSession session) {
 		session.invalidate();
-		return true;
 	}
 }

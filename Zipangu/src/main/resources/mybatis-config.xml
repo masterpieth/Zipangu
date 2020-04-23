@@ -29,8 +29,6 @@
        <mapper resource="mapper/msgMapper.xml" />
 		<mapper resource="mapper/resumeMapper.xml" />
 		<mapper resource="mapper/scheduleMapper.xml" />
-    </mappers>
-		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/interviewMapper.xml" />
 	</mappers>
 </configuration>

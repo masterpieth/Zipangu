@@ -31,6 +31,9 @@
 	</form>
 </div>
 <div class="container" style="height:100px;"></div>
+<c:if test="${requestScope.result == false}">
+    <script>alert("ID 또는 암호가 일치하지 않습니다");</script>
+</c:if>
 </body>
 </html>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />

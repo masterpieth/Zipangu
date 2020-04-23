@@ -7,7 +7,7 @@
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css' />">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style2.css' />">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 
