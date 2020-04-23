@@ -1,6 +1,6 @@
 package com.syuusyoku.zipangu.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,51 +9,72 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.syuusyoku.zipangu.dao.MemberDAO;
+import com.syuusyoku.zipangu.dao.PageNavigator;
 import com.syuusyoku.zipangu.dao.ResumeDAO;
-import com.syuusyoku.zipangu.vo.CareerVO;
-import com.syuusyoku.zipangu.vo.QualifiedVO;
+import com.syuusyoku.zipangu.dao.ScheduleDAO;
+import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.ResumeVO;
 
 @Controller
 public class ResumeController {
 	@Autowired
 	private ResumeDAO dao;
+	@Autowired
+	private MemberDAO memberDao;
+	@Autowired
+	private ScheduleDAO scheduleDao;
 
 	@RequestMapping(value = "resume/resumeForm", method = RequestMethod.GET)
-	public String resumeForm() {
+	public String resumeForm(ResumeVO resume, HttpSession session, Model model) {
+		String userID = (String) session.getAttribute("userID");
+		int resume_num = resume.getResume_num();
+		if (resume_num < 0) {
+			model.addAttribute("resume", resume);
+			model.addAttribute("member", memberDao.getMember(userID));
+		} else {
+			MemberVO member = new MemberVO();
+			member.setUserID(userID);
+			member.setResume_num(resume_num);
+			model.addAttribute("member", dao.getResumeMember(member));
+			HashMap<String, Object> resumeForm = dao.getResume(member);
+			model.addAttribute("resume", resumeForm.get("resume"));
+			model.addAttribute("careerList", resumeForm.get("careerList"));
+			model.addAttribute("qualifiedList", resumeForm.get("qualifiedList"));
+			model.addAttribute("mentorID", scheduleDao.getMentorID(userID));
+		}
 		return "resume/resumeForm";
 	}
 
 	@RequestMapping(value = "resume/resumeList", method = RequestMethod.GET)
-	public String resumeList(HttpSession session, Model model) {
-		model.addAttribute("resumeList", dao.resumeList(session));
+	public String resumeList(HttpSession session, Model model, @RequestParam(name = "page", defaultValue = "1") int page) {
+		String userID = (String) session.getAttribute("userID");
+		PageNavigator navi = dao.navi(userID, page);
+		model.addAttribute("navi", navi);
+		model.addAttribute("resumeList", dao.resumeList(userID, navi));
 		return "resume/resumeList";
 	}
 
 	@RequestMapping(value = "resume/saveResume", method = RequestMethod.POST)
 	public String saveResume(
-		MultipartFile picFile, ResumeVO resume, String[] careerStartYear, String[] careerStartMonth,
-		String[] careerEndYear, String[] careerEndMonth, String[] careerContent,
-		String[] qualifiedYear, String[] qualifiedMonth, String[] qualifiedContent, HttpSession session
+		MultipartFile picFile, MemberVO member, ResumeVO resume, 
+		String careerJSON, String qualifiedJSON, HttpSession session
 	) {
-		ArrayList<CareerVO> careerList = new ArrayList<>();
-		for (int i = 0; i < careerContent.length; i++) {
-			CareerVO career = new CareerVO();
-			career.setStart_period(careerStartYear[i] + "-" + careerStartMonth[i] + "-01");
-			career.setEnd_period(careerEndYear[i] + "-" + careerEndMonth[i] + "-01");
-			career.setContent(careerContent[i]);
-			careerList.add(career);
-		}
-		ArrayList<QualifiedVO> qualifiedList = new ArrayList<>();
-		for (int i = 0; i < qualifiedContent.length; i++) {
-			QualifiedVO qualified = new QualifiedVO();
-			qualified.setPeriod(qualifiedYear[i] + "-" + qualifiedMonth[i] + "-01");
-			qualified.setContent(qualifiedContent[i]);
-			qualifiedList.add(qualified);
-		}
-		dao.saveResume(picFile, resume, session, careerList, qualifiedList);
-		return "resume/resumeForm";
+		resume.setUserID((String) session.getAttribute("userID"));
+		dao.saveResume(picFile, member, resume, careerJSON, qualifiedJSON);
+		return "redirect:/resume/resumeList";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "resume/shareUrl", method = RequestMethod.POST)
+	public void shareUrl(String mentorID, String shareUrl, HttpSession session) {
+		MemberVO member = memberDao.getMember(mentorID);
+		String menteeID = (String) session.getAttribute("userID");
+		String subject = menteeID + "님이 멘토링을 원하고 있습니다.";
+		memberDao.sendSimpleMessage(member.getEmail(), subject, shareUrl);
 	}
 }

@@ -8,7 +8,7 @@
 		FROM
 			member
 		WHERE
-			userid = #{userID}
+			LOWER(userid) = LOWER(#{userID})
 	</select>
 
 	<insert id="signup" parameterType="member">
@@ -23,11 +23,12 @@
 			#{address},
 			#{phone},
 			#{sex},
-			DEFAULT,
+			#{authority},
 			#{textFileName},
 			DEFAULT
 		)
 	</insert>
+
 
 	<select id="login" parameterType="member" resultType="int">
 		SELECT
@@ -35,8 +36,34 @@
 		FROM
 			member
 		WHERE
-			userid = #{userID}
+			LOWER(userid) = LOWER(#{userID})
 		AND
 			userpwd = #{userPwd}
+	</select>
+	
+	<update id="uploadKakaoText" parameterType="member">
+		update member set textFileName=#{textFileName} where userID=#{userID}
+	</update>
+	
+	<select id="mentorList" resultType="member">
+		select * from member where authority = '1'
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="member">
+		SELECT
+			userid,
+			userpwd,
+			email,
+			username,
+			TO_CHAR(birth,'YYYY-MM-DD') AS birth,
+			address,
+			phone,
+			sex,
+			authority,
+			textfilename
+		FROM
+			member
+		WHERE
+			LOWER(userid) = LOWER(#{userID})
 	</select>
 </mapper>
