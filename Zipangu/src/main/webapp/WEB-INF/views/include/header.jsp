@@ -100,10 +100,10 @@
                             <section id="msgSection">
                                 <c:choose>
                                     <c:when test="${sessionScope.authority=='2'}">
-                                        <input type="hidden" class="msg_location" value="mentee_id=${sessionScope.userID}&mentor_id=admin">
+                                        <input type="hidden" class="msg_location" value="mentee_id=${sessionScope.userID}&mentor_id=Administrator">
                                     </c:when>
                                     <c:when test="${sessionScope.authority=='1'}">
-                                        <input type="hidden" class="msg_location" value="mentee_id=admin&mentor_id=${sessionScope.userID}">
+                                        <input type="hidden" class="msg_location" value="mentee_id=Administrator&mentor_id=${sessionScope.userID}">
                                     </c:when>
                                 </c:choose>
                                 <button id="msgButton">

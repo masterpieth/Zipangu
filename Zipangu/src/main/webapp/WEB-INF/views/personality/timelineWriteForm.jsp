@@ -22,14 +22,14 @@ $(function(){
 			console.log(data.length);
 			var temp="";
 			var length = data.length;
-			for(var i=0; i<length-1; i++) {
+			for(var i=0; i<length; i++) {
 				if(i%10==0) {
 					temp += '<table>';
 					temp += '<tr><th>항목</th><th>퍼센트</th><th>선택</th></tr>';
 				}
-				temp += '<tr><td>'+data[i].trait+'</td><td>'+data[i].rate+'</td>';
+				temp += '<tr><td>'+data[i].trait+'</td><td>'+data[i].rate+' %</td>';
 				temp += '<td><div class="primary-checkbox"><input type="checkbox" name="keywordSelected" id="default-checkbox['+i+']"><label for="default-checkbox['+i+']"></label></div></td></tr>';
-				if(i%10==9 || i==length-2) {
+				if(i%10==9 || i==length-1) {
 					temp += '</table>';
 					$("#personality_result"+Math.floor(i/10)).append(temp);
 					temp="";

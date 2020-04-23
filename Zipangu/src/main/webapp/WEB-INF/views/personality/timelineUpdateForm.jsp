@@ -83,11 +83,11 @@ $(function(){
 				<div class="row">
 					<!-- single feature -->
 					<div class="col-lg-3 col-md-6 col-sm-6">
-						<div class="single_feature" id="personality_result0">
+						<div class="single_feature" id="personality_result0">	
 							<table>
 								<c:forEach items="${requestScope.keywordList}" begin="0" end="9" var="keyword">
 									<tr>
-										<td>${keyword.trait}</td><td>${keyword.rate}</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
+										<td>${keyword.trait}</td><td>${Math.round(keyword.rate)} %</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -99,7 +99,7 @@ $(function(){
 							<table>
 								<c:forEach items="${requestScope.keywordList}" begin="10" end="19" var="keyword">
 									<tr>
-										<td>${keyword.trait}</td><td>${keyword.rate}</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
+										<td>${keyword.trait}</td><td>${Math.round(keyword.rate)} %</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -111,7 +111,7 @@ $(function(){
 							<table>
 								<c:forEach items="${requestScope.keywordList}" begin="20" end="29" var="keyword">
 									<tr>
-										<td>${keyword.trait}</td><td>${keyword.rate}</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
+										<td>${keyword.trait}</td><td>${Math.round(keyword.rate)} %</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -123,7 +123,7 @@ $(function(){
 							<table>
 								<c:forEach items="${requestScope.keywordList}" begin="30" end="39" var="keyword">
 									<tr>
-										<td>${keyword.trait}</td><td>${keyword.rate}</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
+										<td>${keyword.trait}</td><td>${Math.round(keyword.rate)} %</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -140,7 +140,7 @@ $(function(){
 							<table>
 								<c:forEach items="${requestScope.keywordList}" begin="40" end="49" var="keyword">
 									<tr>	
-										<td>${keyword.trait}</td><td>${keyword.rate}</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
+										<td>${keyword.trait}</td><td>${Math.round(keyword.rate)} %</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
 									</tr>
 								</c:forEach>
 							</table>
@@ -152,7 +152,7 @@ $(function(){
 							<table>
 								<c:forEach items="${requestScope.keywordList}" begin="50" end="52" var="keyword">
 									<tr>
-										<td>${keyword.trait}</td><td>${keyword.rate}</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
+										<td>${keyword.trait}</td><td>${Math.round(keyword.rate)} %</td><td><input type="checkbox" name="keywordSelected" value="${keyword.trait}"></td>
 									</tr>
 								</c:forEach>
 							</table>

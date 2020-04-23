@@ -13,7 +13,7 @@
 	$(function(){
 		var mentor = $("#mentor_id").val();
 		var mentee = $("#mentee_id").val();
-		if(mentor=='admin'||mentee=='admin') {
+		if(mentor=='Administrator'||mentee=='Administrator') {
 			var str = "";
 			str += '<div class="bubble you">';
 			str += '검색하고자 하는 기업명을 입력해 주세요.';
@@ -64,8 +64,8 @@
 				$(".chat").append(str);
 				
 				str="";
-				//대화 상대가 admin이면 자동으로 답변 나가게..
-				if(mentor=='admin'||mentee=='admin') {
+				//대화 상대가 Administrator이면 자동으로 답변 나가게..
+				if(mentor=='Administrator'||mentee=='Administrator') {
 					var data = {
 							"chatContent": data.content,
 							"msg_num" : data.msg_num
