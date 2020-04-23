@@ -84,4 +84,22 @@ public class MemberController {
 	}
 	
 	
+	@RequestMapping(value = "/member/loginForm", method = RequestMethod.GET)
+	public String loginForm() {
+		return "/member/loginForm";
+	}
+	
+	@RequestMapping(value = "/member/login", method = {RequestMethod.GET, RequestMethod.POST})
+	public String login(MemberVO vo, HttpSession session, RedirectAttributes rttr) {
+		boolean result = dao.login(vo, session);
+		if(result) return "redirect:/";
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/member/loginForm";
+	}
+	
+	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		dao.logout(session);
+		return "redirect:/";
+	}
 }
