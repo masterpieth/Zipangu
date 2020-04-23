@@ -18,8 +18,8 @@
 </head>
 <body>
 <div class="container" style="height:100px;"></div>
-<div class="container col-6">
-	<h2>Zipangu에 오신 것을 환영합니다.</h2>
+<div class="container col-3">
+	<h5>Zipangu에 오신 것을 환영합니다.</h5><br>
 	<p>회원 가입을 위한 정보를 입력해 주세요.</p>
 	<form action="<c:url value='/member/signup' />" class="needs-validation" method="post" novalidate>
 		<div class="form-group">
@@ -76,14 +76,17 @@
 				<label for="sex">역할:</label>
 				<select class="form-control" id="authority" name="authority" required>
 					<option></option>
-					<option value="1">멘티</option>
-					<option value="2">멘토</option>
+					<option value="1">멘토</option>
+					<option value="2">멘티</option>
 				</select>
-				<div class="valid-message" id="authorityMessage">당신의 역할을 골라 주세요.</div>
+				<div class="valid-message" id="sexMessage">당신의 역할을 골라 주세요.</div>
 			</div>
 		</div>
-		<button type="submit" class="btn btn-primary" id="signupBtn" onclick="return signup()">가입하기</button>
-		<button onclick="TogetherJS(this); return false;">Start TogetherJS</button>
+		<br>
+		<div align="center">
+		<button type="submit" class="genric-btn danger e-large" id="signupBtn" onclick="return signup()">가입하기</button>
+<!-- 		<button onclick="TogetherJS(this); return false;">Start TogetherJS</button> -->
+		</div>
 	</form>
 </div>
 <div class="container" style="height:100px;"></div>
@@ -217,13 +220,14 @@ $(function() {
 	$('#authority').on('keyup click', function() {
 		var authority = $('#authority').val();
 		if (authority.length > 0) {
-			$('#authorityMessage').css('color', '#28a745');
+			$('#sexMessage').css('color', '#28a745');
 			checkAuthority = true;
 		} else {
-			$('#authorityMessage').css('color', '#dc3545');
+			$('#sexMessage').css('color', '#dc3545');
 			checkAuthority = false;
 		}
 	});
+
 });
 </script>
 </html>

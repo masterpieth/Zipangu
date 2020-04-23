@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.syuusyoku.zipangu.dao.CompanyMapper">
+    <insert id="insertBookmark" parameterType="companyVO">
+        insert into 
+            company_result
+        values(
+            #{company_num},
+            #{userID},
+            #{coname},
+            #{type},
+            #{location},
+            #{contact}
+        )
+    </insert>
+    <delete id="deleteBookmark" parameterType="companyVO">
+        delete from company_result
+        where
+            company_num = #{company_num}
+            and
+            userid = #{userID}
+    </delete>
+    <select id="getBookmarkCount" parameterType="string" resultType="companyVO">
+        select
+            type,
+            count(*) as count
+        from
+            company_result
+        where
+            userid = #{userID}
+        group by type
+        order by count(*) desc
+    </select>
+    <select id="getBookmarkList" parameterType="string" resultType="companyVO">
+        select
+            company_num,
+            userid,
+            coname,
+            type,
+            location,
+            contact
+        from 
+            company_result
+        where
+            userid = #{userID}
+    </select>
+</mapper>

@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 </head>
 <body>
 <div class="container" style="height:100px;"></div>
@@ -15,22 +14,26 @@
 		<table class="table table-bordered">
 			<tr><th style="text-align:center;"><h4>로그인</h4></th></tr>
 			<tr><td>
-				<h6>아이디</h6>
+				<p>아이디</p>
 				<input type="text" class="form-control" name="userID" placeholder="아이디" required>
 				<br>
-				<h6>비밀번호</h6>
+				<p>비밀번호</p>
 				<input type="password" class="form-control" name="userPwd" placeholder="비밀번호" required>
 				<br>
-				<button type="submit" class="btn btn-primary btn-block">로그인</button>
+				<button type="submit" class="genric-btn info btn-block" style="font-size: 15px;">로그인</button>
+				<br>
 				<br>
 				<a href="<c:url value='/member/signupForm' />">
-					<button type="button" class="btn btn-info btn-block">회원 가입</button>
+					<button type="button" class="genric-btn success btn-block" style="font-size: 15px;">회원 가입</button>
 				</a>
 			</td></tr>
 		</table>
 	</form>
 </div>
 <div class="container" style="height:100px;"></div>
+<c:if test="${requestScope.result == false}">
+    <script>alert("ID 또는 암호가 일치하지 않습니다");</script>
+</c:if>
 </body>
 </html>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />

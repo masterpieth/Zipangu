@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.syuusyoku.zipangu.dao.InterviewMapper">
+
+	<select id="selectList" resultType="qvo">
+		SELECT
+			question_num
+			, question_text
+		FROM
+			question
+	</select>
+	
+<!-- 			아이디에 면접 결과 저장 -->
+	<insert id="startInterview" parameterType="ivo">
+		
+		<selectKey keyProperty="interview_num" order="BEFORE" resultType="int">
+			select interview_seq.nextval from dual
+		</selectKey>
+	
+		INSERT INTO
+			interview
+			(INTERVIEW_NUM
+			,USERID
+			,INPUTDATE
+		) VALUES (
+			#{interview_num}
+			,#{userID}
+			,SYSDATE)
+	</insert>
+
+	
+<!-- 	면접 완료 결과 저장 -->
+	<insert id="insertInterview" parameterType="rvo">
+		INSERT INTO
+			interview_result
+			(interview_num
+			, question_num
+			, voicefilename
+			, result
+		) VALUES (
+			#{interview_num}
+			, #{question_num}
+			, #{voicefilename}
+			, #{result}
+			)
+	</insert>
+	
+<!-- 	<selcet id="selectInterview"> 보류 -->
+<!-- 		select  -->
+	
+<!-- 	</selcet> -->
+
+<!-- 	interviewresult -->
+	<select id="resultList" parameterType="ivo" resultType="rvo">
+SELECT 
+	A.INPUTDATE,
+	C.QUESTION_TEXT,
+	B.RESULT,
+	B.VOICEFILENAME
+FROM 
+	INTERVIEW A, 
+	INTERVIEW_RESULT B,
+	QUESTION C
+WHERE 
+	A.INTERVIEW_NUM = B.INTERVIEW_NUM 
+AND C.QUESTION_NUM = B.QUESTION_NUM
+AND A.INTERVIEW_NUM IN 
+(select 
+	interview_num 
+from 
+	interview_result 
+GROUP BY 
+	INTERVIEW_NUM 
+having 
+	count(*)=5)
+ORDER BY a.inputdate DESC
+	</select>
+
+<!-- 	<select id="resultList1" resultType="rvo"> -->
+<!-- select  -->
+<!-- 	interview_num  -->
+<!-- from  -->
+<!-- 	interview_result  -->
+<!-- GROUP BY  -->
+<!-- 	INTERVIEW_NUM  -->
+<!-- having  -->
+<!-- 	count(*)=5 -->
+<!-- 	</select> -->
+</mapper>

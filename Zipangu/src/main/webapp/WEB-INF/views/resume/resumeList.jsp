@@ -1,7 +1,7 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -24,9 +24,30 @@ input[type="radio"] {
 }
 </style>
 <body>
+
+    <section class="banner_area ">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/resume/resumeList"/>">이력서 목록</a>
+                    </div>
+                </div>
+                <div class="banner_content text-center">
+                    <h2>이력서 조회</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
 <div class="container" style="height:100px;"></div>
 <div class="container">
-	<h2>조회하실 이력서를 선택하여 주세요.</h2>
+    <div class="row justify-content-center align-items-center">
+    	<h2>조회하실 이력서를 선택하여 주세요.</h2>
+    </div>
+    <br><br>
 	<form action="<c:url value="/resume/resumeForm" />" method="get" id="resumeList">
 		<table class="table table-striped" border="1">
 			<thead><tr>
@@ -92,26 +113,6 @@ input[type="radio"] {
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#inputTitle">새 이력서</button>
 	<p class="float-right">&nbsp;&nbsp;</p>
 	<button type="button" class="btn btn-info float-right" id="updateResume">수정하기</button>
-	<div class="modal" id="inputTitle">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<form action="<c:url value='/resume/resumeForm' />" method="get">
-					<div class="modal-body">
-						<input class="form-control" type="text" name="title" required>
-						<input type="hidden" name="resume_num" value="-1">
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-danger">작성</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
 </div>
 <div class="container" style="height:100px;"></div>
 </body>
@@ -135,4 +136,4 @@ $(function() {
 });
 </script>
 </html>
-<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+<jsp:include page="../include/footer.jsp"></jsp:include>

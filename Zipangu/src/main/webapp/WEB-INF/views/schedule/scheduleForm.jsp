@@ -1,11 +1,6 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>예약 현황</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 <style>
 td {
@@ -23,6 +18,22 @@ td {
 </style>
 </head>
 <body>
+    <section class="banner_area ">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/resume/resumeForm"/>">예약하기</a>
+                    </div>
+                </div>
+                <div class="banner_content text-center">
+                    <h2>멘토링 예약</h2>
+                </div>
+            </div>
+        </div>
+    </section>
 <div class="container" style="height:100px;"></div>
 <div class="container">
 	<table class="table table-bordered">
@@ -271,5 +282,4 @@ $(function() {
 	createCalendar();
 });
 </script>
-</html>
-<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+<jsp:include page="../include/footer.jsp"></jsp:include>

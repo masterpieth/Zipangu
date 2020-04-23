@@ -6,12 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
-
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String home() {
-//		return "home";
-//	}
-
+	
 	@RequestMapping(value = "/header", method = RequestMethod.GET)
 	public String header() {
 		return "include/header";
@@ -21,7 +16,6 @@ public class HomeController {
 	public String footer() {
 		return "include/footer";
 	}
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main() {
 		return "main";
