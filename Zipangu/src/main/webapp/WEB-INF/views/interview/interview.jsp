@@ -261,6 +261,7 @@ window.onload = function(){
 		var interviewInfo = document.getElementById("info");
 			
 		if(mouseClick === 0){
+			interviewInfo.innterHTML = "[답변하기] 버튼을 누르고 아래 질문에 답변해주세요.";
 			question_Doc.innerHTML = arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("첫번째 질문이 표시 됩니다.");
@@ -319,15 +320,21 @@ window.onload = function(){
 	<ul id="recordingsList" ></ul>
 </div>
 
-<!-- 진행 완료된 값들 저장 테스트 -->
-<div align="center">
-<h2>----------------테스트용(interviewresult 저장되는 값들)----------------</h2>
+<div id="interviewComplete">
+<h1> 모의 면접을 완료 하였습니다. </h1>
+<h3> 면접 결과는 [결과보기] 버튼을 선택하시면 확인 하실 수 있습니다. </h3>
+<button id="">결과 보기</button>
+</div>
+
+<!-- 진행 완료된 값들 저장 -->
+<div align="center" style="display:none;">
+<h2>----------------(interviewresult 저장되는 값들)----------------</h2>
 		진행자 : <input type="text" id="userID" value="${sessionScope.userID}"><br>
 		interivew_num : <input type="text" id="interview_num" value=""><br>
 		question_num : <input type="text" id="question_num" value=""><br>
 		저장되는 파일 이름 : <input type="text" id="voicefilename" value=""><br>
 		문장 성향 : <input type="text" id="demo2">
-<h2>----------------테스트용(STT 결과(미저장))----------------</h2>
+<h2>----------------(STT 결과(미저장))----------------</h2>
 		STT 결과 : <textarea id="demo" readonly="readonly"></textarea><br>
 </div>
 

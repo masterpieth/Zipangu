@@ -218,7 +218,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <a href="<c:url value="/"/>"><button class="primary-btn text-uppercase">모의면접 바로가기</button></a>
+                <a href="<c:url value="interview/getinterview"/>"><button class="primary-btn text-uppercase">모의면접 바로가기</button></a>
             </div>
         </div>
     </section>

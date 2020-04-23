@@ -25,7 +25,7 @@ public class InterviewDAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	//질문 리스트 준비
+	//질문 리스트
 	public ArrayList<QuestionVO> selectList(){
 		ArrayList<QuestionVO> list = null;
 		try {
@@ -79,7 +79,7 @@ public class InterviewDAO {
 	    return dTime;
 	}
 	
-	//각 모의 면접 결과 저장 
+	//모의 면접 결과 저장 
 	public int insertInterview(InterviewResultVO vo){
 		int result = 0;
 		
@@ -93,19 +93,7 @@ public class InterviewDAO {
 		return result;
 	}
 
-//	//모의 면접 완료 후 리스트 표시(보류)
-//	public ArrayList<InterviewResultVO> selectInterview(InterviewResultVO vo){
-//		ArrayList<InterviewResultVO> list = null;
-//		try {
-//			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-//			list = mapper.selectInterview(vo);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return list;
-//	}
-	
-//	//결과 전체 표시
+	//결과 전체 표시
 	public ArrayList<InterviewResultVO> resultList(InterviewResultVO vo){
 		ArrayList<InterviewResultVO> list = null;
 		try {
@@ -117,30 +105,4 @@ public class InterviewDAO {
 		}
 		return list;
 	}
-//	
-	//면접을 5개 진행한 테이블 조회
-//	public ArrayList<InterviewResultVO> resultList1(InterviewResultVO vo){
-//		ArrayList<InterviewResultVO> list1 = null;
-//		try {
-//			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-//			list1 = mapper.resultList1(vo);
-//			System.out.println(list1+"5개 완료된 출력");
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return list1;
-//	}
-//	
-//	//위에서 받은 결과의 interview_num 값을 전달
-//	public int resultList2(InterviewResultVO vo) {
-//		int result = 0;
-//		try {
-//			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
-//			result = mapper.resultList2(vo);
-//			System.out.println(result+"5개 완료된 num 전달");
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
 }
