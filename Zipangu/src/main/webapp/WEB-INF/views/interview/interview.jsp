@@ -48,11 +48,14 @@ window.onload = function(){
 			 	if (sec < 0) {
 			 		clearInterval(leftTime);
 			 		document.getElementById("counting").innerHTML = "답변은 60초 이내로 해주세요.";
-	
-					rec.stop();
+
+			 		stopRecording();
+					recordButton.disabled = false;
+					stopButton.disabled = true;
 				}
 			}, 1000);
-
+			
+		
 	    var constraints = { audio: true, video:false }
 		recordButton.disabled = true;
 		stopButton.disabled = false;
@@ -259,34 +262,38 @@ window.onload = function(){
 		var question_Doc = document.getElementById("question");
 		var question_num = document.getElementById("question_num");
 		var interviewInfo = document.getElementById("info");
-			
+		var interviewComplete = document.getElementById("interviewComplete");
+		var startinterviewinfo = document.getElementById("startinterviewinfo");
+		var interviewsector = document.getElementById("interviewsector");
+		
 		if(mouseClick === 0){
-			interviewInfo.innterHTML = "[답변하기] 버튼을 누르고 아래 질문에 답변해주세요.";
-			question_Doc.innerHTML = arr[mouseClick].question_text;
+			interviewInfo.innerHTML = "[답변하기] 버튼을 누르고 아래 질문에 답변해주세요.";
+			startinterviewinfo.style.display = "none";
+			question_Doc.innerHTML = "첫번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("첫번째 질문이 표시 됩니다.");
 			console.log(arr[mouseClick].question_num);
 			mouseClick++;
 		} else if(mouseClick === 1) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
+			question_Doc.innerHTML = "두번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("두번째 질문이 표시 됩니다.");
 			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 2) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
+			question_Doc.innerHTML = "세번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("세번째 질문이 표시 됩니다.");
 			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 3) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
+			question_Doc.innerHTML = "네번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("네번째 질문이 표시 됩니다.");
 			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 4) {
-			question_Doc.innerHTML = arr[mouseClick].question_text;
+			question_Doc.innerHTML = "마지막 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("마지막번째 질문이 표시 됩니다.");
 			console.log(mouseClick+"질문 번호");
@@ -294,18 +301,18 @@ window.onload = function(){
 		} else if(mouseClick === 5) {
 			recordButton.disabled = true;
     		stopButton.disabled = true;
+    		interviewComplete.style.display = "block";
+    		interviewsector.style.display = "none";
 		}
 	}
 </script>
 <body>
-<div align="center">
-
+<div align="center" id="interviewsector">
+<h3 id="startinterviewinfo">[모의면접 시작]을 누르시면 시작합니다.</h3>
 <button id="startInterview">모의면접 시작</button>
-
 <!-- 질문 -->
 <h4 id="info"></h4>
 <h1 id="question"></h1>
-</div>
 
 <!-- 타이머 -->
 <p id="counting" align="center"></p>
@@ -319,8 +326,8 @@ window.onload = function(){
 <!-- 음성 녹음(완료 리스트) -->
 	<ul id="recordingsList" ></ul>
 </div>
-
-<div id="interviewComplete">
+</div>
+<div id="interviewComplete" style="display: none">
 <h1> 모의 면접을 완료 하였습니다. </h1>
 <h3> 면접 결과는 [결과보기] 버튼을 선택하시면 확인 하실 수 있습니다. </h3>
 <button id="">결과 보기</button>
