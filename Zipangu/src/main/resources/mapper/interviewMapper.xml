@@ -46,7 +46,7 @@
 			)
 	</insert>
 	
-<!-- 	<selcet id="selectInterview"> -->
+<!-- 	<selcet id="selectInterview"> 보류 -->
 <!-- 		select  -->
 	
 <!-- 	</selcet> -->
@@ -54,20 +54,37 @@
 <!-- 	interviewresult -->
 	<select id="resultList" parameterType="ivo" resultType="rvo">
 SELECT 
-	A.INTERVIEW_NUM,
-	A.USERID, 
 	A.INPUTDATE,
-	B.QUESTION_NUM, 
-	B.VOICEFILENAME,
+	C.QUESTION_TEXT,
 	B.RESULT,
-	C.QUESTION_TEXT
+	B.VOICEFILENAME
 FROM 
 	INTERVIEW A, 
 	INTERVIEW_RESULT B,
 	QUESTION C
 WHERE 
-	A.INTERVIEW_NUM = B.INTERVIEW_NUM AND C.QUESTION_NUM = B.QUESTION_NUM
-ORDER BY A.INPUTDATE DESC
+	A.INTERVIEW_NUM = B.INTERVIEW_NUM 
+AND C.QUESTION_NUM = B.QUESTION_NUM
+AND A.INTERVIEW_NUM IN 
+(select 
+	interview_num 
+from 
+	interview_result 
+GROUP BY 
+	INTERVIEW_NUM 
+having 
+	count(*)=5)
+ORDER BY a.inputdate DESC
 	</select>
-	
+
+<!-- 	<select id="resultList1" resultType="rvo"> -->
+<!-- select  -->
+<!-- 	interview_num  -->
+<!-- from  -->
+<!-- 	interview_result  -->
+<!-- GROUP BY  -->
+<!-- 	INTERVIEW_NUM  -->
+<!-- having  -->
+<!-- 	count(*)=5 -->
+<!-- 	</select> -->
 </mapper>

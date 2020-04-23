@@ -109,7 +109,6 @@ window.onload = function(){
 				fd.append("blob", blob);
 // 				console.log(fd);
 
-
 				//답변 파일 저장
 				$.ajax({
 					url: "/zipangu/interview/voice",
@@ -262,7 +261,6 @@ window.onload = function(){
 		var interviewInfo = document.getElementById("info");
 			
 		if(mouseClick === 0){
-			interviewInfo.innerHTML = "다음 질문에 답변해주세요.";
 			question_Doc.innerHTML = arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
 			console.log("첫번째 질문이 표시 됩니다.");
