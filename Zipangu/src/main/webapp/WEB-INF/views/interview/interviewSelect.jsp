@@ -54,7 +54,7 @@ function test1() {
 // audio.play(fileName);
 // }
 </script>
-
+<audio src="<c:url value="/uploaded/blob.wav"/>" controls="controls"></audio>
 <button onclick="test1()">test</button>
 <p id="path1"></p>
 </body>
