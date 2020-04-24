@@ -171,7 +171,7 @@ function openUploadTextForm() {
 					<div class="service-2-left">
 						<div class="get-know">
 							<p class="df-color">성향분석</p>
-							<h1>지팡구에서는 직접 쓴 텍스트를 통한 성향분석이 가능합니다.</h1>
+							<h1>Zipangu에서는 직접 쓴 텍스트를 통한 성향분석이 가능합니다.</h1>
 							<hr>
 							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. <br>
 							나의 경험, 생각 및 반응에 관한 단어가 포함되어 있는 텍스트를 입력 해주세요.

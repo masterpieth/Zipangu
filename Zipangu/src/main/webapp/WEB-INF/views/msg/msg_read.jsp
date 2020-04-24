@@ -12,6 +12,12 @@
 <script type="text/javascript">
 	$(function(){
 		$("#search_people").keyup(function(){
+			$('#after_search').empty();
+			if($("#search_people").val()==''||$("#search_people").val().length==0) {
+				$('#after_search').empty();
+				$('#after_search').attr('hidden','hidden');
+				$('#before_search').removeAttr('hidden','hidden');
+			}
 		//msg/search_msg_people 대화상대 검색
 			$.ajax({
 				type:"get",
@@ -19,36 +25,35 @@
 				data : {search_people : $("#search_people").val()},
 				dataType : 'json',
 				success: function(data){
+					var str='';
+					for(var i=0; i<data.length; i++) {
+						if(i==0) {
+							str += '<ul class="people">';
+						}
+						str += '<a href="/zipangu/msg/msg_start?mentee_id='+data[i].mentee_id+'&mentor_id='+data[i].mentor_id+'">';
+						
+						var result = ${sessionScope.userID==data[i].mentor_id};
+						
+						if(result==true){
+							str += '<li class="person" data-chat="person'+data[i].msg_num+'">';	
+						    str += '<span class="name">'+data[i].mentee_id+'</span>';
+						    str += '</li>';
+						}
+						if(result==false){
+						    str += '<li class="person" data-chat="person'+data[i].msg_num+'">';
+							str += '<span class="name">'+data[i].mentor_id+'</span>';
+							str += '</li>';
+						}			
+						
+						str += '</a>';
+						if(i==data.length-1) {
+							str += '</ul>';
+						}
+					}
+					$('#after_search').append(str);
+					
 					$('#before_search').attr('hidden','hidden');
 					$('#after_search').removeAttr('hidden','hidden');
-					var str="";
-// 					for(var i=0; i<data.length; i++) {
-// 					str += '<ul class="people">';
-// 					str += '<a href="/zipangu/msg/msg_start?mentee_id='+data[i].mentee_id+'&mentor_id='+data[i].mentor_id+'">';
-// 					str += '<c:if test="${sessionScope.userID=='+data[i].mentor_id+'}">';
-// 				    str += '<li class="person" data-chat="person'+data[i].msg_num+'">';	
-// 				    str += '<span class="name">'+data[i].mentee_id+'</span>';'
-// 				    str += '</li>';
-// 				    str += '</c:if>';
-// 				    str += '<c:if test="${sessionScope.userID=='+data[i].mentee_id+'}">;
-// 					str += '<li class="person" data-chat="person${list.msg_num}">	;
-// 					str += '<span class="name">${list.mentor_id}</span>
-// 					str += '</li>			
-// 					str += '</c:if>
-// 					str += ' </a>
-		      
-// 	            </ul>
-					console.log(data);
-					console.log(data.length);
-// 					for(var i=0; i<10; i++) {
-// 						temp += data[i].rate;
-// 						temp += data[i].trait;
-// 					}
-// 					$("#showChart").append(temp);
-					if($("#search_people").val()=='') {
-						$('#before_search').removeAttr('hidden','hidden');
-						$('#after_search').attr('hidden','hidden');
-					}
 				},error: function(request,status,error){
 					console.log("실패");
 					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -181,7 +186,8 @@
                 <input type="text" id="search_people" placeholder="Search" />
                 <a href="javascript:;" class="search"></a>
             </div>
-            <div id="after_search" hidden="hidden"></div>
+            <div id="after_search" hidden="hidden">
+            </div>
             <div id="before_search">
             <ul class="people">
           		<c:forEach items="${who_user_msg_to_list}" var="list">         	
