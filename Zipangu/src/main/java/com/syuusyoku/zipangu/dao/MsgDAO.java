@@ -2,6 +2,7 @@ package com.syuusyoku.zipangu.dao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
@@ -98,21 +99,32 @@ public class MsgDAO {
 		} return result;
 	}
 	
-	public ArrayList<List_MsgVO> select_mentee_list(String mentor_id) {
-		ArrayList<List_MsgVO> list = null;
-		try {
-			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
-			list = mapper.select_mentee_list(mentor_id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} return list;
-	}
-	
 	public ArrayList<List_MsgVO> who_user_msg_to(String userID) {
 		ArrayList<List_MsgVO> list = null;
 		try {
 			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
 			list = mapper.who_user_msg_to(userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return list;
+	}
+	
+
+	public ArrayList<List_MsgVO> select_lis_msg_mentor(HashMap<String, String> map) {
+		ArrayList<List_MsgVO> list = null;
+		try {
+			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
+			list = mapper.select_lis_msg_mentor(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} return list;
+	}
+			
+	public ArrayList<List_MsgVO> select_list_msg_mentee(HashMap<String, String> map) {
+		ArrayList<List_MsgVO> list = null;
+		try {
+			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
+			list = mapper.select_list_msg_mentee(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} return list;
