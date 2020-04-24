@@ -4,7 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
-
+<!DOCTYPE html>
+<html>
+<head>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
@@ -23,13 +25,6 @@ $(function(){
 		return;
 	}
 	getTotalEntrysheet();
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    
-    setNavUl(bookmarkCount);
-    bookmarkAnalysis(bookmarkCount);
-
-    setEntrysheet();
 })
 
 function getBookmarkCount() {
@@ -77,6 +72,14 @@ function getTotalEntrysheet() {
         	$('#loadingDiv').hide();
             $('#resultDiv').show();
             $('#resultDiv2').show();
+            
+            google.charts.load("current", {packages:["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            setNavUl(bookmarkCount);
+            bookmarkAnalysis(bookmarkCount);
+            setEntrysheet();
+            $('#ali0').trigger('click');
         }
     });
 }
@@ -129,7 +132,7 @@ function setNavUl(data) {
 	var divStr = '';
 	$.each(data, function(index, item){
 		if(index == 0){
-			liStr += '<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#li' + index +'">';
+			liStr += '<li class="nav-item"><a id="ali0" class="nav-link active show" data-toggle="tab" href="#li' + index +'">';
 			liStr += item.type;
 			liStr += '</a></li>';
 			divStr = '<div class="tab-pane fade show active" id="li' + index +'"></div>';
@@ -142,9 +145,9 @@ function setNavUl(data) {
 	});
 	$('ul.nav-tabs').html(liStr);
 	$('div.tab-content').html(divStr);
-	$('#bookmark_tbody').html(bookmarkOutput(data[0].type));
 }
 function setEntrysheet(){
+	
 	$('a.nav-link').on('click', function(){
 		var type = $(this).text();
 		var divId = $(this).attr('href');
@@ -185,9 +188,12 @@ function bookmarkOutput(type) {
 
 function entrysheetOutput(typeResult, divId){
 	var str = '';
-	str += '<table class="table paginated">';
 	
 	if(typeResult.length != 0){
+		str += '<div class="row justify-content-center" style="padding-top: 30px;">총'+ typeResult.length + '건의 합격 자기소개서가 있습니다. 조회하고자 하는 자기소개서 번호를 입력해주세요.</div>';
+		str += '<div class="row justify-content-center" style="padding-bottom: 30px;"><input type="number" value="1" class="form-control" style="width: 80px;" max="'+ typeResult.length + '" min="1"/>';
+		str += '<input type="button" class="btn btn-info" value="조회"/></div>';
+		str += '<table class="table">';
 		str += '<tr><th>규모</th></tr>';
 		str += '<tr><th>' + typeResult[0].COMSIZE + '</th></tr>';
 		str += '<tr><th>업종</th></tr>';
@@ -206,10 +212,10 @@ function entrysheetOutput(typeResult, divId){
 	    str += '<tr><th>' + typeResult[0].ABSORPTION + '</th></tr>';
 	    str += '<tr><th>조언</th></tr>';
 	    str += '<tr><th>' + typeResult[0].ADVICE + '</th></tr>';
+	    str += '</table>';
 	} else {
-		str += '<tr><th>검색결과가 없습니다.</th></tr>';
+		str += '<div class="row justify-content-center" style="height: 800px;"><h3>검색 결과가 없습니다.</h3></div>';
 	}
-	str += '</table>';
 	$(divId).html(str);
 }
 </script>
@@ -233,7 +239,6 @@ function entrysheetOutput(typeResult, divId){
         </div>
     </section>
 <!--================End Home Banner Area =================-->
-
 	<div class="container-fluid">
 	    <br>
 	    <div class="row justify-content-center align-items-center">
@@ -250,7 +255,7 @@ function entrysheetOutput(typeResult, divId){
 		<div class="row" id="resultDiv">
 			<div class="container">
 				<div class="col-md-6" style="float: right;">
-				    <div class="card">
+				    <div class="card-body">
 			            <h4 class="card-title">즐겨찾기 등록 현황</h4>
 			            <hr>
 			            <div id="chartDiv"></div>
@@ -314,4 +319,6 @@ function entrysheetOutput(typeResult, divId){
         </script>
     </c:when>
 </c:choose>
+</body>
+</html>
 <jsp:include page="../include/footer.jsp"></jsp:include>
