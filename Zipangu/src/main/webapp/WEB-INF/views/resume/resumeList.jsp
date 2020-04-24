@@ -113,26 +113,6 @@ input[type="radio"] {
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#inputTitle">새 이력서</button>
 	<p class="float-right">&nbsp;&nbsp;</p>
 	<button type="button" class="btn btn-info float-right" id="updateResume">수정하기</button>
-	<div class="modal" id="inputTitle">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<form action="<c:url value='/resume/resumeForm' />" method="get">
-					<div class="modal-body">
-						<input class="form-control" type="text" name="title" required>
-						<input type="hidden" name="resume_num" value="-1">
-					</div>
-					<div class="modal-footer">
-						<button type="submit" class="btn btn-danger">작성</button>
-						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
 </div>
 <div class="container" style="height:100px;"></div>
 </body>

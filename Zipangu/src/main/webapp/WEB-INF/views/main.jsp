@@ -10,13 +10,18 @@
                     <div class="banner_content">
                         <h2>
                             Zipangu<br>
-                            일본 취직,,도우미,,대충 홍보멘트 하나<br>
+                            여러분의 일본 취업을 도와드립니다!<br>
                         </h2>
                         <p>
-                            지팡구는 ~~~하고 ~~~한 ~~~를 대상으로 맞춤형 종합 취업 지원 서비스를 제공하는 팡구입니다. 어쩌고 저쩌고 해서 
-                            성향분석부터 모의면접까지 전반적인 취업준비에 활용이 가능합니다 호호하하
+                            지팡구는 일본에서 일하고 싶은 여러분들을 위한 다양한 맞춤형 종합 취업 지원 서비스를 제공합니다. 성향분석 및 기업분석을 통한 자기분석, 멘토링, 모의면접 등
+                            지팡구의 다양한 서비스를 체험해 보세요!       
                         </p>
-                        <a class="primary-btn text-uppercase" href="<c:url value="personality/personalityInsight"/>">시작하기</a>
+                        <br>
+                        <a class="primary-btn text-uppercase" href="<c:url value="personality/personalityInsight"/>">성향분석 시작하기</a>
+                        <br><br>
+                        <p>
+                        자기 분석 서비스는 성향분석으로부터 시작이 가능합니다. <br>먼저 지팡구의 성향 분석 서비스를 이용해 보세요!
+                        </p>
                     </div>
                 </div>
                 

@@ -65,7 +65,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                  aria-expanded="false">이력서</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/resume/resumeForm'/>">새 이력서</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#inputTitle">새 이력서</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value="/resume/resumeList"/>">이력서 목록</a></li>
                                 </ul>
                             </li>
@@ -101,10 +101,10 @@
                             <section id="msgSection">
                                 <c:choose>
                                     <c:when test="${sessionScope.authority=='2'}">
-                                        <input type="hidden" class="msg_location" value="mentee_id=${sessionScope.userID}&mentor_id=admin">
+                                        <input type="hidden" class="msg_location" value="mentee_id=${sessionScope.userID}&mentor_id=Administrator">
                                     </c:when>
                                     <c:when test="${sessionScope.authority=='1'}">
-                                        <input type="hidden" class="msg_location" value="mentee_id=admin&mentor_id=${sessionScope.userID}">
+                                        <input type="hidden" class="msg_location" value="mentee_id=Administrator&mentor_id=${sessionScope.userID}">
                                     </c:when>
                                 </c:choose>
                                 <button id="msgButton">
@@ -120,5 +120,25 @@
             </nav>
         </div>
     </header>
+    <div class="modal" id="inputTitle">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="<c:url value='/resume/resumeForm' />" method="get">
+					<div class="modal-body">
+						<input class="form-control" type="text" name="title" required>
+						<input type="hidden" name="resume_num" value="-1">
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger">작성</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

@@ -40,7 +40,7 @@ public class MemberController {
 		if (dao.signup(member)) {
 			dao.sendSimpleMessage(member.getEmail(), member.getUserID() + "님 가입을 환영합니다", "Zipangu에서");
 			dao.login(member, session);
-			//admin과 대화하는 채팅화면 자동 생성
+			//Administrator과 대화하는 채팅화면 자동 생성
 
 			List_MsgVO listVO = new List_MsgVO();
 			String mentor_id="";
@@ -48,11 +48,11 @@ public class MemberController {
 			
 			if(member.getAuthority()==1) {
 	            mentor_id += member.getUserID();
-	            mentee_id += "admin";
+	            mentee_id += "Administrator";
 	         }
 	         if(member.getAuthority()==2) {
 	            mentee_id += member.getUserID();
-	            mentor_id += "admin";
+	            mentor_id += "Administrator";
 	         }
 	         
 	         
