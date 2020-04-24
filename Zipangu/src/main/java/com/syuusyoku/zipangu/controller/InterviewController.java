@@ -90,7 +90,7 @@ public class InterviewController {
 		ArrayList<InterviewResultVO> list = dao.resultList(vo); //최종 결과를 받아옴
 		JSONArray json = new JSONArray(list);
 		model.addAttribute("list_json", json);
-		
+
 		return "interview/interviewSelect";
 	}
 }
