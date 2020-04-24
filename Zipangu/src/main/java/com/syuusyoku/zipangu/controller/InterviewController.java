@@ -70,11 +70,9 @@ public class InterviewController {
 	
 	//결과 화면
 	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
-	public String resultList(Model model, InterviewResultVO vo) {
-		ArrayList<InterviewResultVO> list = dao.resultList(vo); //최종 결과를 받아옴
-		JSONArray json = new JSONArray(list);
+	public String resultList(Model model, InterviewResultVO vo, HttpSession session) {
+		ArrayList<InterviewResultVO> list = dao.resultList(vo, session); //최종 결과를 받아옴
 		model.addAttribute("list", list);
-
 		return "interview/interviewResult";
 	}
 }

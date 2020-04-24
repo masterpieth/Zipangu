@@ -68,7 +68,6 @@ public class InterviewDAO {
 		try(
 			OutputStream os = Files.newOutputStream(filepath)){
 				os.write(blob.getBytes());
-			    System.out.println("'"+dTime+".wav' 저장");//파일명
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -92,7 +91,10 @@ public class InterviewDAO {
 	}
 
 	//결과 전체 표시
-	public ArrayList<InterviewResultVO> resultList(InterviewResultVO vo){
+	public ArrayList<InterviewResultVO> resultList(InterviewResultVO vo, HttpSession session){
+		String userID = (String)session.getAttribute("userID");
+		vo.setUserID(userID);
+		
 		ArrayList<InterviewResultVO> list = null;
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
