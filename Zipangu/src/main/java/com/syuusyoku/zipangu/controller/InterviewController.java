@@ -1,9 +1,5 @@
 package com.syuusyoku.zipangu.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -47,7 +43,6 @@ public class InterviewController {
 		boolean result = false;
 		if(dao.startInterview(vo, session) == 1) result = true;
 		rttr.addFlashAttribute("startInterview", result);
-		System.out.println(vo.toString()+"startInterview");
 		return vo.getInterview_num();
 	}
 	
@@ -70,7 +65,6 @@ public class InterviewController {
 	@RequestMapping(value = "interview/insertInterview", method = RequestMethod.POST)
 	public int insertInterview(InterviewResultVO vo) {
 		int result = dao.insertInterview(vo);
-		System.out.println(vo.toString()+"controller");
 		return result;
 	}
 	
@@ -79,18 +73,8 @@ public class InterviewController {
 	public String resultList(Model model, InterviewResultVO vo) {
 		ArrayList<InterviewResultVO> list = dao.resultList(vo); //최종 결과를 받아옴
 		JSONArray json = new JSONArray(list);
-		model.addAttribute("list_json", json);
+		model.addAttribute("list", list);
 
 		return "interview/interviewResult";
-	}
-
-	//테스트용 오디오 작업
-	@RequestMapping(value = "interview/interviewSelect", method = RequestMethod.GET)
-	public String testvioce(Model model, InterviewResultVO vo) {
-		ArrayList<InterviewResultVO> list = dao.resultList(vo); //최종 결과를 받아옴
-		JSONArray json = new JSONArray(list);
-		model.addAttribute("list_json", json);
-
-		return "interview/interviewSelect";
 	}
 }

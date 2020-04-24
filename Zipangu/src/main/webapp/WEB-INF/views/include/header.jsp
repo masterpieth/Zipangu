@@ -82,7 +82,6 @@
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/interview/getinterview'/>">면접보기</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/interview/getinterviewResult'/>">결과조회</a></li>
-                                	<li class="nav-item"><a class="nav-link" href="<c:url value='/interview/interviewSelect'/>">음성 재생 테스트</a></li>
                                 </ul>
                             </li>
                             <c:choose>

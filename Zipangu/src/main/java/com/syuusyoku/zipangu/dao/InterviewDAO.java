@@ -51,7 +51,6 @@ public class InterviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(vo.toString()+"StartinterviewDAO");
 		return vo.getInterview_num();
 	}
 	
@@ -89,7 +88,6 @@ public class InterviewDAO {
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
-		System.out.println(vo.toString()+"insertinterviewDAO");	
 		return result;
 	}
 
@@ -99,7 +97,6 @@ public class InterviewDAO {
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
 			list = mapper.resultList(vo);
-			System.out.println(list+"최종 리스트 출력");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

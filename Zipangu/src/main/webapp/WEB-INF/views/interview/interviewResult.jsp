@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.util.ArrayList" %>
 <html>
 <head>
 	<title>voice</title>
@@ -13,37 +12,11 @@
 
 <meta charset="UTF-8">
 <title>모의 면접 결과 보기</title>
-	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
-
-<script type="text/javascript">
-$(function(){
-	var arr = ${requestScope.list_json};
-	var html = '';
-
-	for(key in arr){
-		if(key%5==0){
-			html += '<tr><td colspan="4"></td></tr>';
-			html += '<td>'+arr[key].inputdate+'</td>';
-			html += '<td>'+arr[key].question_text+'</td>';
-			html += '<td>'+arr[key].result+'</td>';
-			html += '<td>'+arr[key].voicefilename+'</td>';
-			}else{
-				html += '<tr>';
-				html += '<td>'+arr[key].inputdate+'</td>';
-				html += '<td>'+arr[key].question_text+'</td>';
-				html += '<td>'+arr[key].result+'</td>';
-				html += '<td>'+arr[key].voicefilename+'</td>';
-				html += '</tr>'; 
-			}
-	}
-	$("#dynamicTbody").empty();
-	$("#dynamicTbody").append(html);
-});
-</script>
+<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 </head>
 <body>
 <div align="center">
-	<table border="1" id="dynamicTable">
+	<table border="1">
 		<thead>
 			<tr align="center">
 				<th colspan="4">모의면접 결과</th>
@@ -55,8 +28,24 @@ $(function(){
 				<th>듣기</th>
 			</tr>
 		</thead>
-	<tbody id="dynamicTbody">
-		
+	<tbody>
+        <c:forEach items="${list}" var="item" varStatus="status">
+			<c:if test="${status.index % 5 == 0}">
+            	<th colspan="4"></th>
+            	<tr align="center">
+        		    <td>${item.inputdate}</td>
+	                <td>${item.question_text}</td>
+	                <td>${item.result}</td>
+	                <td>${item.voicefilename}</td>
+                </tr>
+			</c:if>
+	            <tr align="center">
+	                <td>${item.inputdate}</td>
+	                <td>${item.question_text}</td>
+	                <td>${item.result}</td>
+	                <td>${item.voicefilename}</td>
+	            </tr>
+        </c:forEach>
 	</tbody>
 	</table>
 </div>
