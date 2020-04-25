@@ -46,7 +46,7 @@
                                 일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트일단 4줄 일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트
                             </p>
                             <div class="author-title">
-                                <a href="<c:url value="resume/resumeForm"/>"><button class="primary-btn text-uppercase">이력서 작성 바로가기</button></a>
+                                <a href="#" data-toggle="modal" data-target="#inputTitle"><button class="primary-btn text-uppercase">이력서 작성 바로가기</button></a>
                             </div>
                         </div>
                     </div>
