@@ -42,11 +42,20 @@
 	</select>
 	
 	<update id="uploadKakaoText" parameterType="member">
-		update member set textFileName=#{textFileName} where userID=#{userID}
+		UPDATE MEMBER
+		SET
+			TEXTFILENAME = #{textFileName}
+		WHERE
+			USERID = #{userID}
 	</update>
 	
 	<select id="mentorList" resultType="member">
-		select * from member where authority = '1'
+		SELECT
+			*
+		FROM
+			MEMBER
+		WHERE
+			AUTHORITY = '1'
 	</select>
 	
 	<select id="getMember" parameterType="String" resultType="member">

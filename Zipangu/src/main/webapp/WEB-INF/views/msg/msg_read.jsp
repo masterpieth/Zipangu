@@ -18,13 +18,15 @@
 				$('#after_search').attr('hidden','hidden');
 				$('#before_search').removeAttr('hidden','hidden');
 			}
-		//msg/search_msg_people 대화상대 검색
+			//msg/search_msg_people 대화상대 검색
 			$.ajax({
 				type:"get",
 				url:"search_msg_people",
 				data : {search_people : $("#search_people").val()},
 				dataType : 'json',
 				success: function(data){
+					$('#before_search').attr('hidden','hidden');
+					$('#after_search').removeAttr('hidden','hidden');
 					var str='';
 					for(var i=0; i<data.length; i++) {
 						if(i==0) {
@@ -51,9 +53,6 @@
 						}
 					}
 					$('#after_search').append(str);
-					
-					$('#before_search').attr('hidden','hidden');
-					$('#after_search').removeAttr('hidden','hidden');
 				},error: function(request,status,error){
 					console.log("실패");
 					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
