@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.syuusyoku.zipangu.vo.List_MsgVO;
-import com.syuusyoku.zipangu.vo.MemberVO;
 
 @Repository
 public class MsgDAO {
@@ -117,17 +116,5 @@ public class MsgDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} return list;
-	}
-
-	//탈퇴로 인한 정보 삭제
-	public boolean withdraw(MemberVO member) {
-		int result = 0;
-		try {
-			MsgMapper mapper = sqlSession.getMapper(MsgMapper.class);
-			result = mapper.withdraw(member);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result > 0;
 	}
 }

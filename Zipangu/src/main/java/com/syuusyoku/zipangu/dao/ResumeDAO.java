@@ -122,15 +122,4 @@ public class ResumeDAO {
 		}
 		return member;
 	}
-
-	public boolean withdraw(MemberVO member) {
-		int result = 0;
-		try {
-			ResumeMapper mapper = session.getMapper(ResumeMapper.class);
-			result = mapper.withdraw(member);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result > 0;
-	}
 }

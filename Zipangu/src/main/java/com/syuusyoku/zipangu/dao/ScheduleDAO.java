@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.ScheduleVO;
 
 @Repository
@@ -79,19 +78,5 @@ public class ScheduleDAO {
 			e.printStackTrace();
 		}
 		return mentorID;
-	}
-
-	public boolean withdraw(MemberVO member) {
-		int result = 0;
-		try {
-			ScheduleMapper mapper = session.getMapper(ScheduleMapper.class);
-			if (member.getAuthority() == 1)
-				result = mapper.mentorWithdraw(member);
-			else
-				result = mapper.menteeWithdraw(member);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result > 0;
 	}
 }

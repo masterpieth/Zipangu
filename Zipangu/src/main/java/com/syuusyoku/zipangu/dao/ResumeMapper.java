@@ -38,6 +38,4 @@ public interface ResumeMapper {
 	ArrayList<CareerVO> getCareer(int resume_num);
 
 	ArrayList<QualifiedVO> getQualified(int resume_num);
-
-	int withdraw(MemberVO member);
 }
