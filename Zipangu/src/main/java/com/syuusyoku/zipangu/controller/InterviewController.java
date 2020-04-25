@@ -1,5 +1,9 @@
 package com.syuusyoku.zipangu.controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,7 +37,7 @@ public class InterviewController {
 		ArrayList<QuestionVO> questionList = dao.selectList();
 		JSONArray json = new JSONArray(questionList);
 		model.addAttribute("questionList", json);
-		return "interview/interview";
+		return "/interview/interview";
 	}
 	
 	//모의 면접 시작
@@ -82,8 +86,11 @@ public class InterviewController {
 
 	//테스트용 오디오 작업
 	@RequestMapping(value = "interview/interviewSelect", method = RequestMethod.GET)
-	public String home() {
+	public String testvioce(Model model, InterviewResultVO vo) {
+		ArrayList<InterviewResultVO> list = dao.resultList(vo); //최종 결과를 받아옴
+		JSONArray json = new JSONArray(list);
+		model.addAttribute("list_json", json);
+
 		return "interview/interviewSelect";
 	}
-	
 }

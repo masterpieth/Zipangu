@@ -72,6 +72,23 @@ td {
 		</c:if>
 </div>
 <div class="container" style="height:100px;"></div>
+<div>전체 멘토 목록</div>
+<table>
+	<c:forEach items="${requestScope.mentorList}" var="mentor">
+		<tr>
+			<th>멘토이름</th><td>${mentor.userName}</td>
+			<th>멘토 아이디</th><td>${mentor.userID}</td>
+			<td>	
+				<form action="<c:url value='/msg/msg_start'/>" method="get">
+					<input type="hidden" value="${sessionScope.userID}" name="mentee_id"> 
+					<input type="hidden" value="${mentor.userID}" name="mentor_id">
+					
+					<input type="submit" value="연락하기">
+				</form>
+			</td>
+		</tr>
+	</c:forEach>
+</table>
 </body>
 <script>
 var calendarDate, scheduleList, thisMonth, date;

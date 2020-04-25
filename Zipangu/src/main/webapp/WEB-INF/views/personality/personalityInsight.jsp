@@ -171,22 +171,27 @@ function openUploadTextForm() {
 					<div class="service-2-left">
 						<div class="get-know">
 							<p class="df-color">성향분석</p>
-							<h1>내가 쓴 텍스트를 통해 성향을 알아보고 키워드들을 통해 타임라인을 만들어보세요,,,,,</h1>
+							<h1>지팡구에서는 직접 쓴 텍스트를 통한 성향분석이 가능합니다.</h1>
 							<hr>
-							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. 
+							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. <br>
 							나의 경험, 생각 및 반응에 관한 단어가 포함되어 있는 텍스트를 입력 해주세요.
 							직접 텍스트 입력외에도 카카오토 대화내용 또는 txt 파일 업로드를 통해 이용이 가능합니다.
 							위의 두 방법으로 성향분석을 원하실 경우 아래 '파일 업로드'버튼을 눌러주세요.
 							유의미한 결과를 얻기 위해서는 적어도 3,500단어 이상, 이상적으로 6000단어가 필요합니다.
 							100단어 정도로도 성향분석은 가능하지만, 분석 결과가 정확하지 않을 수 있는 점 양해 부탁드립니다.</p>			
-							<button class="genric-btn danger e-large" onclick="openUploadTextForm()">파일 업로드</button>
+							<br>
+							<div align="center">
+							<button class="genric-btn danger e-large" onclick="openUploadTextForm()">
+								파일 업로드
+							</button>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="service-2-right">
 						<div class="get-know">
-							<p>사용할 텍스트 내용을 확인해 주세요. 텍스트를 업로드 하지 않고 아래에 직접 내용을 입력하셔도 됩니다.</p>
+							<p>사용할 텍스트 내용을 확인해 주세요. <br>텍스트를 업로드 하지 않고 아래에 직접 내용을 입력하셔도 됩니다.</p>
 							<textarea rows="20" cols="80" id="revisedContent" style="resize: none;"></textarea>
 						</div>
 					</div>
@@ -202,9 +207,11 @@ function openUploadTextForm() {
 			</div>
 		</div>
 	</section>
+	<br><br>
 	<div  class="row justify-content-center" id="ment1" hidden="hidden">
-		나와 가장 관련 있는 키워드 (10개)<br>
+		나와 가장 관련 있는 키워드 (10개)
 	</div>
+	<br><br>
 	<div id="showChart" class="container"></div>
 	<br><br><br><br>
 <!-- <section class="features_area" id="features_counter"> -->
@@ -212,7 +219,7 @@ function openUploadTextForm() {
 		<div class="row counter_wrapper">
 			<!-- single feature -->
 			<div class="col-lg-3 col-md-6 col-sm-6">
-				<div class="single_feature" id="personality_result0">
+				<div class="single_feature" id="personality_result0" >
 				</div>
 			</div>
 			<!-- single feature -->

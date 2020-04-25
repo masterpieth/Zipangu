@@ -330,7 +330,7 @@ window.onload = function(){
 <div id="interviewComplete" style="display: none">
 <h1> 모의 면접을 완료 하였습니다. </h1>
 <h3> 면접 결과는 [결과보기] 버튼을 선택하시면 확인 하실 수 있습니다. </h3>
-<button id="">결과 보기</button>
+<button type="button" onclick="location.href='getinterviewResult'">결과 보기</button>
 </div>
 
 <!-- 진행 완료된 값들 저장 -->
@@ -346,5 +346,5 @@ window.onload = function(){
 </div>
 
 </body>
-	<jsp:include page="../include/footer.jsp"></jsp:include>
 </html>
+	<jsp:include page="../include/footer.jsp"></jsp:include>
