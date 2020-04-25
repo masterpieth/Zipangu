@@ -3,6 +3,7 @@ package com.syuusyoku.zipangu.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.ScheduleVO;
 
 public interface ScheduleMapper {
@@ -16,4 +17,8 @@ public interface ScheduleMapper {
 	int insertSchedule(ScheduleVO schedule);
 
 	String getMentorID(ScheduleVO schedule);
+
+	int menteeWithdraw(MemberVO member);
+
+	int mentorWithdraw(MemberVO member);
 }

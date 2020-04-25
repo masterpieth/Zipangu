@@ -93,11 +93,11 @@
 </body>
 <script>
 TogetherJSConfig_hubBase = "https://togetherjs-hub.glitch.me/";
-var checkID, checkPwd, checkEMail, checkUserName, checkBirth, checkAddress, checkPhone, checkSex, checkAuthority;
-checkID = checkPwd = checkEMail = checkUserName = checkBirth = checkAddress = checkPhone = checkSex = checkAuthority = false;
+var checkID, checkPwd, checkEmail, checkUserName, checkBirth, checkAddress, checkPhone, checkSex, checkAuthority;
+checkID = checkPwd = checkEmail = checkUserName = checkBirth = checkAddress = checkPhone = checkSex = checkAuthority = false;
 
 function signup() {
-	return checkID && checkPwd && checkEMail && checkUserName && checkBirth && checkAddress && checkPhone && checkSex && checkAuthority;
+	return checkID && checkPwd && checkEmail && checkUserName && checkBirth && checkAddress && checkPhone && checkSex && checkAuthority;
 }
 
 $(function() {
@@ -151,14 +151,14 @@ $(function() {
 	});
 
 	$('#email').keyup(function() {
-		var eMail = $('#email').val();
+		var email = $('#email').val();
 		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		if (regExp.test(eMail)) {
+		if (regExp.test(email)) {
 			$('#emailMessage').css('color', '#28a745');
-			checkEMail = true;
+			checkEmail = true;
 		} else {
 			$('#emailMessage').css('color', '#dc3545');
-			checkEMail = false;
+			checkEmail = false;
 		}
 	});
 

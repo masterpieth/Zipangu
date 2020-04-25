@@ -32,5 +32,4 @@
 		select * from list_msg 
 		where mentor_id=#{userID} or mentee_id=#{userID}
 	</select>
-	
 </mapper>

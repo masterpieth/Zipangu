@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.PersonalityVO;
 import com.syuusyoku.zipangu.vo.TimelineVO;
 
@@ -137,5 +138,15 @@ public class PersonalityDAO {
 		} return list;
 	}
 	
-	
+	//탈퇴로 인한 정보 삭제
+	public boolean withdraw(MemberVO member) {
+		int result = 0;
+		try {
+			PersonalityMapper mapper = sqlSession.getMapper(PersonalityMapper.class);
+			result = mapper.withdraw(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result > 0;
+	}
 }

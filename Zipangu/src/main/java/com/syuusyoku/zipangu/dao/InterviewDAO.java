@@ -10,13 +10,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
+
 import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.syuusyoku.zipangu.vo.InterviewResultVO;
 import com.syuusyoku.zipangu.vo.InterviewVO;
+import com.syuusyoku.zipangu.vo.MemberVO;
 import com.syuusyoku.zipangu.vo.QuestionVO;
 
 @Controller
@@ -104,5 +108,17 @@ public class InterviewDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	//탈퇴로 인한 정보 삭제
+	public boolean withdraw(MemberVO member){
+		int result = 0;
+		try {
+			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
+			result = mapper.withdraw(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result > 0;
 	}
 }

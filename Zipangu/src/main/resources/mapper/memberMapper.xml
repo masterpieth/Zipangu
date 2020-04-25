@@ -29,7 +29,6 @@
 		)
 	</insert>
 
-
 	<select id="login" parameterType="member" resultType="int">
 		SELECT
 			COUNT(*)
@@ -60,10 +59,59 @@
 			phone,
 			sex,
 			authority,
-			textfilename
+			textfilename,
+			TO_CHAR(signupdate,'YYYY-MM-DD') AS signupDate
 		FROM
 			member
 		WHERE
 			LOWER(userid) = LOWER(#{userID})
 	</select>
+
+	<update id="update" parameterType="member">
+		UPDATE
+			member
+		SET
+			username = #{userName},
+			userpwd = #{userPwd},
+			email = #{email},
+			address = #{address},
+			phone = #{phone},
+			sex = #{sex},
+			authority = #{authority}
+		WHERE
+			userid = #{userID}
+	</update>
+
+	<update id="menteeWithdraw" parameterType="member">
+		UPDATE
+			schedule
+		SET
+			menteeid = NULL
+		WHERE
+			menteeid = #{userID}
+	</update>
+
+	<delete id="withdraw" parameterType="member">
+	{CALL BEGIN
+		DELETE company_result WHERE	userid = #{userID};
+		DELETE timeline WHERE userid = #{userID};
+		DELETE personality WHERE userid = #{userID};
+		<choose>
+			<when test="authority eq 1">
+				DELETE list_msg WHERE mentor_id = #{userID};
+				DELETE schedule WHERE mentorid = #{userID};
+			</when>
+			<otherwise>
+				DELETE list_msg WHERE mentee_id = #{userID};
+			</otherwise>
+		</choose>
+		DELETE interview_result	WHERE interview_num IN (SELECT interview_num FROM interview WHERE userid = #{userID});
+		DELETE interview WHERE userid = #{userID};
+		DELETE career WHERE resume_num IN (SELECT resume_num FROM resume WHERE userid = #{userID});
+		DELETE qualified WHERE resume_num IN (SELECT resume_num FROM resume WHERE userid = #{userID});
+		DELETE resume_member WHERE resume_num IN (SELECT resume_num FROM resume WHERE userid = #{userID});
+		DELETE resume WHERE userid = #{userID};
+		DELETE member WHERE	userid = #{userID};
+	END}
+	</delete>
 </mapper>
