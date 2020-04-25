@@ -248,7 +248,8 @@ function checkDate(button) {
 			if (mentorList.length < 25)
 				mentorList += '예약 가능한 멘토가 없습니다';
 			else {
-				modalFooter += '<button type="button" class="btn btn-danger" data-dismiss="modal" ';
+				modalFooter += '<button type="button" class="btn btn-info" onclick="askReserve()">연락하기</button>';
+				modalFooter += '<button type="button" class="btn btn-success" data-dismiss="modal" ';
 				modalFooter += 'onclick="reserve(this)">예약</button>';
 			}
 			mentorList += '</div>';
@@ -301,6 +302,11 @@ function updateSchedule() {
 	});
 };
 
+function askReserve() {
+	var mentor_id = $('input[name=mentorID]:checked').val();
+    typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
+};
+
 function openUploadMessenger(mentor_id) {
 	open(
 		'<c:url value="/msg/msg_start?mentor_id=' + mentor_id +
@@ -324,7 +330,7 @@ $(function() {
 	createCalendar();
 	$('#contact').click(function() {
         var mentor_id = $('input[name=mentor_id]:checked').val();
-        mentor_id.length < 1 ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
+        typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
     });
 });
 </script>
