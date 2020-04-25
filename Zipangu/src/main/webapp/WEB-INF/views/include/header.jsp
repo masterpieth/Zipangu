@@ -133,7 +133,7 @@
 						<input type="hidden" name="resume_num" value="-1">
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-danger">작성</button>
+						<button type="submit" class="btn btn-primary">작성</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 					</div>
 				</form>
