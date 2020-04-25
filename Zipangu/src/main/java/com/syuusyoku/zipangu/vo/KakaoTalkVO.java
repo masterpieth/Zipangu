@@ -1,12 +1,12 @@
 package com.syuusyoku.zipangu.vo;
 
-public class KakaoVO {
+public class KakaoTalkVO {
 	private String kakaoContent;
 	private String kakaoName;
-	public KakaoVO() {
-		super();
+	public KakaoTalkVO() {
+		// TODO Auto-generated constructor stub
 	}
-	public KakaoVO(String kakaoContent, String kakaoName) {
+	public KakaoTalkVO(String kakaoContent, String kakaoName) {
 		super();
 		this.kakaoContent = kakaoContent;
 		this.kakaoName = kakaoName;
