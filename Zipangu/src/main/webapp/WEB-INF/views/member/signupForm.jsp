@@ -85,7 +85,6 @@
 		<br>
 		<div align="center">
 		<button type="submit" class="genric-btn danger e-large" id="signupBtn" onclick="return signup()">가입하기</button>
-<!-- 		<button onclick="TogetherJS(this); return false;">Start TogetherJS</button> -->
 		</div>
 	</form>
 </div>

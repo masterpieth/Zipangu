@@ -18,7 +18,8 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/uploaded/**" location="file:///C:/Zipangu/" />
+	<resources mapping="/uploaded/**" location="file:///C:/git/Zipangu" />
+	<resources mapping="/voice/**" location="file:///C:/PJT/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -38,6 +39,7 @@
 			<mapping path="/analysis/*"/>
 			<mapping path="/resume/resumeForm"/>
 			<mapping path="/schedule/scheduleForm"/>
+			<mapping path="/interview/*"/>
 			<beans:ref bean="interceptor" />
 		</interceptor>
 	</interceptors>

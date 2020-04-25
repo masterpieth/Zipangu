@@ -29,7 +29,7 @@ $(function(){
 			data : revisedContent, 
 			success: function(data){
 
-// 				console.log(data);
+				console.log(data);
 				
 				var resultPersonality = data.personality;
 				var resultNeeds = data.needs;
@@ -78,13 +78,12 @@ $(function(){
 					},
 					traditional: true,
 					success: function(){
-// 						console.log("성공");
+						console.log("성공");
 						$.ajax({
 							type:"post",
 							url:"makeChart",
 							success: function(data){
-// 								console.log("차트만들기");
-// 								console.log(data);
+								console.log(data);
 								var temp = "";
 
 								for(var i=0; i<10; i++) {
@@ -171,9 +170,9 @@ function openUploadTextForm() {
 					<div class="service-2-left">
 						<div class="get-know">
 							<p class="df-color">성향분석</p>
-							<h1>지팡구에서는 직접 쓴 텍스트를 통한 성향분석이 가능합니다.</h1>
+							<h1>Zipangu에서는 직접 쓴 텍스트를 통한 성향분석이 가능합니다.</h1>
 							<hr>
-							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. 
+							<p>위 서비스를 이용하기 위해서는 본인이 작성한 텍스트가 필요합니다. <br>
 							나의 경험, 생각 및 반응에 관한 단어가 포함되어 있는 텍스트를 입력 해주세요.
 							직접 텍스트 입력외에도 카카오토 대화내용 또는 txt 파일 업로드를 통해 이용이 가능합니다.
 							위의 두 방법으로 성향분석을 원하실 경우 아래 '파일 업로드'버튼을 눌러주세요.
@@ -239,6 +238,8 @@ function openUploadTextForm() {
 			</div>
 		</div>
 		<div class="row counter_wrapper">	
+			<div class="col-lg-3 col-md-6 col-sm-6">
+			</div>
 			<!-- single feature -->
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="single_feature" id="personality_result4">
@@ -248,6 +249,8 @@ function openUploadTextForm() {
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="single_feature" id="personality_result5">
 				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6">
 			</div>
 		</div>
 		<br><br>

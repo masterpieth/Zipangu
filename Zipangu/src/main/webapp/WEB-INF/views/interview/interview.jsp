@@ -3,11 +3,11 @@
 <%@ page import="java.util.ArrayList" %>
 <html>
 <head>
-	<title>voice</title>
+	<title>모의 면접</title>
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-    <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style2.css' />">
+<%--     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style2.css' />"> --%>
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 
@@ -92,25 +92,32 @@ window.onload = function(){
 		var url = URL.createObjectURL(blob);
 		var au = document.createElement('audio');
 		var li = document.createElement('li');
-		li.className = 'lis'; 
-
+		var br = document.createElement('br');
+		li.className = 'lis';
 		var filename = new Date().toISOString();
+		
 		au.controls = true; //오디오 컨트롤 바
 		au.src = url;
 		li.appendChild(au);
-		li.appendChild(document.createTextNode("이 답변으로"))
+		li.append(br);
+		li.appendChild(document.createTextNode("위 답변으로"));
 		recordingsList.appendChild(li);
+// 		recordingsList.appendChild(br);
 
 		//파일저장 및 API 실행
 		var upload = document.createElement('button');
 			upload.id = 'mouseClick';
 			upload.href = "#";
 			upload.innerHTML = "제출하기";
-
+			upload.setAttribute('class','btn btn-danger');
+			
+// 			upload.setAttribute('onclick', 'Show();');
+			
 			upload.addEventListener("click", function(event) {
+// 				document.getElementById("loadingDiv").style.display ='block';
+				// Show();
 				var fd = new FormData();
 				fd.append("blob", blob);
-// 				console.log(fd);
 
 				//답변 파일 저장
 				$.ajax({
@@ -121,6 +128,10 @@ window.onload = function(){
 					cache: false,
 					processData:false,
 					contentType: false,
+					/* beforeSend: function(){
+		 	            $('#loadingDiv').show();
+		 	            Show();
+					}, */
 					success: function(data){
 						console.log("답변 파일 저장 완료"); //녹음 파일 저장 완료 확인
 						$('#voicefilename').val(data+".wav");
@@ -132,13 +143,14 @@ window.onload = function(){
 						}
 				});
 			});
-				li.appendChild(document.createTextNode(" ")) 
-				li.appendChild(upload)
+				li.appendChild(document.createTextNode(" "));
+				li.appendChild(upload);
 	}
 }
 
 	//STT
-	function speechToText(blob){
+	function speechToText(blob) {
+		// $('#loadingDiv').show();
 		var temp;
 		var text = "";
 		
@@ -155,7 +167,6 @@ window.onload = function(){
 	                'Content-Type' : 'audio/wav'
 	            },
 	            success: function(data){
-		            console.log("STT 완료")
 	                temp = data;
 	               	length = temp.results.length;
 	               	for (i = 0; i < length; i++) {
@@ -163,12 +174,11 @@ window.onload = function(){
 	               	}
 	               	document.getElementById("demo").innerHTML = text;
 	            },
-	            error: function(data){
+	            error: function(data) {
 	                console.log(data)
 	            }
-	        })
+	})
 	}
-
 	//NLU
 	function naturalLanguageUnderstanding(){
 		var temp2;
@@ -198,29 +208,31 @@ window.onload = function(){
 				console.log("답변 분석 완료");
 	            temp2 = data;
 	           	text2 = temp2.sentiment.document.label;
-	
 	            if (text2==="positive") {
 	                stats = "긍정적";
 	              } else if (text2 ==="negative") {
-	            	  stats = "부정적";
-	              } else {
+	            	  stats = "부정적"; 
+	              } else if (text2 === "neutral") {
 	            	  stats = "중립적";
 	              }
 	            $('#demo2').val(stats);
 			},
-			error : function(request, status, error){
-				console.log(request.status + '/' + request.responseText + '/' + error);
-			}
+			error : function(data){
+				$('#demo2').val("분석 불가")
+			}, complete: function(){
+		        $('#loadingDiv').hide();
+           }
 		});
 	};
 
 	$(function (){
+// Hide();
+//Show();
 		$('#startInterview').on('click',function(){
 			$.ajax({
 				url : "/zipangu/interview/startInterview",
 				type : "post",
 				success : function(data){
-					console.log("interview_num : "+data);
 					console.log("모의면접 준비 완료");
 					$('#interview_num').val(data);
 					nextQuestionButton();
@@ -237,6 +249,7 @@ window.onload = function(){
 
 	//선택 버튼을 누르면 결과를 DB에 저장
 	function insert_interview(){
+		Hide();
 			$.ajax({
 				url : "/zipangu/interview/insertInterview",
 				type : "post",
@@ -271,32 +284,22 @@ window.onload = function(){
 			startinterviewinfo.style.display = "none";
 			question_Doc.innerHTML = "첫번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
-			console.log("첫번째 질문이 표시 됩니다.");
-			console.log(arr[mouseClick].question_num);
 			mouseClick++;
 		} else if(mouseClick === 1) {
 			question_Doc.innerHTML = "두번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
-			console.log("두번째 질문이 표시 됩니다.");
-			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 2) {
 			question_Doc.innerHTML = "세번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
-			console.log("세번째 질문이 표시 됩니다.");
-			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 3) {
 			question_Doc.innerHTML = "네번째 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
-			console.log("네번째 질문이 표시 됩니다.");
-			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 4) {
 			question_Doc.innerHTML = "마지막 : "+arr[mouseClick].question_text;
 			$('#question_num').val(arr[mouseClick].question_num);
-			console.log("마지막번째 질문이 표시 됩니다.");
-			console.log(mouseClick+"질문 번호");
 			mouseClick++;
 		} else if(mouseClick === 5) {
 			recordButton.disabled = true;
@@ -305,36 +308,89 @@ window.onload = function(){
     		interviewsector.style.display = "none";
 		}
 	}
+
+// 	function getTotalEntrysheet() {
+// 	    $.ajax({
+// //	         url : "http://192.168.0.8:5000/getTotalEntrysheet",
+// 	        url : "http://10.10.17.117:5000/getTotalEntrysheet",
+// 	        type : "post",
+// 	        success: function(data){
+// 	            totalEntrysheet = data;
+// 	        }, error: function(e){
+// 	            console.log(e);
+// 	        },beforeSend: function(){
+// 	            $('#loadingDiv').show();
+// // 	            $('#resultDiv').hide();
+// // 	            $('#resultDiv2').hide();
+// 	        },complete: function(){
+// 	           $('#loadingDiv').hide();
+// // 	            $('#resultDiv').show();
+// // 	            $('#resultDiv2').show();
+// 	        }
+// 	    });
+// 	}
+
+function Show()
+{
+	$('#loadingDiv').show();
+}
+function Hide()
+{
+	$('#loadingDiv').hide();
+}
+function CreateShow()
+{
+	$('#mouseClick').on('click', function()
+	{
+		Show();
+	});
+}
 </script>
 <body>
-<div align="center" id="interviewsector">
-<h3 id="startinterviewinfo">[모의면접 시작]을 누르시면 시작합니다.</h3>
-<button id="startInterview">모의면접 시작</button>
-<!-- 질문 -->
-<h4 id="info"></h4>
-<h1 id="question"></h1>
+<!-- <div id="loadingDiv" class="row justify-content-center align-items-center" style="display:none; padding-top: 100px; padding-bottom: 200px;"> -->
+<%--           <img src="<c:url value="/resources/img/loading.gif"/>"> --%>
+<!-- </div> -->
 
-<!-- 타이머 -->
-<p id="counting" align="center"></p>
+<div class="space">
+</div>
 
-<!-- 음성녹음(진행 버튼) -->
-<div align="center">
-	<div id="controls" align="center">
-		<button id="recordButton">답변하기</button>
-		<button id="stopButton" disabled>답변완료</button>
-	</div>
-<!-- 음성 녹음(완료 리스트) -->
-	<ul id="recordingsList" ></ul>
+<div align="center" id="interviewsector" class="interviewsector">
+	<h3 id="startinterviewinfo">[모의면접 시작]을 누르시면 시작합니다.</h3>
+	<button id="startInterview" class = 'btn btn-lg btn-danger'>모의면접 시작</button>
+	<p> </p>
+	
+	<!-- 질문 -->
+	<h4 id="info"></h4>
+	<h1 id="question"></h1>
+	
+	<!-- 타이머 -->
+	<h3 id="counting" align="center"></h3>
+	
+	<!-- 음성녹음(진행 버튼) -->
+		<div align="center">
+			<div id="controls" align="center">
+				<button id="recordButton" class ="btn btn-danger">답변하기</button>
+				<button id="stopButton" class ="btn btn-danger" disabled>답변완료</button>
+	<div class="space"></div>
+			</div>
+		
+		<!-- 음성 녹음(완료 리스트) -->
+			<div>
+				<ul id="recordingsList"></ul>
+			</div>
+		</div>
 </div>
-</div>
-<div id="interviewComplete" style="display: none">
-<h1> 모의 면접을 완료 하였습니다. </h1>
-<h3> 면접 결과는 [결과보기] 버튼을 선택하시면 확인 하실 수 있습니다. </h3>
-<button id="">결과 보기</button>
+
+<div id="interviewComplete">
+	<div class="space"></div>
+		<h1> 모의 면접을 완료 하였습니다. </h1>
+		<h3> 면접 결과는 [결과보기] 버튼을 선택하시면 확인 하실 수 있습니다. </h3>
+		<button type="button" onclick="location.href='getinterviewResult'" class="btn btn-danger">결과 보기</button>
+	<div class="space"></div>
 </div>
 
 <!-- 진행 완료된 값들 저장 -->
-<div align="center" style="display:none;">
+<div id="testdev"align="center">
 <h2>----------------(interviewresult 저장되는 값들)----------------</h2>
 		진행자 : <input type="text" id="userID" value="${sessionScope.userID}"><br>
 		interivew_num : <input type="text" id="interview_num" value=""><br>
@@ -344,7 +400,8 @@ window.onload = function(){
 <h2>----------------(STT 결과(미저장))----------------</h2>
 		STT 결과 : <textarea id="demo" readonly="readonly"></textarea><br>
 </div>
-
+<div class="space">
+</div>
 </body>
-	<jsp:include page="../include/footer.jsp"></jsp:include>
 </html>
+	<jsp:include page="../include/footer.jsp"></jsp:include>

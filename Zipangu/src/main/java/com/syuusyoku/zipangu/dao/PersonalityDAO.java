@@ -136,4 +136,6 @@ public class PersonalityDAO {
 			e.printStackTrace();
 		} return list;
 	}
+	
+	
 }

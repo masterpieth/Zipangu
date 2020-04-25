@@ -46,11 +46,6 @@
 			)
 	</insert>
 	
-<!-- 	<selcet id="selectInterview"> 보류 -->
-<!-- 		select  -->
-	
-<!-- 	</selcet> -->
-
 <!-- 	interviewresult -->
 	<select id="resultList" parameterType="ivo" resultType="rvo">
 SELECT 
@@ -64,6 +59,7 @@ FROM
 	QUESTION C
 WHERE 
 	A.INTERVIEW_NUM = B.INTERVIEW_NUM 
+AND A.USERID = #{userID}
 AND C.QUESTION_NUM = B.QUESTION_NUM
 AND A.INTERVIEW_NUM IN 
 (select 
@@ -76,15 +72,4 @@ having
 	count(*)=5)
 ORDER BY a.inputdate DESC
 	</select>
-
-<!-- 	<select id="resultList1" resultType="rvo"> -->
-<!-- select  -->
-<!-- 	interview_num  -->
-<!-- from  -->
-<!-- 	interview_result  -->
-<!-- GROUP BY  -->
-<!-- 	INTERVIEW_NUM  -->
-<!-- having  -->
-<!-- 	count(*)=5 -->
-<!-- 	</select> -->
 </mapper>
