@@ -29,7 +29,7 @@ $(function(){
 			data : revisedContent, 
 			success: function(data){
 
-// 				console.log(data);
+				console.log(data);
 				
 				var resultPersonality = data.personality;
 				var resultNeeds = data.needs;
@@ -78,13 +78,12 @@ $(function(){
 					},
 					traditional: true,
 					success: function(){
-// 						console.log("성공");
+						console.log("성공");
 						$.ajax({
 							type:"post",
 							url:"makeChart",
 							success: function(data){
-// 								console.log("차트만들기");
-// 								console.log(data);
+								console.log(data);
 								var temp = "";
 
 								for(var i=0; i<10; i++) {
@@ -239,6 +238,8 @@ function openUploadTextForm() {
 			</div>
 		</div>
 		<div class="row counter_wrapper">	
+			<div class="col-lg-3 col-md-6 col-sm-6">
+			</div>
 			<!-- single feature -->
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="single_feature" id="personality_result4">
@@ -248,6 +249,8 @@ function openUploadTextForm() {
 			<div class="col-lg-3 col-md-6 col-sm-6">
 				<div class="single_feature" id="personality_result5">
 				</div>
+			</div>
+			<div class="col-lg-3 col-md-6 col-sm-6">
 			</div>
 		</div>
 		<br><br>

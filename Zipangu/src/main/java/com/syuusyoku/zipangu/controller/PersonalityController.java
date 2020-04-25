@@ -28,9 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.dao.PersonalityDAO;
+import com.syuusyoku.zipangu.vo.KakaoTalkVO;
 import com.syuusyoku.zipangu.vo.PersonalityVO;
 import com.syuusyoku.zipangu.vo.TimelineVO;
-import com.syuusyoku.zipangu.vo.kakaoVO;
 
 
 
@@ -57,7 +57,7 @@ public class PersonalityController {
 
 	@RequestMapping(value = "personality/sendKakao", method = RequestMethod.POST,produces ="application/text; charset=utf8")
 	@ResponseBody
-	public String sendKakao(@RequestBody kakaoVO vo, HttpSession session) {
+	public String sendKakao(@RequestBody KakaoTalkVO vo, HttpSession session) {
 		
 		String userID=(String)session.getAttribute("userID");
 		String kakaoContent = vo.getKakaoContent();
