@@ -10,14 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.syuusyoku.zipangu.vo.InterviewResultVO;
 import com.syuusyoku.zipangu.vo.InterviewVO;
 import com.syuusyoku.zipangu.vo.QuestionVO;
@@ -54,7 +51,6 @@ public class InterviewDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(vo.toString()+"StartinterviewDAO");
 		return vo.getInterview_num();
 	}
 	
@@ -72,7 +68,6 @@ public class InterviewDAO {
 		try(
 			OutputStream os = Files.newOutputStream(filepath)){
 				os.write(blob.getBytes());
-			    System.out.println("'"+dTime+".wav' 저장");//파일명
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -92,20 +87,22 @@ public class InterviewDAO {
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
-		System.out.println(vo.toString()+"insertinterviewDAO");	
 		return result;
 	}
 
 	//결과 전체 표시
-	public ArrayList<InterviewResultVO> resultList(InterviewResultVO vo){
+	public ArrayList<InterviewResultVO> resultList(InterviewResultVO vo, HttpSession session){
+		String userID = (String)session.getAttribute("userID");
+		vo.setUserID(userID);
+		
 		ArrayList<InterviewResultVO> list = null;
 		try {
 			InterviewMapper mapper = sqlSession.getMapper(InterviewMapper.class);
 			list = mapper.resultList(vo);
-			System.out.println(list+"최종 리스트 출력");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
+	
 }

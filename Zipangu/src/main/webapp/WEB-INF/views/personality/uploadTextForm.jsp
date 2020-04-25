@@ -111,8 +111,8 @@ function exit2() {
 		                        
 		                    <p style="padding-top: 30px; padding-bottom: 25px;">2.카카오톡 프로필 상의 나의 이름을 입력해주세요.</p>
 		                    <img alt="카카오톡이름작성" src="<c:url value='/resources/img/kakaoUpload2.JPG'/>" width="400" height="200">
-		                    <div align="center" style="padding-top: 30px;">
-		                        이름 입력 : <input type="text" name="kakaoName" id="kakaoName" required="required">
+		                    <div style="padding-top: 30px;">
+		                        	이름 입력 : <input type="text" name="kakaoName" id="kakaoName" required="required">
 		                                    <input type="text" name="kakaoContent" id="kakaoContent" hidden="hidden">
 		                    </div>
 		                    <div align="center" style="padding-top: 30px; padding-bottom: 25px;">

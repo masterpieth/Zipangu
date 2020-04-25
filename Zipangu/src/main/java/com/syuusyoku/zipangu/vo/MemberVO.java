@@ -12,14 +12,14 @@ public class MemberVO {
 	private String sex;
 	private int authority;
 	private String textFileName;
-	private String signupDate;
+	private String singupDate;
 	
 	public MemberVO() {
 		super();
 	}
 
 	public MemberVO(int resume_num, String userID, String userPwd, String email, String userName, String birth,
-			String address, String phone, String sex, int authority, String textFileName, String signupDate) {
+			String address, String phone, String sex, int authority, String textFileName, String singupDate) {
 		super();
 		this.resume_num = resume_num;
 		this.userID = userID;
@@ -32,7 +32,7 @@ public class MemberVO {
 		this.sex = sex;
 		this.authority = authority;
 		this.textFileName = textFileName;
-		this.signupDate = signupDate;
+		this.singupDate = singupDate;
 	}
 
 	public int getResume_num() {
@@ -123,19 +123,19 @@ public class MemberVO {
 		this.textFileName = textFileName;
 	}
 
-	public String getSignupDate() {
-		return signupDate;
+	public String getSingupDate() {
+		return singupDate;
 	}
 
-	public void setSignupDate(String singupDate) {
-		this.signupDate = singupDate;
+	public void setSingupDate(String singupDate) {
+		this.singupDate = singupDate;
 	}
 
 	@Override
 	public String toString() {
 		return "MemberVO [resume_num=" + resume_num + ", userID=" + userID + ", userPwd=" + userPwd + ", email=" + email
 				+ ", userName=" + userName + ", birth=" + birth + ", address=" + address + ", phone=" + phone + ", sex="
-				+ sex + ", authority=" + authority + ", textFileName=" + textFileName + ", signupDate=" + signupDate
+				+ sex + ", authority=" + authority + ", textFileName=" + textFileName + ", singupDate=" + singupDate
 				+ "]";
 	}
 	

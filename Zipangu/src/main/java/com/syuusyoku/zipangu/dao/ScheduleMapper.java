@@ -11,7 +11,7 @@ public interface ScheduleMapper {
 
 	int updateSchedule(ScheduleVO schedule);
 
-	int deleteSchedule(HashMap<String, String> map);
+	void deleteSchedule(HashMap<String, String> map);
 
 	int insertSchedule(ScheduleVO schedule);
 

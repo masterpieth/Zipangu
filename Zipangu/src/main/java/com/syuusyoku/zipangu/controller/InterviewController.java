@@ -33,7 +33,7 @@ public class InterviewController {
 		ArrayList<QuestionVO> questionList = dao.selectList();
 		JSONArray json = new JSONArray(questionList);
 		model.addAttribute("questionList", json);
-		return "interview/interview";
+		return "/interview/interview";
 	}
 	
 	//모의 면접 시작
@@ -43,7 +43,6 @@ public class InterviewController {
 		boolean result = false;
 		if(dao.startInterview(vo, session) == 1) result = true;
 		rttr.addFlashAttribute("startInterview", result);
-		System.out.println(vo.toString()+"startInterview");
 		return vo.getInterview_num();
 	}
 	
@@ -66,24 +65,14 @@ public class InterviewController {
 	@RequestMapping(value = "interview/insertInterview", method = RequestMethod.POST)
 	public int insertInterview(InterviewResultVO vo) {
 		int result = dao.insertInterview(vo);
-		System.out.println(vo.toString()+"controller");
 		return result;
 	}
 	
 	//결과 화면
 	@RequestMapping(value = "interview/getinterviewResult", method = RequestMethod.GET)
-	public String resultList(Model model, InterviewResultVO vo) {
-		ArrayList<InterviewResultVO> list = dao.resultList(vo); //최종 결과를 받아옴
-		JSONArray json = new JSONArray(list);
-		model.addAttribute("list_json", json);
-
+	public String resultList(Model model, InterviewResultVO vo, HttpSession session) {
+		ArrayList<InterviewResultVO> list = dao.resultList(vo, session); //최종 결과를 받아옴
+		model.addAttribute("list", list);
 		return "interview/interviewResult";
 	}
-
-	//테스트용 오디오 작업
-	@RequestMapping(value = "interview/interviewSelect", method = RequestMethod.GET)
-	public String home() {
-		return "interview/interviewSelect";
-	}
-	
 }

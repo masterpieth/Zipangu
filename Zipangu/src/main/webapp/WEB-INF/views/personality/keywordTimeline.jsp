@@ -7,9 +7,11 @@
 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/timeline.css'/>">
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/datedropper.css'/>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 <script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script> 
 <script src="<c:url value='/resources/js/datedropper.pro.min.js '/>"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 <script type="text/javascript">
 
@@ -91,6 +93,7 @@ function deleteConfirm() {
 
 </head>
 <body>
+				
 <div class="row justify-content-center align-items-center" id="resultDivIfnoResult" hidden="hidden">
 	<div class="container-fluid">
 	<br>
@@ -131,84 +134,129 @@ function deleteConfirm() {
             </div>
         </div>
     </section>
-
-<section class="timeline">
-<!-- 검색 기능 -->
-	<div align="center">
-		<form action="keywordTimeline" method="get">
-		<div class="col-md-9">
-            <div class="row justify-content-center align-items-center">
-	            <div class="blog_right_sidebar" style="border: none; padding-right: 10px;">
-	            	<select name="searchItem" id="searchItem" class="form-control">
-						<option value="byKeyword">키워드</option>
-						<option value="byDate">날짜</option>
-					</select>
-	            </div>
-                  <div class="blog_right_sidebar" style="border: none; width: 40%; padding-left: 10px;">
-                        <aside class="single_sidebar_widget search_widget">
-                        	<div class="input-group">
-                                <input type="text" class="form-control" name="searchKeyword" id="searchKeyword" data-dd-format="Y/m/d" placeholder="Search"
-                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="lnr lnr-magnifier"></i></button>
-                                </span>
-                            </div>
-                      </aside>
-            	</div>
-            </div>
-            </div>
-		</form>
-	</div>
-	<section class="service-area-2 section_gap" style="padding-top: 0px; padding-bottom: 0px">
-	<div class="container">
-		<div class="card-body" align="center" style="font-size: 120%;">
-			<a href="<c:url value='/personality/timelineWriteForm'/>" style="color: black;"> 
-				에피소드 작성하기 <img src="<c:url value="/resources/img/write.png"/>" alt="글쓰기" width="35" height="35" align="middle">
-			</a>
+    <section class="section_gap team-area" style="padding-bottom: 0px">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-7">
+					<p style="color: #f13d80">
+						타임라인
+					</p>
+					<div class="main_title">
+						<h2>
+							성향분석으로 얻은 키워드를 활용하여 타임라인 작성이 가능합니다!
+						</h2>
+						자기소개서에 쓸 다양한 에피소드들. 어떻게 정리해야 할지 고민이신가요?
+						<br>성향분석을 통해 얻은 키워드로 에피소드를 분류하여 시간순으로 정리해보세요!
+						<div id="timeline_ex" class="modal" style="height: auto; width: auto; padding: 50px; color: black;">
+							<br>
+							<p align="center">
+								*예시*
+							</p>
+							<br>
+							<img alt="타임라인예시" src="<c:url value='/resources/img/timelineExample.png'/>" width="100%" height="100%">
+							<br><br>
+							<p>
+								1. 키워드로 검색이 가능합니다.
+								<br>2. 날짜 검색시 해당 날짜에 한 활동들이 검색됩니다.
+							</p>	
+							<br><br>
+							<p align="center">
+								<a href="#" rel="modal:close">
+									<button class="genric-btn danger e-large">
+										닫기
+									</button>
+								</a>
+							</p>
+						</div>
+						<p>
+							<a href="#timeline_ex" rel="modal:open">
+								*예시 및 작성방법*
+							</a>
+						</p>	
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-	</section>
-  <ul style="color: black;">
-  	<c:forEach items="${requestScope.timelineList}" var="TimelineVO">
-  	    <li>
-	      <div style="background-color: white; border : pink; border-width : 1px; border-style : dashed; margin-bottom: 0px" >
-	        <p align="right">
-	          <a href="<c:url value='/personality/timelineUpdateForm?timeline_Num=${TimelineVO.timeline_Num}'/>">
-	      	    <img src="<c:url value="/resources/img/fix.png"/>" alt="수정" width="35" height="35" align="right" >
-	      	  </a>
-	      	</p>
-	      	<table style="word-break:break-all;">
-	      	  <tr>
-	      		<td>
-                  <time>
-		            <fmt:parseDate value="${TimelineVO.start_Date}" var="dateFmt" pattern="yyyy-MM-dd"/>
-		            <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
-		            ~
-		            <fmt:parseDate value="${TimelineVO.finish_Date}" var="dateFmt" pattern="yyyy-MM-dd"/>
-		            <fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
-		          </time>
-		        </td>
-		      </tr> 
-		      <tr>
-		        <td>내가 고른 키워드 : ${TimelineVO.traits_Selected}</td>
-		      </tr>
-		      <tr>
-		        <td>제목 : ${TimelineVO.episode_Title}</td>
-		      </tr>
-		      <tr>
-		        <td>내용 : ${TimelineVO.episode_Content}</td>
-		      </tr>
-		    </table>
-		    <p align="right" style="margin-bottom: 0px">
-		      <a href="<c:url value='/personality/timelineDelete?timeline_Num=${TimelineVO.timeline_Num}'/>" onclick="return deleteConfirm()">
-	      	    <img src="<c:url value="/resources/img/delete.png"/>" alt="삭제" width="35" height="35" align="right" >
-	      	  </a>
-	      	  <br><br>
-		    </p>
-		  </div>
-	    </li>   
-    </c:forEach>
-  </ul>
+	</section>		
+	<section class="timeline">
+	<!-- 검색 기능 -->
+		<div align="center">
+			<form action="keywordTimeline" method="get">
+				<div class="col-md-9">
+            		<div class="row justify-content-center align-items-center">
+	            		<div class="blog_right_sidebar" style="border: none; padding-right: 10px;">
+	            			<select name="searchItem" id="searchItem" class="form-control">
+								<option value="byKeyword">키워드</option>
+								<option value="byDate">날짜</option>
+							</select>
+	            		</div>
+                  		<div class="blog_right_sidebar" style="border: none; width: 40%; padding-left: 10px;">
+                        	<aside class="single_sidebar_widget search_widget">
+                        		<div class="input-group">
+                                	<input type="text" class="form-control" name="searchKeyword" id="searchKeyword" data-dd-format="Y/m/d" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
+                               			<span class="input-group-btn">
+                                    		<button class="btn btn-default" type="submit"><i class="lnr lnr-magnifier"></i></button>
+                            			</span>
+                        		</div>
+                    		</aside>
+            			</div>
+            		</div>
+        		</div>
+			</form>
+		</div>	
+		<section class="service-area-2 section_gap" style="padding-top: 0px; padding-bottom: 0px">
+		<div class="container">
+			<div class="card-body" align="center" style="font-size: 120%;">
+				<a href="<c:url value='/personality/timelineWriteForm'/>" style="color: black;"> 
+					<button class="genric-btn danger e-large">
+						에피소드 작성하기 <img src="<c:url value="/resources/img/write.png"/>" alt="글쓰기" width="35" height="35" align="middle">
+					</button>
+				</a>
+			</div>
+		</div>
+		</section>
+		<ul style="color: black;">
+			<c:forEach items="${requestScope.timelineList}" var="TimelineVO">
+		  		<li>
+			    	<div style="background-color: white; border : pink; border-width : 1px; border-style : dashed; margin-bottom: 0px" >
+			        <p align="right">
+			        	<a href="<c:url value='/personality/timelineUpdateForm?timeline_Num=${TimelineVO.timeline_Num}'/>">
+			      	    	<img src="<c:url value="/resources/img/fix.png"/>" alt="수정" width="35" height="35" align="right" >
+			      		</a>
+			      	</p>
+			      	<table style="word-break:break-all;">
+			      		<tr>
+			      			<td>
+		                  		<time>
+				            		<fmt:parseDate value="${TimelineVO.start_Date}" var="dateFmt" pattern="yyyy-MM-dd"/>
+				            		<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
+				            		~
+				            		<fmt:parseDate value="${TimelineVO.finish_Date}" var="dateFmt" pattern="yyyy-MM-dd"/>
+				            		<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
+				        		</time>
+				      		</td>
+				      	</tr> 
+				      	<tr>
+				        	<td>내가 고른 키워드 : ${TimelineVO.traits_Selected}</td>
+				      	</tr>
+				      	<tr>
+				       		<td>제목 : ${TimelineVO.episode_Title}</td>
+				      	</tr>
+					    <tr>
+					        <td>내용 : ${TimelineVO.episode_Content}</td>
+					      </tr>
+				    </table>
+				    <p align="right" style="margin-bottom: 0px">
+				      <a href="<c:url value='/personality/timelineDelete?timeline_Num=${TimelineVO.timeline_Num}'/>" onclick="return deleteConfirm()">
+			      	    <img src="<c:url value="/resources/img/delete.png"/>" alt="삭제" width="35" height="35" align="right" >
+			      	  </a>
+			      	  <br><br>
+					</p>
+				</div>
+			</li>   
+		</c:forEach>
+	</ul>
 </section>
 </div>
 <jsp:include page="../include/footer.jsp"></jsp:include>
+	

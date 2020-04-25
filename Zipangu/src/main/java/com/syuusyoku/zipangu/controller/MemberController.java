@@ -21,8 +21,9 @@ import com.syuusyoku.zipangu.vo.MemberVO;
 public class MemberController {
 	@Autowired
 	private MemberDAO dao;
+
 	@Autowired
-	private MsgDAO msgDao;
+	private MsgDAO daoMs;
 
 	@RequestMapping(value = "member/signupForm", method = RequestMethod.GET)
 	public String signupForm() {
@@ -60,7 +61,7 @@ public class MemberController {
 	         listVO.setMentor_id(mentor_id);
 	         listVO.setMsg_num(UUID.randomUUID().toString());
 
-	         msgDao.insert_list_msg(listVO);
+	         daoMs.insert_list_msg(listVO);
 		}
 		return "member/signupResult";
 	}

@@ -1,6 +1,7 @@
 package com.syuusyoku.zipangu.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,6 @@ import com.syuusyoku.zipangu.dao.MemberDAO;
 import com.syuusyoku.zipangu.dao.MsgDAO;
 import com.syuusyoku.zipangu.vo.ChatBotVO;
 import com.syuusyoku.zipangu.vo.List_MsgVO;
-import com.syuusyoku.zipangu.vo.MemberVO;
 
 @Controller
 public class MsgController {
@@ -29,6 +29,29 @@ public class MsgController {
 	@Autowired
 	private MemberDAO daoMe;
 	
+	//대화 목록 검색
+	@RequestMapping(value = "msg/search_msg_people", method = RequestMethod.GET)
+	@ResponseBody
+	public ArrayList<List_MsgVO> chatAnswer(String search_people, HttpSession session) {
+		String userID = (String)session.getAttribute("userID");
+		HashMap<String,String> map = new HashMap<>();
+		ArrayList<List_MsgVO> result = null;
+		
+		//user가 mentee인 경우 mentor의 리스트를 찾음
+		if(daoMe.getMember(userID).getAuthority()==1) {
+			map.put("mentee_id", search_people);
+			map.put("mentor_id", userID);
+			result = dao.select_lis_msg_mentor(map);
+		}
+		if(daoMe.getMember(userID).getAuthority()==2) {
+			map.put("mentee_id", userID);
+			map.put("mentor_id", search_people);
+			result = dao.select_lis_msg_mentor(map);
+		}
+		return result;
+	}
+	
+	//자동 답변
 	@RequestMapping(value = "msg/chatAnswer", method = RequestMethod.POST,produces ="application/text; charset=utf8")
 	@ResponseBody
 	public String chatAnswer(@RequestBody ChatBotVO vo) {
@@ -36,17 +59,7 @@ public class MsgController {
 		String result = dao.chatAnswer(chatContent);
 		return result;
 	}
-	
-	//멘티가 보는 화면
-	//멘토 목록 + 멘토 선택하면 대화창(msg/msg_read) 나오게
-	@RequestMapping(value = "msg/msg_main", method = RequestMethod.GET)
-	public String msg_main(Model model) {
-		ArrayList<MemberVO> list = daoMe.mentorList();
-		model.addAttribute("mentorList", list);
-				
-		return "msg/msg_main";
-	}
-	
+
 	//대화창
 	@RequestMapping(value = "msg/msg_read", method = RequestMethod.GET)
 	public String msg_read(Model model, HttpSession session) {
