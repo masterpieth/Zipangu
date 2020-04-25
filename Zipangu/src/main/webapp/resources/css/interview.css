@@ -1,0 +1,15 @@
+ul 
+ { 
+list-style:none; 
+ }
+ 
+.space
+ {
+	width:80px;
+	height:80px;
+ }
+ 
+ #interviewComplete
+ {
+display: none;
+ }
