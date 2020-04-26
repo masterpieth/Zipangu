@@ -11,20 +11,20 @@
 	
 <script type="text/javascript">
 	$(function(){
-		$("#search_people").keyup(function(){
-			$('#after_search').empty();
-			if($("#search_people").val()==''||$("#search_people").val().length==0) {
-				$('#after_search').empty();
-				$('#after_search').attr('hidden','hidden');
-				$('#before_search').removeAttr('hidden','hidden');
-			}
-			//msg/search_msg_people 대화상대 검색
+		$("#search_people").on("keyup",function(){
+			//Search에 검색하면 키보드 누를 때마다 검색결과 나오게
 			$.ajax({
 				type:"get",
 				url:"search_msg_people",
 				data : {search_people : $("#search_people").val()},
 				dataType : 'json',
 				success: function(data){
+					if($("#search_people").val()==''||$("#search_people").val().length==0) {
+						$('#after_search').empty();
+						$('#after_search').attr('hidden','hidden');
+						$('#before_search').removeAttr('hidden','hidden');
+					}
+					$('#after_search').empty();
 					$('#before_search').attr('hidden','hidden');
 					$('#after_search').removeAttr('hidden','hidden');
 					var str='';
@@ -34,14 +34,12 @@
 						}
 						str += '<a href="/zipangu/msg/msg_start?mentee_id='+data[i].mentee_id+'&mentor_id='+data[i].mentor_id+'">';
 						
-						var result = ${sessionScope.userID==data[i].mentor_id};
-						
-						if(result==true){
+						if(${sessionScope.authority==1}){
 							str += '<li class="person" data-chat="person'+data[i].msg_num+'">';	
 						    str += '<span class="name">'+data[i].mentee_id+'</span>';
 						    str += '</li>';
 						}
-						if(result==false){
+						if(${sessionScope.authority==2}){
 						    str += '<li class="person" data-chat="person'+data[i].msg_num+'">';
 							str += '<span class="name">'+data[i].mentor_id+'</span>';
 							str += '</li>';

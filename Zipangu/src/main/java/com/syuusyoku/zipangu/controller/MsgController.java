@@ -36,12 +36,11 @@ public class MsgController {
 		String userID = (String)session.getAttribute("userID");
 		HashMap<String,String> map = new HashMap<>();
 		ArrayList<List_MsgVO> result = null;
-		
 		//user가 mentee인 경우 mentor의 리스트를 찾음
 		if(daoMe.getMember(userID).getAuthority()==1) {
 			map.put("mentee_id", search_people);
 			map.put("mentor_id", userID);
-			result = dao.select_lis_msg_mentor(map);
+			result = dao.select_list_msg_mentee(map);
 		}
 		if(daoMe.getMember(userID).getAuthority()==2) {
 			map.put("mentee_id", userID);
