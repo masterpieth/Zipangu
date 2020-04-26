@@ -13,7 +13,7 @@
                             여러분의 일본 취업을 도와드립니다!<br>
                         </h2>
                         <p>
-                            Zipangu는 일본에서 일하고 싶은 여러분들을 위한 다양한 맞춤형 종합 취업 지원 서비스를 제공합니다. 성향분석 및 기업분석을 통한 자기분석, 멘토링, 모의면접 등
+                            Zipangu는 일본에서 일하고 싶은 여러분들을 위한 다양한 맞춤형 종합 취업 지원 서비스를 제공합니다. 성향분석 및 기업분석을 통한 자기분석, 멘토링, 모의면접 등<br>
                             Zipangu의 다양한 서비스를 체험해 보세요!       
                         </p>
                         <br>
@@ -40,10 +40,8 @@
                             <p>1:1 매칭을 통한 전문 첨삭을 통한 확실한 취업 준비</p>
                         </div>
                         <div class="author-lacture">
-                            <p>여기에는 멘토링/이력서 첨삭 관련 홍보멘트~~~~~~~~~~ 한 4줄쯤 들어가야 될것같은데 ㅎㅎ 언제 다쓰지
-                                일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트 일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트
-                                일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트 일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트
-                                일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트일단 4줄 일단 4줄 채우면 어떻게 되는지 보기용 복붙 멘트
+                            <p>
+                                모르겟다.. 홍보멘트가 필요합니다
                             </p>
                             <div class="author-title">
                                 <a href="#" data-toggle="modal" data-target="#inputTitle"><button class="primary-btn text-uppercase">이력서 작성 바로가기</button></a>
@@ -80,8 +78,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7">
                     <div class="main_title">
-                        <h1>개인 맞춤형 기업 분석 서비스</h1>
-                        <p>어쩌고저쩌고~~~~~~~ 간단하게 1줄 설명 ㄱ~~~~~~~~</p>
+                        <h1>개인 맞춤형 기업 분석</h1>
+                        <p>Zipangu만의 취업 지원 서비스</p>
                     </div>
                 </div>
             </div>
@@ -93,13 +91,10 @@
                             <img class="img-fluid" src="${pageContext.request.contextPath}/resources/template_img/service/service1.jpg" style="height: 195px;">
                         </div>
                         <div class="service-details">
-                            <h5 style="color: white;">236534634개의 기업정보</h5>
-                            <p>하하 사실 리쿠나비에서 살짝 빌렸다!
-                                하하 사실 리쿠나비에서 살짝 빌렸다!
-                                하하 사실 리쿠나비에서 살짝 빌렸다!
-                                하하 사실 리쿠나비에서 살짝 빌렸다!
-                                하하 사실 리쿠나비에서 살짝 빌렸다!
-                                하하 사실 리쿠나비에서 살짝 빌렸다!
+                            <h5 style="color: white;">22632개의 기업정보</h5>
+                            <p>
+                                Zipangu에 등록된 22632개의 기업정보를 토대로 <br> 사용자에게 적합한 기업 목록을 추천합니다. <br>
+                                기업분석을 통해 사용자는 다양한 기업 종류에 대한 정보를 얻고 활용할 수 있습니다.
                             </p>
                         </div>
                     </div>
@@ -112,10 +107,9 @@
                         </div>
                         <div class="service-details">
                             <h5 style="color: white;">개인 맞춤형 기업 추천</h5>
-                            <p>유사도 분석ㅇ~~~~~~~ 할건데 그 결과를 즐찾해서 써라~~~~~~~
-                                뭐튼간 대충 4줄쯤~~~~~~뭐튼간 대충 4줄쯤~~~~~~
-                                뭐튼간 대충 4줄쯤~~~~~~뭐튼간 대충 4줄쯤~~~~~~
-                                뭐튼간 대충 4줄쯤~~~~~~뭐튼간 대충 4줄쯤~~~~~~
+                            <p>
+                                업로드된 텍스트를 바탕으로 Zipangu에 등록된 기업 중 사용자에게 가장 적합한 결과를 추천합니다. <br>
+                                Zipangu의 기업 분석 기능을 통해 기업 조사 혹은 진로 탐색에 도움을 얻을 수 있습니다.
                             </p>
                         </div>
                     </div>
@@ -127,10 +121,11 @@
                             <img class="img-fluid" src="${pageContext.request.contextPath}/resources/template_img/service/service3.jpg" style="height: 195px;">
                         </div>
                         <div class="service-details">
-                            <h5 style="color: white;">즐겨찾기 분석 통한 자소서 추천</h5>
-                            <p>사용자가 즐찾한 결과와 일치하는 합격자소서를 추천한다~~~~~~~~~~~~~~~~
-                            알아 서 쓰라구요! 좀! 알아 서 쓰라구요! 좀! 알아 서 쓰라구요! 좀! 
-                            알아 서 쓰라구요! 좀! 알아 서 쓰라구요! 좀! 알아 서 쓰라구요! 좀! 알아 서 쓰라구요! 좀! 
+                            <h5 style="color: white;">관심기업 분석 통한 자기소개서 추천</h5>
+                            <p>
+                                기업 분석만으로 끝나지 않고 Zipangu는 최종 합격까지 생각합니다. <br>
+                                사용자가 등록한 기업 목록을 기반으로 동일한 업종에의 합격 자기소개서를 제공합니다.<br> 
+                                선배들의 자기소개서를 확인하고 관심기업에의 합격 가능성을 올려보세요.
                             </p>
                         </div>
                     </div>
