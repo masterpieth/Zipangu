@@ -207,9 +207,15 @@ function openUploadTextForm() {
 		</div>
 	</section>
 	<br><br>
-	<div  class="row justify-content-center" id="ment1" hidden="hidden">
-		나와 가장 관련 있는 키워드 (10개)
-	</div>
+	<div  class="row justify-content-center align-items-center" id="ment1" hidden="hidden">
+		<div class="col-md-7">
+	        <h2 class="mb-30 title_color">분석결과</h2>
+	        <p>
+		        나와 가장 관련 있는 키워드 (10개)
+	        </p>
+	        <hr>
+	    </div>
+    </div>
 	<br><br>
 	<div id="showChart" class="container"></div>
 	<br><br><br><br>

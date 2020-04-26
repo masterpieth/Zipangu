@@ -69,18 +69,18 @@ public class PersonalityController {
 		String textFileName = daoMe.getMember(userID).getTextFileName();
 		
 //		나영상꺼		
-//		File file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload"+textFileName+".txt");
+		File file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload"+textFileName+".txt");
 //		최나은 주소
-		File file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+//		File file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 		
 		if(file.exists()) file.delete();
 		
 		textFileName = UUID.randomUUID().toString();
 		daoMe.uploadKakaoText(userID, textFileName);	
 //		나영상꺼
-//		String filePath = "C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
+		String filePath = "C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
 //		최나은 주소
-		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
+//		String filePath = "C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt";
 		try {
 			
 			FileWriter fileWriter = new FileWriter(filePath);
@@ -98,9 +98,9 @@ public class PersonalityController {
 		file = null;
 		 try{
 //				나영상꺼
-//			 file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+			 file = new File("C:\\git\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 //				최나은 주소			 
-			 file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
+//			 file = new File("C:\\Users\\Administrator\\Desktop\\Zipangu\\Zipangu\\src\\main\\webapp\\resources\\imgUpload\\"+textFileName+".txt");
 		     FileReader fr = new FileReader(file);
 	         
 		     BufferedReader br = new BufferedReader(fr);

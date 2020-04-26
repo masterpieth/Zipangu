@@ -1,11 +1,12 @@
+<jsp:include page="../include/header.jsp"></jsp:include>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <% request.setCharacterEncoding("utf-8"); %>
 <% response.setContentType("text/html; charset=utf-8"); %>
-
-<jsp:include page="../include/header.jsp"></jsp:include>
-
+<!DOCTYPE html>
+<html>
+<head>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
@@ -13,24 +14,18 @@
 var bookmarkCount;
 var bookmarkList;
 var totalEntrysheet;
-var type_arr;
+var typeResult;
 
 $(function(){
 	getBookmarkCount();
 	bookmarkList = getBookmarkList();
 	if(bookmarkList.length == 0) {
+		$('#loadingDiv').hide();
 		$('#resultDiv').attr('hidden','hidden');
 		$('#resultDivIfnoResult').removeAttr('hidden','hidden');
 		return;
 	}
 	getTotalEntrysheet();
-    google.charts.load("current", {packages:["corechart"]});
-    google.charts.setOnLoadCallback(drawChart);
-    
-    setNavUl(bookmarkCount);
-    bookmarkAnalysis(bookmarkCount);
-
-    setEntrysheet();
 })
 
 function getBookmarkCount() {
@@ -63,13 +58,28 @@ function getBookmarkList(){
 }
 function getTotalEntrysheet() {
     $.ajax({
-//         url : "http://192.168.0.8:5000/getTotalEntrysheet",
-        url : "http://10.10.17.117:5000/getTotalEntrysheet",
+        url : "http://192.168.0.8:5000/getTotalEntrysheet",
+//         url : "http://10.10.17.117:5000/getTotalEntrysheet",
         type : "post",
         success: function(data){
             totalEntrysheet = data;
         }, error: function(e){
             console.log(e);
+        },beforeSend: function(){
+            $('#loadingDiv').show();
+            $('#resultDiv').hide();
+            $('#resultDiv2').hide();
+        },complete: function(){
+        	$('#loadingDiv').hide();
+            $('#resultDiv').show();
+            $('#resultDiv2').show();
+            
+            google.charts.load("current", {packages:["corechart"]});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            setNavUl(bookmarkCount);
+            setEntrysheet();
+            $('#ali0').trigger('click');
         }
     });
 }
@@ -96,69 +106,78 @@ function drawChart(){
     chart.draw(data, options);
 }
 
-function bookmarkAnalysis(data) {
-    var str = ''
+function kuromoji(typeItem) {
+    var str = '';
     var temp = [];
-    $.each(data, function(index, item) {
-        $.ajax({
-            url : "/zipangu/analysis/kuromoji",
-            type : "post",
-            data : {
-                type : item.type
-            },
-            async: false,
-            success: function(data){
-                data = $.unique(data.split(' '));
-                temp.push(data);
-            }, error: function(e){
-                console.log(e);
-            }
-        });
+    $.ajax({
+        url : "/zipangu/analysis/kuromoji",
+        type : "post",
+        data : {
+            type : typeItem
+        },
+        async: false,
+        success: function(data){
+            data = $.unique(data.split(' '));
+            temp.push(data);
+        }, error: function(e){
+            console.log(e);
+        }
     })
-    type_arr = temp;
+    return temp;
 }
+
 function setNavUl(data) {
 	var liStr = '';
 	var divStr = '';
 	$.each(data, function(index, item){
 		if(index == 0){
-			liStr += '<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#li' + index +'">';
+			liStr += '<li class="nav-item"><a id="ali'+ index + '" class="nav-link active show" data-toggle="tab" href="#li' + index +'">';
 			liStr += item.type;
 			liStr += '</a></li>';
-			divStr = '<div class="tab-pane fade show active" id="li' + index +'"></div>';
 		} else {
-			liStr += '<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#li' + index +'">';
+			liStr += '<li class="nav-item"><a id="ali'+ index + '" class="nav-link" data-toggle="tab" href="#li' + index +'">';
 			liStr += item.type;
 			liStr += '</a></li>';
-			divStr +='<div class="tab-pane fade" id="li' + index +'"></div>';
 		}
 	});
 	$('ul.nav-tabs').html(liStr);
-	$('div.tab-content').html(divStr);
-	$('#bookmark_tbody').html(bookmarkOutput(data[0].type));
 }
 function setEntrysheet(){
 	$('a.nav-link').on('click', function(){
+		$('#indexNum').val(1);
 		var type = $(this).text();
-		var divId = $(this).attr('href');
+		var title = type;
+	    if(type.includes('（')){
+	    	type = type.substring(type.indexOf('（') + 1, type.indexOf('）'));
+		}
+		var type_arr = kuromoji(type);
+		var index = $('#indexNum').val()-1;
 		
-		var typeResult = searchEntrysheet(type);
-		entrysheetOutput(typeResult, divId);
-		
+		typeResult = searchEntrysheet(type_arr[0]);
+		$('#indexNum').attr('max', typeResult.length);
+		if(typeResult.length != 0){
+			$('#resultDivIfResult').show();
+			$('#typeResultLength').html(typeResult.length);
+			$('#table').html(entrysheetOutput(index));
+		} else {
+			$('#resultDivIfResult').hide();
+			$('#table').html('<tr><th>검색 결과가 없습니다.</th></tr>');
+		}
 		var tbodyStr = bookmarkOutput(type);
 		$('#bookmark_tbody').html(tbodyStr);
-		$('#currentBookmarkTitle').html('즐겨찾기 상세 : ' + type);
+		$('#currentBookmarkTitle').html('즐겨찾기 상세 : ' + title);
 	});
 }
-function searchEntrysheet(type){
-	var str = '';
+function searchEntrysheet(type_arr){
 	var typeResult = [];
-    $.each(totalEntrysheet, function(index, item){
-        if(item.JOBTYPE.indexOf(type) !== -1){
-            typeResult.push(item);
-        }
-    });
-    return typeResult;
+	$.each(type_arr, function(index,item){
+		$.each(totalEntrysheet, function(index2, item2){
+			if(item2.JOBTYPE.includes(item)) {
+				typeResult.push(item2);
+			}
+		})
+	})
+	return typeResult;
 }
 function bookmarkOutput(type) {
     var str = '';
@@ -175,35 +194,34 @@ function bookmarkOutput(type) {
     });
     return str;
 }
-
-function entrysheetOutput(typeResult, divId){
+function search(){
+    var index = $('#indexNum').val()-1;
+    $('#table').html(entrysheetOutput(index));
+}
+function entrysheetOutput(index){
 	var str = '';
-	str += '<table class="table paginated">';
 	
 	if(typeResult.length != 0){
 		str += '<tr><th>규모</th></tr>';
-		str += '<tr><th>' + typeResult[0].COMSIZE + '</th></tr>';
+		str += '<tr><td>' + typeResult[index].COMSIZE + '</th></tr>';
 		str += '<tr><th>업종</th></tr>';
-	    str += '<tr><th>' + typeResult[0].JOBTYPE + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].JOBTYPE + '</th></tr>';
 	    str += '<tr><th>위치</th></tr>';
-	    str += '<tr><th>' + typeResult[0].COMLOCATION + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].COMLOCATION + '</th></tr>';
 	    str += '<tr><th>자격사항</th></tr>';
-	    str += '<tr><th>' + typeResult[0].QUALIFICATION + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].QUALIFICATION + '</th></tr>';
 	    str += '<tr><th>취미/특기</th></tr>';
-	    str += '<tr><th>' + typeResult[0].HOBBYNSKILL + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].HOBBYNSKILL + '</th></tr>';
 	    str += '<tr><th>공부/연구</th></tr>';
-	    str += '<tr><th>' + typeResult[0].STUDY + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].STUDY + '</th></tr>';
 	    str += '<tr><th>PR</th></tr>';
-	    str += '<tr><th>' + typeResult[0].PR + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].PR + '</th></tr>';
 	    str += '<tr><th>몰두했던 것</th></tr>';
-	    str += '<tr><th>' + typeResult[0].ABSORPTION + '</th></tr>';
+	    str += '<tr><td>' + typeResult[index].ABSORPTION + '</th></tr>';
 	    str += '<tr><th>조언</th></tr>';
-	    str += '<tr><th>' + typeResult[0].ADVICE + '</th></tr>';
-	} else {
-		str += '<tr><th>검색결과가 없습니다.</th></tr>';
+	    str += '<tr><td>' + typeResult[index].ADVICE + '</th></tr>';
 	}
-	str += '</table>';
-	$(divId).html(str);
+	return str;
 }
 </script>
 </head>
@@ -226,39 +244,41 @@ function entrysheetOutput(typeResult, divId){
         </div>
     </section>
 <!--================End Home Banner Area =================-->
-
 	<div class="container-fluid">
 	    <br>
 	    <div class="row justify-content-center align-items-center">
-	        <div class="card-body" align="center">
+	        <div class="card-body col-md-6" align="center">
 	            <h1>합격자소서 추천</h1>
 	            <hr>
-	            <p>기업 분석에서 즐겨찾기 해놓은거랑,,,맞는,, 587건의 자소서를 바탕으로 해당 분야의 합격 자소서를 추천합니다.</p>
+	            <p>${sessionScope.userID}님의 즐겨찾기 내역을 바탕으로, Zipangu에 등록된 587건의 자소서 중 관심기업과 관련된 합격 자소서를 추천합니다.</p>
 	        </div>
 	    </div>
 	    <br>
+	    <div id="loadingDiv" class="row justify-content-center align-items-center" style="padding-top: 100px; padding-bottom: 200px;">
+	       <img src="<c:url value="/resources/img/loading.gif"/>">
+	    </div>
 		<div class="row" id="resultDiv">
 			<div class="container">
 				<div class="col-md-6" style="float: right;">
-				    <div class="card">
+				    <div class="card-body">
 			            <h4 class="card-title">즐겨찾기 등록 현황</h4>
 			            <hr>
 			            <div id="chartDiv"></div>
 			        </div>
 				</div>
 			    <div class="col-md-6">
-			       <div class="card">
+			       <div class="card-body">
 		                <h4 class="card-title" id="currentBookmarkTitle">즐겨찾기 상세</h4>
 		                <hr>
 		                <p>즐겨찾기 해제를 원하는 경우 해당 기업명을 클릭해주세요.</p>
-		                <div class="card-body pre-scrollable" style="height: 100%;">
-		                <table class="table table-hover" id="testTable">
+		                <div class="card-body pre-scrollable">
+		                <table class="table table-hover table-responsive" id="testTable">
 		                    <thead>
 		                        <tr>
 		                            <th style="width: 10%;">#</th>
 		                            <th style="width: 20%;">기업명</th>
 		                            <th style="width: 15%;">위치</th>
-		                            <th style="width: 55%;">연락처</th>
+		                            <th style="width: 50%;">연락처</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody id="bookmark_tbody">
@@ -278,20 +298,30 @@ function entrysheetOutput(typeResult, divId){
                 <div class="row justify-content-center align-items-center">
                     <p>먼저 기업분석을 진행해주세요.</p>
                 </div>
+                <br>
                 <a href="<c:url value="/analysis/company"/>" class="genric-btn danger e-large" style="width: 300px; font-size: 15px;">기업분석 페이지로 이동</a>
 		    </div>
 		</div>
-		<div class="row">
+		<div class="row" id="resultDiv2">
 		   <div class="container" id="inputContainer">
 		       <ul class="nav nav-tabs">
 	            </ul>
 	            <div class="tab-content">
+	               <div id="resultDivIfResult">
+	                   <div class="row justify-content-center" style="padding-top: 30px; padding-bottom: 15px;">
+	                       <p>총 <span id="typeResultLength"></span>건의 합격 자기소개서가 있습니다. 조회하고자 하는 자기소개서 번호를 입력해주세요.</p>
+	                   </div>
+	                   <div class="row justify-content-center" style="padding-bottom: 30px;">
+                            <input type="number" id="indexNum" value="1" min="1" class="form-control col-1">
+                            <input type="button" class="btn btn-info" value="조회" id="searchBtn" onclick="search();"/>
+                       </div>
+	               </div>
+    	           <table class="table" id="table">
+	               </table>
 	            </div>
 	        </div>
 		</div>
 	</div>
-<div class="card">
-</div>
 <c:choose>
     <c:when test="${requestScope.deleteResult == true}">
         <script>
@@ -304,7 +334,6 @@ function entrysheetOutput(typeResult, divId){
         </script>
     </c:when>
 </c:choose>
+</body>
+</html>
 <jsp:include page="../include/footer.jsp"></jsp:include>
-<script src="/zipangu/resources/template_js/jquery-3.2.1.min.js"></script>
-<script src="/zipangu/resources/template_js/popper.js"></script>
-<script src="/zipangu/resources/template_js/bootstrap.min.js"></script>
