@@ -12,7 +12,11 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="single-footer-widget">
                             <h5 class="footer_title">About Zipangu</h5>
-                            <p class="about-text">여기에 장황한 설명이 있는데 굳이 넣어야 하는 걸까요? 여러분의 생각은 어떠신가요? 귀찮네요 ㅎㅎ 그냥 뺄까 싶은데 일단 둡니다</p>
+                            <p class="about-text">
+                                일본 취업을 희망하는 한국인들을 대상으로 취업 지원 서비스를 제공하는 Zipangu는,
+                                성향 분석을 통한 기업 추천 및 합격 자소서 조회, 이력서 작성부터 면접까지 취업 활동과 관련된 
+                                모든 서비스를 제공하는 종합 취업 서비스 플랫폼입니다.
+                            </p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -33,9 +37,9 @@
                                 </div>
                                 <div class="col-5">
                                     <ul class="list">
-                                        <li><a href="<c:url value="/resume/resumeForm"/>">Resume</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#inputTitle">Resume</a></li>
                                         <li><a href="<c:url value="/schedule/scheduleForm"/>">Mentoring</a></li>
-                                        <li><a href="#">Interview</a></li>
+                                        <li><a href="<c:url value='/interview/getinterview'/>">Interview</a></li>
                                         <c:choose>
                                             <c:when test="${sessionScope.userID == null}">
                                                 <li><a href="<c:url value="/member/loginForm"/>">Login</a></li>
@@ -63,6 +67,26 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 </div>
             </div>
         </div>
+    <div class="modal" id="inputTitle">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">이력서 제목을 입력해 주세요.</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="<c:url value='/resume/resumeForm' />" method="get">
+                    <div class="modal-body">
+                        <input class="form-control" type="text" name="title" required>
+                        <input type="hidden" name="resume_num" value="-1">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">작성</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     </footer>
     </body>
 </html>

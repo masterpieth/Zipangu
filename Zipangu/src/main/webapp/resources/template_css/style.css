@@ -666,7 +666,7 @@ button:focus {
     .home_banner_area .banner_inner .banner_content p {
       max-width: 680px;
       font-size: 15px;
-      margin: 25px 0px 45px; }
+      margin: 25px 50px 45px 45px; }
       @media (max-width: 991px) {
         .home_banner_area .banner_inner .banner_content p {
           max-width: 460px; } }

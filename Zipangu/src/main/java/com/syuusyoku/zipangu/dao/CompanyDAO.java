@@ -22,6 +22,9 @@ public class CompanyDAO {
 		vo.setUserID(userID);
 		try {
 			CompanyMapper mapper = session.getMapper(CompanyMapper.class);
+			if(mapper.getBookmark(vo) > 0) {
+				return false;
+			}
 			result = mapper.insertBookmark(vo);
 		} catch (Exception e) {
 			e.printStackTrace();

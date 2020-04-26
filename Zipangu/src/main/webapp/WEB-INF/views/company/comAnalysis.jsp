@@ -1,16 +1,32 @@
+<jsp:include page="../include/header.jsp"></jsp:include>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<jsp:include page="../include/header.jsp"></jsp:include>
-
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
-
 <script>
+
+var bookmarkList;
+var temp;
+
 $(function(){
+	$('#loadingDiv').hide();
+	bookmarkList = getBookmarkList();
 	analysis();
 })
-
+function getBookmarkList(){
+    var result;
+    $.ajax({
+        url : "/zipangu/analysis/getBookmarkList",
+        type: "post",
+        async: false,
+        success: function(data){
+            result = data;
+        },
+        error: function(e){
+            console.log(e);
+        }
+    });
+    return result;
+}
 function analysis(){
 	$('#startBtn').on('click', function(){
         var value = $('#revisedContent').val();
@@ -38,6 +54,11 @@ function analysis(){
                 comList(value);
             }, error : function(data){
                 console.log(data);
+            }, beforeSend : function(){
+            	$('#loadingDiv').show();
+            	$('#resultContainer').attr('hidden','hidden');
+            }, complete : function(){
+            	$('#loadingDiv').hide();
             }
         })
     })
@@ -48,7 +69,7 @@ function output(data){
         str += '<tr><td style="text-align: center;">' + (index+1) + '</td>';
         str += '<td class="typename">' + item['type'] + '</td>';
         str += '<td style="text-align: center;">' + (Math.round(item['score']*100)) + '%</td>';
-        str += '<td><input type="button" value="상세" class="detailBtn genric-btn danger e-large" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
+        str += '<td><input type="button" value="상세" class="detailBtn genric-btn danger e-large container-fluid" data-toggle="modal" data-target="#exampleModal"/></td></tr>';
     })
     return str
 }
@@ -69,6 +90,10 @@ function comList(inputText){
             data: jsonData,
             success: function(data){
                 data.splice(0,1);
+
+                temp = data;
+
+                
                 var str = modalOutput(data);
                 $('#modalTbody').html(str);
                 bookmark();
@@ -89,9 +114,13 @@ function modalOutput(data){
         str += '<td>' + item['location'] + '</td>';
         str += '<td>' + item['contact'] + '</td>';
         str += '<td>' + (Math.round(item['score']*100)) + '%</td>';
-        str += '<td><input type="button" value="선택" class="selectBtn genric-btn info e-large"/>';
-        str += '<input type="hidden" class="type" value="'+item['type'] + '"/>';
-        str += '<input type="hidden" class="company_num" value="'+item['company_num'] + '"/></td></tr>';
+        if(bookmarkList.findIndex(x => x.coname === item.coname) > 0){
+        	str += '<td><input type="button" value="등록됨" class="selectBtn genric-btn info e-large container-fluid" disabled="disabled"/>';
+        } else if(bookmarkList.findIndex(x => x.coname === item.coname) == -1){
+        	 str += '<td><input type="button" value="등록하기" class="selectBtn genric-btn info e-large container-fluid"/>';
+             str += '<input type="hidden" class="type" value="'+item['type'] + '"/>';
+             str += '<input type="hidden" class="company_num" value="'+item['company_num'] + '"/></td></tr>';
+        }
     });
     return str;
 }
@@ -115,6 +144,7 @@ function bookmark(){
             },
             success: function(data){
                 if(data) alert("즐겨찾기에 등록되었습니다.");
+                else alert("이미 등록된 기업입니다.");
             },
             error: function(e){
                 console.log(e);
@@ -158,23 +188,25 @@ function openUploadTextForm() {
                             <p class="df-color">기업분석</p>
                             <h1>개인 맞춤형 기업 추천 서비스</h1>
                             <hr>
-                            <p>업로드한 텍스트 파일과 기업정보의 유사도를 비교하여, 개인에게 맞는 기업 리스트를 추천합니다.
-                               사용방법에 대한 자세한 매뉴얼 들어가야 함(아래쪽에 있는 div에)
-                               전체 22612개의 기업 정보를 바탕으로 분석을 제공합니다.</p>            
+                            <p>
+                               업로드한 텍스트 파일과 Zipangu에 등록된 22632개의 기업정보와의 유사도를 비교하여, 개인에게 맞는 기업 리스트를 추천합니다.
+                               <br>
+                               아래의 가이드를 참고하여, 원하는 기업을 즐겨찾기에 등록해주세요. 등록된 즐겨찾기를 바탕으로 해당 업종의 합격자소서를 추천합니다.
+                            </p>            
                             <button class="genric-btn danger e-large" onclick="openUploadTextForm()">파일 업로드</button>
                         </div>
                     </div>
                     <h4>기업분석 사용 가이드</h4>
                     <p>
-                        상세 버튼을 누르고 등록 버튼을 눌러서 관심기업을 즐겨찾기 하세요 ㄱㄱㄱ
+                       상세순위 버튼을 누르고 관심 기업을 즐겨찾기에 추가해보세요.
                     </p>
                     <img class="img-fluid" src="${pageContext.request.contextPath}/resources/template_img/service/comanalysis.jpg" style="width: 625px;">
                 </div>
                 <div class="col-lg-6">
                     <div class="service-2-right">
                         <div class="get-know">
-                            <p>아래의 텍스트를 바탕으로 기업정보와의 유사도를 비교하여, 
-                                <br>선택한 순위만큼의 기업 종류를 추천합니다.
+                            <p>아래의 텍스트를 바탕으로 기업정보와의 유사도를 비교하여,
+                                <br>총 126 건 중 선택한 순위만큼의 기업 종류를 추천합니다.
                                 <br>분석 전 텍스트의 내용을 확인해주세요.
                             </p>
                             <select class="form-control" id="listnumSel">
@@ -193,13 +225,16 @@ function openUploadTextForm() {
         <div class="card-body" style="padding-top: 85px;">
             <div  class="row justify-content-center">
                 <a href="#" class="genric-btn danger e-large" id="startBtn" style="width: 300px; font-size: 15px;">시작하기</a>
-                <table id="insightList" hidden="hidden"></table>
             </div>
+        </div>
+        <div id="loadingDiv" class="row justify-content-center align-items-center" style="padding-top: 100px; padding-bottom: 200px;">
+           <img src="<c:url value="/resources/img/loading.gif"/>">
         </div>
             <div class="container text-center" id="resultContainer" hidden="hidden">
                <div class="card-body" style="padding-top: 50px;" align="center">
                     <div class="col-md-7">
                         <h2 class="mb-30 title_color">분석결과 : 추천순위</h2>
+                        <hr>
                         <p>사용자와 가장 유사한 기업 종류를 순위별로 표시하였습니다. 
                             <br>
                             해당 업종의 기업명 순위를 조회하려면 상세 버튼을 눌러주세요.
@@ -218,6 +253,20 @@ function openUploadTextForm() {
                        <tbody id="tbody">
                        </tbody>
                    </table>
+                </div>
+                <div class="card-body" align="center">
+                    <div class="col-md-7">
+                        <hr>
+                        <div  class="row justify-content-center">
+	                        <p>즐겨찾기를 추가하셨나요?
+	                           <br>
+	                           Zipangu에 등록된 587건의 합격자소서를 통해 관심 기업에의 합격률을 올려보세요.
+	                       </p>
+                        </div>
+	                    <div  class="row justify-content-center">
+	                        <a href="<c:url value="/analysis/entrysheet"/>" class="genric-btn info e-large" id="startBtn" style="width: 300px; font-size: 15px;">자기소개서 추천 페이지로 이동</a>
+	                    </div>
+                    </div>
                 </div>
             </div>
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -254,6 +303,3 @@ function openUploadTextForm() {
     </section>
     <!--================ End Blog Area =================-->
 <jsp:include page="../include/footer.jsp"></jsp:include>
-<script src="${pageContext.request.contextPath}/resources/template_js/jquery-3.2.1.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/template_js/popper.js"></script>
-<script src="${pageContext.request.contextPath}/resources/template_js/bootstrap.min.js"></script>

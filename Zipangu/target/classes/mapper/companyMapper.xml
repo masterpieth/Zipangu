@@ -14,6 +14,16 @@
             #{contact}
         )
     </insert>
+    <select id="getBookmark" parameterType="companyVO" resultType="int">
+        select 
+            count(*)
+        from
+            company_result
+        where
+            userid = #{userID}
+            and
+            company_num = #{company_num}
+    </select>
     <delete id="deleteBookmark" parameterType="companyVO">
         delete from company_result
         where
