@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +21,7 @@ import com.syuusyoku.zipangu.vo.MemberVO;
 public class MemberController {
 	@Autowired
 	private MemberDAO dao;
-	
+
 	@Autowired
 	private MsgDAO daoMs;
 
@@ -82,5 +83,38 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		dao.logout(session);
 		return "redirect:/";
+	}
+
+	@RequestMapping(value = "member/myPage", method = RequestMethod.GET)
+	public String myPage(HttpSession session, Model model) {
+		model.addAttribute("member", dao.getMember((String) session.getAttribute("userID")));
+		return "member/myPage";
+	}
+
+	@RequestMapping(value = "member/updateForm", method = RequestMethod.GET)
+	public String updateMemberForm(HttpSession session, Model model) {
+		model.addAttribute("member", dao.getMember((String) session.getAttribute("userID")));
+		return "member/updateForm";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "member/update", method = RequestMethod.POST)
+	public boolean update(HttpSession session, MemberVO member) {
+		member.setUserID((String) session.getAttribute("userID"));
+		return dao.update(member);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "member/withdraw", method = RequestMethod.POST)
+	public boolean withdraw(HttpSession session, String userPwd) {
+		MemberVO member = new MemberVO();
+		member.setUserID((String) session.getAttribute("userID"));
+		member.setUserPwd(userPwd);
+		member.setAuthority((int) session.getAttribute("authority"));
+		if (dao.withdraw(member)) {
+			dao.logout(session);
+			return true;
+		} else
+			return false;
 	}
 }

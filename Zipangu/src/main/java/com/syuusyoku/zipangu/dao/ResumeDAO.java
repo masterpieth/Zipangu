@@ -25,7 +25,7 @@ public class ResumeDAO {
 	@Autowired
 	private SqlSession session;
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean saveResume(
 		MultipartFile picFile, MemberVO member, ResumeVO resume,
 		String careerJSON, String qualifiedJSON
@@ -48,7 +48,7 @@ public class ResumeDAO {
 					resume_num = resume.getResume_num();
 				}
 				member.setResume_num(resume_num);
-				result += mapper.saveResumeMember(member);
+				mapper.saveResumeMember(member);
 			} else {
 				if (!picFile.isEmpty()) {
 					new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()).delete();
@@ -56,17 +56,17 @@ public class ResumeDAO {
 					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
 				}
 				result = mapper.updateResume(resume);
-				result += mapper.updateResumeMember(member);
-				result += mapper.deleteCareer(resume_num);
-				result += mapper.deleteQualified(resume_num);
+				mapper.updateResumeMember(member);
+				mapper.deleteCareer(resume_num);
+				mapper.deleteQualified(resume_num);
 			}
 			for (CareerVO career: careerList) {
 				career.setResume_num(resume_num);
-				result += mapper.saveCareer(career);
+				mapper.saveCareer(career);
 			}
 			for (QualifiedVO qualified : qualifiedList) {
 				qualified.setResume_num(resume_num);
-				result += mapper.saveQualified(qualified);
+				mapper.saveQualified(qualified);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.syuusyoku.zipangu.vo.MemberVO;
 
@@ -69,7 +70,7 @@ public class MemberDAO {
 		}
 		return false;
 	}
-	
+
 	public void uploadKakaoText(String userID,String textFileName) {
 		MemberVO vo = new MemberVO();
 		vo.setUserID(userID);
@@ -81,7 +82,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public MemberVO getMember(String userID) {
 		MemberVO result = null;
 		try {
@@ -104,5 +105,29 @@ public class MemberDAO {
 
 	public void logout(HttpSession session) {
 		session.invalidate();
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public boolean withdraw(MemberVO member) {
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			if (member.getAuthority() == 2)
+				mapper.menteeWithdraw(member);
+			mapper.withdraw(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public boolean update(MemberVO member) {
+		int result = 0;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			result = mapper.update(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result > 0;
 	}
 }

@@ -17,4 +17,10 @@ public interface MemberMapper {
 	public ArrayList<MemberVO> mentorList();
 	
 	MemberVO getMember(String userID);
+
+	int update(MemberVO member);
+
+	void menteeWithdraw(MemberVO member);
+
+	void withdraw(MemberVO member);
 }

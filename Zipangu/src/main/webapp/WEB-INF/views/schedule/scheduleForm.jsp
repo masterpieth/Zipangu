@@ -15,6 +15,12 @@ td {
 .saturday {
 	color: gray;
 }
+
+.modal-body {
+	overflow:scroll;
+	overflow-x:hidden;
+	height:140px;
+}
 </style>
 </head>
 <body>
@@ -55,40 +61,52 @@ td {
 		</thead>
 		<tbody id="calendar"></tbody>
 	</table>
-		<button type="button" class="btn btn-success float-right" onclick="updateSchedule()">저장</button>
+	<div class="float-right">
 		<c:if test="${authority gt 1}">
-			<div class="modal" id="reserveInfo">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title">예약 현황</h4>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body" id="reserveBody"></div>
-						<div class="modal-footer" id="reserveFooter"></div>
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#mentorList">전체 멘토 목록</button>
+		</c:if>
+		<button type="button" class="btn btn-success" onclick="updateSchedule()">저장</button>
+	</div>
+	<c:if test="${authority gt 1}">
+		<div class="modal" id="reserveInfo">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">예약 현황</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body" id="reserveBody"></div>
+					<div class="modal-footer" id="reserveFooter"></div>
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="mentorList">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">전체 멘토 목록</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<c:forEach items="${mentorList}" var="mentor">
+							<div class="form-check">
+								<label class="form-check-label">
+									<input type="radio" class="form-check-input" name="mentor_id" value="${mentor.userID}">
+									${mentor.userID}
+								</label>
+							</div>
+						</c:forEach>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info" id="contact">연락하기</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 					</div>
 				</div>
 			</div>
-		</c:if>
+		</div>
+	</c:if>
 </div>
 <div class="container" style="height:100px;"></div>
-<div>전체 멘토 목록</div>
-<table>
-	<c:forEach items="${requestScope.mentorList}" var="mentor">
-		<tr>
-			<th>멘토이름</th><td>${mentor.userName}</td>
-			<th>멘토 아이디</th><td>${mentor.userID}</td>
-			<td>	
-				<form action="<c:url value='/msg/msg_start'/>" method="get">
-					<input type="hidden" value="${sessionScope.userID}" name="mentee_id"> 
-					<input type="hidden" value="${mentor.userID}" name="mentor_id">
-					
-					<input type="submit" value="연락하기">
-				</form>
-			</td>
-		</tr>
-	</c:forEach>
-</table>
 </body>
 <script>
 var calendarDate, scheduleList, thisMonth, date;
@@ -230,7 +248,8 @@ function checkDate(button) {
 			if (mentorList.length < 25)
 				mentorList += '예약 가능한 멘토가 없습니다';
 			else {
-				modalFooter += '<button type="button" class="btn btn-danger" data-dismiss="modal" ';
+				modalFooter += '<button type="button" class="btn btn-info" onclick="askReserve()">연락하기</button>';
+				modalFooter += '<button type="button" class="btn btn-success" data-dismiss="modal" ';
 				modalFooter += 'onclick="reserve(this)">예약</button>';
 			}
 			mentorList += '</div>';
@@ -283,6 +302,18 @@ function updateSchedule() {
 	});
 };
 
+function askReserve() {
+	var mentor_id = $('input[name=mentorID]:checked').val();
+    typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
+};
+
+function openUploadMessenger(mentor_id) {
+	open(
+		'<c:url value="/msg/msg_start?mentor_id=' + mentor_id +
+		'&mentee_id=${userID}"/>', "_blank", "width=1000, height=800"
+	);   
+};
+
 $(function() {
 	scheduleList = [];
 	var schedule;
@@ -297,6 +328,10 @@ $(function() {
 	var month = calendarDate.getMonth() + 1;
 	thisMonth = Number(calendarDate.getFullYear() + (month < 10 ? '0' + month : String(month)));
 	createCalendar();
+	$('#contact').click(function() {
+        var mentor_id = $('input[name=mentor_id]:checked').val();
+        typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
+    });
 });
 </script>
 <jsp:include page="../include/footer.jsp"></jsp:include>

@@ -86,10 +86,11 @@
                             </li>
                             <c:choose>
                                 <c:when test="${sessionScope.userID == null}">
+<%--  									<li class="nav-item"><a class="nav-link" href="<c:url value='/member/signupForm' />">회원가입</a></li> --%>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/member/loginForm'/>">로그인</a></li>
                                 </c:when>
                                 <c:when test="${sessionScope.userID != null}">
-                                    <li class="nav-item"><a class="nav-link" href="about-us.html">마이페이지</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/member/myPage'/>">마이페이지</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/member/logout'/>">로그아웃</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#">${sessionScope.userID}님 반갑습니다.</a></li>
                                 </c:when>
@@ -132,7 +133,7 @@
 						<input type="hidden" name="resume_num" value="-1">
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-danger">작성</button>
+						<button type="submit" class="btn btn-primary">작성</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 					</div>
 				</form>

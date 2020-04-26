@@ -38,7 +38,7 @@ public class ScheduleDAO {
 		return scheduleList;
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	public boolean updateSchedule(HttpSession session, String scheduleJSON) {
 		int result = 0;
 		int scheduleListSize = 0;

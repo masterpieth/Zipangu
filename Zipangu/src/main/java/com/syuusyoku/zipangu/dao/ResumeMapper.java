@@ -13,19 +13,19 @@ public interface ResumeMapper {
 
 	int saveResume(ResumeVO resume);
 
-	int saveResumeMember(MemberVO member);
+	void saveResumeMember(MemberVO member);
 
-	int saveCareer(CareerVO career);
+	void saveCareer(CareerVO career);
 
-	int saveQualified(QualifiedVO qualified);
+	void saveQualified(QualifiedVO qualified);
 
 	int updateResume(ResumeVO resume);
 	
-	int updateResumeMember(MemberVO member);
+	void updateResumeMember(MemberVO member);
 	
-	int deleteCareer(int resume_num);
+	void deleteCareer(int resume_num);
 	
-	int deleteQualified(int resume_num);
+	void deleteQualified(int resume_num);
 	
 	MemberVO getResumeMember(MemberVO member);
 
