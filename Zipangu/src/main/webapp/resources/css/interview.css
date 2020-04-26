@@ -5,11 +5,58 @@ list-style:none;
  
 .space
  {
-	width:80px;
 	height:80px;
+	
  }
  
  #interviewComplete
  {
 display: none;
+align-content: center;
  }
+ 
+ #testdev
+ {
+ display: none;
+ }
+ 
+ p
+ {
+ width:600px;
+ }
+ 
+ #introsectorleft
+{
+width: 500px;
+}
+
+.parent {
+    display: flex;
+}
+.child1 {
+    flex: 2.8;
+}
+.child2 {
+    flex: 5;
+	text-align: left;
+}
+.child3 {
+    flex: 1;
+}
+
+#result
+{
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+ul
+{
+margin:0; 
+padding:0;
+}
+
+hr
+{
+width: 60%;
+}

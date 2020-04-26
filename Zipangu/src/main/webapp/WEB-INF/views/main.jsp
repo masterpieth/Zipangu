@@ -204,7 +204,7 @@
 								지원자가 답변한 문장의 성향을 분석합니다.
 								지원자의 답변의 성향을 '긍정적 / 중립적 / 부정적' 총 3개의 분석 결과로 제공해 드립니다.
                             </p>
-                            <p>-답변을 너무 짧게 하거나, 음성 녹음이 되지 않을시엔 '분석 불가'-</p>
+                            <p>-답변이 너무 짧게 하거나, 음성 인식이 되지 않을시엔 '분석 불가'-</p>
                         </div>
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                 </div>
             </div><br>
             <div class="row justify-content-center">
-                <a href="<c:url value="interview/getinterview"/>"><button class="primary-btn text-uppercase">모의면접 바로가기</button></a>
+                <a href="<c:url value="interview/getintro"/>"><button class="primary-btn text-uppercase">모의면접 바로가기</button></a>
             </div>
         </div>
     </section>

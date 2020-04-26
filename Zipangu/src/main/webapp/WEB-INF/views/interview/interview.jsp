@@ -8,6 +8,7 @@
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <%--     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style2.css' />"> --%>
+    <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/interview.css' />">
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 
@@ -92,23 +93,28 @@ window.onload = function(){
 		var url = URL.createObjectURL(blob);
 		var au = document.createElement('audio');
 		var li = document.createElement('li');
-		var br = document.createElement('br');
 		li.className = 'lis';
+		var hr = document.createElement('hr');
+		hr.className = 'hrs';
+		var br = document.createElement('br');
+
 		var filename = new Date().toISOString();
 		
 		au.controls = true; //오디오 컨트롤 바
 		au.src = url;
 		li.appendChild(au);
-		li.append(br);
+		li.appendChild(br);
 		li.appendChild(document.createTextNode("위 답변으로"));
 		recordingsList.appendChild(li);
-// 		recordingsList.appendChild(br);
+
+// 		recordingsList.append(br);
 
 		//파일저장 및 API 실행
 		var upload = document.createElement('button');
 			upload.id = 'mouseClick';
 			upload.href = "#";
 			upload.innerHTML = "제출하기";
+			recordingsList.appendChild(hr);
 			upload.setAttribute('class','btn btn-danger');
 			
 // 			upload.setAttribute('onclick', 'Show();');
@@ -140,6 +146,7 @@ window.onload = function(){
 						insert_interview(); //진행한 인터뷰 저장
 						nextQuestionButton();
 						$("li").remove(".lis"); //제출 후 녹음 리스트 초기화
+						$("hr").remove(".hrs");
 						}
 				});
 			});
@@ -356,8 +363,8 @@ function CreateShow()
 
 <div align="center" id="interviewsector" class="interviewsector">
 	<h3 id="startinterviewinfo">[모의면접 시작]을 누르시면 시작합니다.</h3>
-	<button id="startInterview" class = 'btn btn-lg btn-danger'>모의면접 시작</button>
-	<p> </p>
+		<button id="startInterview" class = 'btn btn-lg btn-danger'>모의면접 시작</button>
+		<hr>
 	
 	<!-- 질문 -->
 	<h4 id="info"></h4>
@@ -371,7 +378,7 @@ function CreateShow()
 			<div id="controls" align="center">
 				<button id="recordButton" class ="btn btn-danger">답변하기</button>
 				<button id="stopButton" class ="btn btn-danger" disabled>답변완료</button>
-	<div class="space"></div>
+				<hr>
 			</div>
 		
 		<!-- 음성 녹음(완료 리스트) -->
@@ -381,16 +388,17 @@ function CreateShow()
 		</div>
 </div>
 
-<div id="interviewComplete">
+<div id="interviewComplete" align="center">
 	<div class="space"></div>
 		<h1> 모의 면접을 완료 하였습니다. </h1>
-		<h3> 면접 결과는 [결과보기] 버튼을 선택하시면 확인 하실 수 있습니다. </h3>
+		<h3> [결과보기] 버튼을 선택하시면 면접 결과를 확인 하실 수 있습니다. </h3>
+		<hr>
 		<button type="button" onclick="location.href='getinterviewResult'" class="btn btn-danger">결과 보기</button>
 	<div class="space"></div>
 </div>
 
 <!-- 진행 완료된 값들 저장 -->
-<div id="testdev"align="center">
+<div id="testdev">
 <h2>----------------(interviewresult 저장되는 값들)----------------</h2>
 		진행자 : <input type="text" id="userID" value="${sessionScope.userID}"><br>
 		interivew_num : <input type="text" id="interview_num" value=""><br>

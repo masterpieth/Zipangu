@@ -80,7 +80,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                  aria-expanded="false">모의면접</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/interview/getinterview'/>">면접보기</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="<c:url value='/interview/getintro'/>">면접보기</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value='/interview/getinterviewResult'/>">결과조회</a></li>
                                 </ul>
                             </li>

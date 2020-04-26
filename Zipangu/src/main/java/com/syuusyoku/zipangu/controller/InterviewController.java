@@ -28,6 +28,12 @@ public class InterviewController {
 	private InterviewDAO dao;
 	
 	//모의면접 진입 및 질문 리스트 처리
+	@RequestMapping(value = "interview/getintro", method = RequestMethod.GET)
+	public String getintro() {
+		return "/interview/intro";
+	}
+	
+	//모의면접 진입 및 질문 리스트 처리
 	@RequestMapping(value = "interview/getinterview", method = RequestMethod.GET)
 	public String getinterview(Model model) {
 		ArrayList<QuestionVO> questionList = dao.selectList();

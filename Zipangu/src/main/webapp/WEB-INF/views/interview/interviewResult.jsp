@@ -35,12 +35,14 @@
 		<table class="table table-hover">
 			<thead>
 				<tr align="center">
-					<th colspan="4"><h2>모의면접 결과</h2></th>
+					<th colspan="4" align="center">
+						<h2>모의면접 결과</h2>
+					</th>
 				</tr>
-				<tr align="center">
-					<th>날       짜 </th>
-					<th>질       문</th>
-					<th>답변 성향</th>
+				<tr id="graph" align="center">
+					<th id="graph">날       짜 </th>
+					<th id="graph">질       문</th>
+					<th id="graph">답변 성향</th>
 					<th>다시 듣기</th>
 				</tr>
 			</thead>
@@ -48,8 +50,7 @@
 	        <c:forEach items="${list}" var="item" varStatus="status">
 				<c:if test="${status.index % 5 == 0}">
 	            	<th colspan="4"></th>
-	            	<tr>
-	                </tr>
+	            		
 				</c:if>
 	            <tr>
 	                <td valign="middle">${item.inputdate}</td>
