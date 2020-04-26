@@ -61,9 +61,13 @@ public class InterviewDAO {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSS", Locale.KOREA);
 		String dTime = formatter.format(systemTime);
 
-		File original = new File("C:/PJT/blob");
-		File change = new File("C:/PJT/"+dTime+".wav");
-		Path filepath = Paths.get("C:/PJT/",blob.getOriginalFilename());
+		File original = new File("C:/zipanguUploaded/blob");
+		File change = new File("C:/zipanguUploaded/"+dTime+".wav");
+		Path filepath = Paths.get("C:/zipanguUploaded/",blob.getOriginalFilename());
+		//현수상 로컬
+//		File original = new File("C:/PJT/blob");
+//		File change = new File("C:/PJT/"+dTime+".wav");
+//		Path filepath = Paths.get("C:/PJT/",blob.getOriginalFilename());
 		
 		try(
 			OutputStream os = Files.newOutputStream(filepath)){

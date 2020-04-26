@@ -23,6 +23,7 @@ $(function(){
 		$('#loadingDiv').hide();
 		$('#resultDiv').attr('hidden','hidden');
 		$('#resultDivIfnoResult').removeAttr('hidden','hidden');
+		$('#resultDivIfResult').hide();
 		return;
 	}
 	getTotalEntrysheet();

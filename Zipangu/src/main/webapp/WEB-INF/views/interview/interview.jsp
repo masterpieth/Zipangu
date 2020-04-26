@@ -1,3 +1,4 @@
+<jsp:include page="../include/header.jsp"></jsp:include>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.ArrayList" %>
@@ -6,10 +7,7 @@
 	<title>모의 면접</title>
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
-<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-<%--     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style2.css' />"> --%>
     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/interview.css' />">
-	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 
 <script>
@@ -354,6 +352,20 @@ function CreateShow()
 }
 </script>
 <body>
+    <section class="banner_area">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/interview/getintro"/>">모의면접</a>
+                    </div>
+                    <h2>모의면접</h2>
+                </div>
+            </div>
+        </div>
+    </section>
 <!-- <div id="loadingDiv" class="row justify-content-center align-items-center" style="display:none; padding-top: 100px; padding-bottom: 200px;"> -->
 <%--           <img src="<c:url value="/resources/img/loading.gif"/>"> --%>
 <!-- </div> -->
@@ -362,7 +374,8 @@ function CreateShow()
 </div>
 
 <div align="center" id="interviewsector" class="interviewsector">
-	<h3 id="startinterviewinfo">[모의면접 시작]을 누르시면 시작합니다.</h3>
+	<h2 id="startinterviewinfo">[모의면접 시작]을 누르시면 시작합니다.</h2>
+	    <br>
 		<button id="startInterview" class = 'btn btn-lg btn-danger'>모의면접 시작</button>
 		<hr>
 	

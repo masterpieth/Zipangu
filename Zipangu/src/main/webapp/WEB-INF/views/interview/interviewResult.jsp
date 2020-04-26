@@ -7,8 +7,6 @@
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
 	<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/interview.css'/>">
-<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
-<%--     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style2.css' />"> --%>
 	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 
@@ -17,6 +15,20 @@
 <script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 </head>
 <body>
+    <section class="banner_area">
+        <div class="banner_inner overlay d-flex align-items-center">
+            <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/interview/getinterviewResult"/>">결과조회</a>
+                    </div>
+                    <h2>모의면접 결과조회</h2>
+                </div>
+            </div>
+        </div>
+    </section>
 	<c:choose>
 		<c:when test="${fn:length(list) == 0}">
 			<div align="center" id="nullResult">

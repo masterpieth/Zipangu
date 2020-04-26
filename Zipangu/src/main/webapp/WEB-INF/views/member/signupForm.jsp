@@ -18,8 +18,8 @@
 </head>
 <body>
 <div class="container" style="height:100px;"></div>
-<div class="container col-3">
-	<h5>Zipangu에 오신 것을 환영합니다.</h5><br>
+<div class="container col-sm-3">
+	<h3>Zipangu에 오신 것을 환영합니다.</h3><br>
 	<p>회원 가입을 위한 정보를 입력해 주세요.</p>
 	<form action="<c:url value='/member/signup' />" class="needs-validation" method="post" novalidate>
 		<div class="form-group">
@@ -66,7 +66,7 @@
 			<div class="form-group col-6">
 				<label for="sex">성별:</label>
 				<select class="form-control" id="sex" name="sex" required>
-					<option></option>
+					<option value="">선택</option>
 					<option value="남성">남성</option>
 					<option value="여성">여성</option>
 				</select>
@@ -75,7 +75,7 @@
 			<div class="form-group col-6">
 				<label for="sex">역할:</label>
 				<select class="form-control" id="authority" name="authority" required>
-					<option></option>
+					<option>선택</option>
 					<option value="1">멘토</option>
 					<option value="2">멘티</option>
 				</select>

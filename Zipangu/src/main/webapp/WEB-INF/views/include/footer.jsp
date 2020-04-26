@@ -29,7 +29,7 @@
                             <div class="row">
                                 <div class="col-5">
                                     <ul class="list">
-                                        <li><a href="#">Main</a></li>
+                                        <li><a href="<c:url value='/'/>">Main</a></li>
                                         <li><a href="<c:url value='/personality/personalityInsight'/>">Personality</a></li>
                                         <li><a href="<c:url value='/analysis/company'/>">Company</a></li>
                                         <li><a href="<c:url value='/analysis/entrysheet'/>">Entrysheet</a></li>

@@ -129,7 +129,7 @@ function deleteConfirm() {
                     </div>
                 </div>
                 <div class="banner_content text-center">
-                    <h2>타임라인</h2>
+                    <h2>성향키워드 타임라인</h2>
                 </div>
             </div>
         </div>
@@ -138,15 +138,17 @@ function deleteConfirm() {
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-7">
-					<p style="color: #f13d80">
-						타임라인
-					</p>
-					<div class="main_title">
+					<div class="card-body">
+						<p style="color: #f13d80">
+							성향키워드 타임라인
+						</p>
 						<h2>
-							성향분석으로 얻은 키워드를 활용하여 타임라인 작성이 가능합니다!
+							성향분석으로 얻은 키워드를 활용하여<br>타임라인 작성이 가능합니다!
 						</h2>
-						자기소개서에 쓸 다양한 에피소드들. 어떻게 정리해야 할지 고민이신가요?
-						<br>성향분석을 통해 얻은 키워드로 에피소드를 분류하여 시간순으로 정리해보세요!
+						<hr>
+						<p style="color: gray;">자기소개서에 쓸 다양한 에피소드들. 어떻게 정리해야 할지 고민이신가요?
+						  <br>성향분석을 통해 얻은 키워드로 에피소드를 분류하여 시간순으로 정리해보세요!
+						</p>
 						<div id="timeline_ex" class="modal" style="height: auto; width: auto; padding: 50px; color: black;">
 							<br>
 							<p align="center">

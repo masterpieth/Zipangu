@@ -73,6 +73,13 @@ $(function(){
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">
                 <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/personality/keywordTimeline"/>">성향키워드 타임라인</a>
+                    </div>
+                </div>
+                <div class="banner_content text-center">
                     <h2>타임라인 글 작성</h2>
                 </div>
             </div>
@@ -87,7 +94,10 @@ $(function(){
 					<th colspan="2">1. 작성하고 싶은 에피소드의 날짜를 입력해주세요.</th>
 				</tr>
 				<tr>
-					<th colspan="2">처음 시작한 날짜 : <input type="text" id="start_Date" name="start_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode" required="required">~ 끝난 날짜 : <input type="text" id="finish_Date" name="finish_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode" required="required"></th>
+					<td colspan="2" style="padding-top: 20px; padding-bottom: 20px;">
+					   처음 시작한 날짜 : <input type="text" id="start_Date" name="start_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode" required="required">
+					   ~ 끝난 날짜 : <input type="text" id="finish_Date" name="finish_Date" data-dd-format="Y/m/d" data-dd-roundtrip="episode" class="episode" required="required">
+					</td>
 				</tr>
 				<tr>
 					<th colspan="2">2. 작성하고 싶은 에피소드의 키워드를 아래 표에서 선택해주세요.
@@ -146,7 +156,7 @@ $(function(){
 					<th>4. 에피소드 제목 : </th><td><input type="text" name="episode_Title" style="width: 100%;" required="required"></td>
 				</tr>
 				<tr>
-					<th>5. 에피소드 내용 : </th><td><textarea rows="10" cols="120" name="episode_Content" required="required"></textarea></td>
+					<th>5. 에피소드 내용 : </th><td><textarea rows="10" cols="120" name="episode_Content" required="required" style="resize: none;"></textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
