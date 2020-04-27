@@ -73,6 +73,8 @@ public class MsgController {
 	//대화창 열기
 	@RequestMapping(value = "msg/msg_start", method = RequestMethod.GET)
 	public String msg_start(String mentee_id, String mentor_id, HttpSession session, RedirectAttributes rttr) {
+		System.out.println(mentee_id);
+		System.out.println(mentor_id);
 		List_MsgVO vo = new List_MsgVO();
 		vo.setMentee_id(mentee_id);
 		vo.setMentor_id(mentor_id);

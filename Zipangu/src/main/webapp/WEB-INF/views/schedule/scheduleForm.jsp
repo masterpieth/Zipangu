@@ -306,10 +306,10 @@ function updateSchedule() {
 
 function askReserve() {
 	var mentor_id = $('input[name=mentorID]:checked').val();
-    typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
+    typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger2(mentor_id);
 };
 
-function openUploadMessenger(mentor_id) {
+function openUploadMessenger2(mentor_id) {
 	open(
 		'<c:url value="/msg/msg_start?mentor_id=' + mentor_id +
 		'&mentee_id=${userID}"/>', "_blank", "width=1000, height=800"
@@ -332,7 +332,7 @@ $(function() {
 	createCalendar();
 	$('#contact').click(function() {
         var mentor_id = $('input[name=mentor_id]:checked').val();
-        typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger(mentor_id);
+        typeof mentor_id === 'undefined' ? alert('멘토가 선택되지 않았습니다.') : openUploadMessenger2(mentor_id);
     });
 });
 </script>
