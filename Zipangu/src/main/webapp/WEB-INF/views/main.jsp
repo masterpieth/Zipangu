@@ -41,10 +41,12 @@
                             <h1>전문가에게 받는 이력서 첨삭</h1>
                             <p>1:1 매칭을 통한 전문 첨삭을 통한 확실한 취업 준비</p>
                         </div>
-                        <div class="author-lacture">
-                            <p>
-                                모르겟다.. 홍보멘트가 필요합니다
-                            </p>
+						<div class="author-lacture">
+							<p>
+								Zipangu의 이력서 양식은 일본에서 가장 많이 사용되는 JIS규격입니다.<br>
+								기업별로 다양한 맞춤형 이력서를 작성하여 구직 활동에 활용해 보세요.<br><br>
+								이력서를 작성한 후, 일본 취업 전문가에게 이력서를 첨삭받을 수 있습니다.
+							</p>
                             <div class="author-title">
                                 <a href="#" data-toggle="modal" data-target="#inputTitle"><button class="primary-btn text-uppercase">이력서 작성 바로가기</button></a>
                             </div>
@@ -144,13 +146,12 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <h1>멘토링~~~~ 예약하기로 가는 div</h1>
-                    <p>
-                        이력서를 작성하셨나요? 첨삭을 받으셔야죠 호호하ㅏ 하 어서 이 버튼을 눌러라!
-                        멘토링~~~~ 예약하기로 가는 div멘토링~~~~ 예약하기로 가는 div
-                        멘토링~~~~ 예약하기로 가는 div멘토링~~~~ 예약하기로 가는 div
-                        멘토링~~~~ 예약하기로 가는 div멘토링~~~~ 예약하기로 가는 div
-                    </p>
+                    <h1>멘토링 예약하기</h1>
+					<p>
+						<br>이력서를 작성하셨나요? 이제 전문가에게 첨삭을 받아 보세요.<br><br>
+						전문가 멘토들이 당신에게 도움을 줄 수 있는 날짜를 등록해 놓았습니다.<br>
+						일정이 비어있는 멘토에게 연락하여 첨삭받을 날짜를 예약하세요!
+					</p>
                     <a href="<c:url value="schedule/scheduleForm"/>" class="primary-btn">멘토링 예약하기</a>
                 </div>
             </div>
