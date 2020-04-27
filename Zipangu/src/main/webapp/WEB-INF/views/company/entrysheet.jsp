@@ -61,8 +61,8 @@ function getBookmarkList(){
 }
 function getTotalEntrysheet() {
     $.ajax({
-        url : "http://192.168.0.8:5000/getTotalEntrysheet",
-//         url : "http://10.10.17.117:5000/getTotalEntrysheet",
+//         url : "http://192.168.0.8:5000/getTotalEntrysheet",
+        url : "http://10.10.17.117:5000/getTotalEntrysheet",
         type : "post",
         success: function(data){
             totalEntrysheet = data;

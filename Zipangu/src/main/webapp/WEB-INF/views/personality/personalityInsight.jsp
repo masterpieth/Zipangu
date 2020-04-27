@@ -3,11 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/personalityInsight.css'/>">
-<head>
 <title>Zipangu</title>
 <script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script>	
 <script type="text/javascript">
-</head>
 
 $(function(){
 	
@@ -150,7 +148,7 @@ function openUploadTextForm() {
             <div class="container">
                 <div class="banner_content text-center">
                     <div class="page_link">
-                        <a href="<c:url value="/"/>">메인페이지
+                        <a href="<c:url value="/"/>">메인페이지s
                         </a>
                         <a href="<c:url value="/personality/personalityInsight"/>">성향 분석</a>
                     </div>
@@ -180,7 +178,7 @@ function openUploadTextForm() {
 							100단어 정도로도 성향분석은 가능하지만, 분석 결과가 정확하지 않을 수 있는 점 양해 부탁드립니다.</p>			
 							<br>
 							<div align="center">
-							<button class="genric-btn danger e-large" onclick="openUploadTextForm()">
+							<button class="genric-btn danger e-large" onclick="openUploadTextForm(); return false;">
 								파일 업로드
 							</button>
 							</div>
