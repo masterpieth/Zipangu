@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이력서 조회</title>
+<title>Zipangu</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 </head>
 <style>

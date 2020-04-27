@@ -42,7 +42,8 @@ public class ResumeDAO {
 					resume.setPicFileName(picFile.getOriginalFilename());
 					result = mapper.saveResume(resume);
 					resume_num = resume.getResume_num();
-					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
+					picFile.transferTo(new File("C:/git/Zipangu/Zipangu/src/main/webapp/resources/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
+//					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
 				} else {
 					result = mapper.saveResume(resume);
 					resume_num = resume.getResume_num();
@@ -53,7 +54,8 @@ public class ResumeDAO {
 				if (!picFile.isEmpty()) {
 					new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()).delete();
 					resume.setPicFileName(picFile.getOriginalFilename());
-					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
+					picFile.transferTo(new File("C:/git/Zipangu/Zipangu/src/main/webapp/resources/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
+//					picFile.transferTo(new File("C:/Zipangu/img/picFile/" + resume_num + "_" + resume.getPicFileName()));
 				}
 				result = mapper.updateResume(resume);
 				mapper.updateResumeMember(member);

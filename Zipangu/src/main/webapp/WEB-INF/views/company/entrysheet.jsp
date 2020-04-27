@@ -7,6 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Zipangu</title>
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.4.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>

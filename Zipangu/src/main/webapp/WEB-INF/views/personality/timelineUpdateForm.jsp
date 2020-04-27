@@ -4,7 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="../include/header.jsp"></jsp:include>
-
+<head>
+<title>Zipangu</title>
+</head>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/datedropper.css'/>">
 
 <script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script> 
@@ -52,6 +54,13 @@ $(function(){
 	<section class="banner_area ">
         <div class="banner_inner overlay d-flex align-items-center">
             <div class="container">
+                <div class="banner_content text-center">
+                    <div class="page_link">
+                        <a href="<c:url value="/"/>">메인페이지
+                        </a>
+                        <a href="<c:url value="/personality/keywordTimeline"/>">성향키워드 타임라인</a>
+                    </div>
+                </div>
                 <div class="banner_content text-center">
                     <h2>타임라인 글 수정</h2>
                 </div>

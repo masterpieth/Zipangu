@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<jsp:include page="../include/header.jsp"></jsp:include>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:include page="../include/header.jsp"></jsp:include>
-
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/personalityInsight.css'/>">
-
+<head>
+<title>Zipangu</title>
 <script src="<c:url value='/resources/js/jquery-3.4.1.js'/>"></script>	
 <script type="text/javascript">
+</head>
 
 $(function(){
 	

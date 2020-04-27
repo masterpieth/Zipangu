@@ -10,9 +10,9 @@
 	width: 160px;
 	position: fixed;
 	z-index: 1;
-	right: 15%;
+	right: 7%;
 	background-color: transparent;
-	padding-top: 100px;
+	padding-top: 70px;
 }
 
 .sidenav>button {

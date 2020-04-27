@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
-	<title>모의 면접</title>
+	<title>Zipangu</title>
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
 	<link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/interview.css'/>">

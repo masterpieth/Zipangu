@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<title>Zipangu</title>
 </head>
 <body>
 <div class="container" style="height:100px;"></div>

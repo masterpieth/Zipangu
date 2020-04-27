@@ -12,7 +12,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="single-footer-widget">
                             <h5 class="footer_title">About Zipangu</h5>
-                            <p class="about-text">
+                            <p class="about-text form-inline">
                                 일본 취업을 희망하는 한국인들을 대상으로 취업 지원 서비스를 제공하는 Zipangu는,
                                 성향 분석을 통한 기업 추천 및 합격 자소서 조회, 이력서 작성부터 면접까지 취업 활동과 관련된 
                                 모든 서비스를 제공하는 종합 취업 서비스 플랫폼입니다.
@@ -39,7 +39,7 @@
                                     <ul class="list">
                                         <li><a href="#" data-toggle="modal" data-target="#inputTitle">Resume</a></li>
                                         <li><a href="<c:url value="/schedule/scheduleForm"/>">Mentoring</a></li>
-                                        <li><a href="<c:url value='/interview/getinterview'/>">Interview</a></li>
+                                        <li><a href="<c:url value='/interview/getintro'/>">Interview</a></li>
                                         <c:choose>
                                             <c:when test="${sessionScope.userID == null}">
                                                 <li><a href="<c:url value="/member/loginForm"/>">Login</a></li>

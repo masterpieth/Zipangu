@@ -65,7 +65,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                                  aria-expanded="false">이력서</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#inputTitle">새 이력서</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="#" data-toggle="modal" data-target="#inputTitleHeader">새 이력서</a></li>
                                     <li class="nav-item"><a class="nav-link" href="<c:url value="/resume/resumeList"/>">이력서 목록</a></li>
                                 </ul>
                             </li>
@@ -120,7 +120,7 @@
             </nav>
         </div>
     </header>
-    <div class="modal" id="inputTitle">
+    <div class="modal" id="inputTitleHeader">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">

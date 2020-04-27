@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보 변경</title>
+<title>Zipangu</title>
 <link rel="stylesheet" href="<c:url value='/resources/template_css/bootstrap.min.css' />">
 </head>
 <body>

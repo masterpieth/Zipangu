@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <jsp:include page="../include/header.jsp"></jsp:include>
-
+<title>Zipangu</title>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/timeline.css'/>">
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/datedropper.css'/>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />

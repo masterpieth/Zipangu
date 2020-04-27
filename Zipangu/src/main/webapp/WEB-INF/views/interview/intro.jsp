@@ -1,14 +1,14 @@
+<jsp:include page="../include/header.jsp"></jsp:include>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>모의 면접 가이드</title>
+	<title>Zipangu</title>
 	<script src="<c:url value="/resources/js/jquery-3.4.1.min.js"/>"></script>
 	<script src="<c:url value='/resources/js/recorder.js'/>"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/interview.css' />">
-	<jsp:include page="../include/header.jsp"></jsp:include>
 </head>
 <body>
     <section class="banner_area">
@@ -36,7 +36,7 @@
 	                제시되는 질문에 모두 답변을 제출해야 답변 분석이 가능합니다.
 	            </p>
 	            <hr>
-	            <h4>다음 주의사항을 확인하시고 진행해 주시기 바랍니다.</h4>
+	            <h4 class="col-auto">다음 주의사항을 확인하시고 진행해 주시기 바랍니다.</h4>
 	            <hr>
 	            <p class="text-center h7">
 	                1. 답변은 일본어로 해주시기 바랍니다.<br><br>
