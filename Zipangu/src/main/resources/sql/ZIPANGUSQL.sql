@@ -4,16 +4,10 @@ DROP SEQUENCE QUESTION_SEQ;
 DROP SEQUENCE COMPANY_SEQ;
 DROP SEQUENCE TIMELINE_SEQ;
 
-DROP TABLE REPLY;
-DROP TABLE BOARD;
-DROP TABLE GUESTBOOK;
-
 DROP TABLE ENTRYSHEET;
 DROP TABLE COMPANY_RESULT;
 DROP TABLE COMPANY;
 DROP TABLE PERSONALITY;
-DROP TABLE SENDER_MSG;
-DROP TABLE RECEIVED_MSG;
 DROP TABLE SCHEDULE;
 DROP TABLE INTERVIEW_RESULT;
 DROP TABLE QUESTION;
@@ -104,22 +98,6 @@ CREATE TABLE SCHEDULE(
 	RESERVEDATE DATE NOT NULL
 );
 
-CREATE TABLE RECEIVED_MSG(
-	USERID VARCHAR2(100) REFERENCES MEMBER(USERID) NOT NULL,
-	SENDERID VARCHAR2(100) REFERENCES MEMBER(USERID) NOT NULL,
-	INPUTDATE TIMESTAMP DEFAULT SYSTIMESTAMP,
-	TITLE VARCHAR2(1000),
-	TEXT VARCHAR2(2000)
-);
-
-CREATE TABLE SENDER_MSG(
-	USERID VARCHAR2(100) REFERENCES MEMBER(USERID) NOT NULL,
-	RECEIVEDID VARCHAR2(100) REFERENCES MEMBER(USERID) NOT NULL,
-	INPUTDATE TIMESTAMP DEFAULT SYSTIMESTAMP,
-	TITLE VARCHAR2(1000),
-	TEXT VARCHAR2(2000)
-);
-
 CREATE TABLE LIST_MSG(
     mentor_id  VARCHAR2(100) REFERENCES MEMBER(USERID) NOT NULL,
     mentee_id  VARCHAR2(100) REFERENCES MEMBER(USERID) NOT NULL,
@@ -176,30 +154,30 @@ CREATE TABLE COMPANY_RESULT(
     CONTACT VARCHAR2(4000)
 );
 
-INSERT INTO MEMBER VALUES('Administrator', '12345678', 'zipangu@zipangu', '관리자', '1970-01-01', '서울 모동', '010-1234-5678', '남성', 0, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor1', '12345678', 'zipangu@zipangu', '일멘토', '1980-02-02', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor2', '12345678', 'zipangu@zipangu', '이멘토', '1981-04-10', '서울 모동', '010-1234-5678', '여성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor3', '12345678', 'zipangu@zipangu', '삼멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor4', '12345678', 'zipangu@zipangu', '사멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor5', '12345678', 'zipangu@zipangu', '오멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor6', '12345678', 'zipangu@zipangu', '육멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor7', '12345678', 'zipangu@zipangu', '칠멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor8', '12345678', 'zipangu@zipangu', '팔멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor9', '12345678', 'zipangu@zipangu', '구멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor10', '12345678', 'zipangu@zipangu', '십멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor11', '12345678', 'zipangu@zipangu', '십일토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor12', '12345678', 'zipangu@zipangu', '십이토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor13', '12345678', 'zipangu@zipangu', '십삼토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor14', '12345678', 'zipangu@zipangu', '십사토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor15', '12345678', 'zipangu@zipangu', '십오토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor16', '12345678', 'zipangu@zipangu', '십육토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor17', '12345678', 'zipangu@zipangu', '십칠토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor18', '12345678', 'zipangu@zipangu', '십팔토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor19', '12345678', 'zipangu@zipangu', '십구토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentor20', '12345678', 'zipangu@zipangu', '이십토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentee1', '12345678', 'zipangu@zipangu', '일멘티', '1990-03-03', '서울 모동', '010-1234-5678', '여성', DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentee2', '12345678', 'zipangu@zipangu', '이멘티', '1991-05-16', '서울 모동', '010-1234-5678', '남성', DEFAULT, null, DEFAULT);
-INSERT INTO MEMBER VALUES('Mentee3', '12345678', 'zipangu@zipangu', '삼멘티', '1992-08-21', '서울 모동', '010-1234-5678', '여성', DEFAULT, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Administrator', '12345678', 'cjlogikkr@gmail.com', '관리자', '1970-01-01', '서울 모동', '010-1234-5678', '남성', 0, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor1', '12345678', 'cjlogikkr@gmail.com', '일멘토', '1980-02-02', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor2', '12345678', 'cjlogikkr@gmail.com', '이멘토', '1981-04-10', '서울 모동', '010-1234-5678', '여성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor3', '12345678', 'cjlogikkr@gmail.com', '삼멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor4', '12345678', 'cjlogikkr@gmail.com', '사멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor5', '12345678', 'cjlogikkr@gmail.com', '오멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor6', '12345678', 'cjlogikkr@gmail.com', '육멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor7', '12345678', 'cjlogikkr@gmail.com', '칠멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor8', '12345678', 'cjlogikkr@gmail.com', '팔멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor9', '12345678', 'cjlogikkr@gmail.com', '구멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor10', '12345678', 'cjlogikkr@gmail.com', '십멘토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor11', '12345678', 'cjlogikkr@gmail.com', '십일토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor12', '12345678', 'cjlogikkr@gmail.com', '십이토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor13', '12345678', 'cjlogikkr@gmail.com', '십삼토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor14', '12345678', 'cjlogikkr@gmail.com', '십사토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor15', '12345678', 'cjlogikkr@gmail.com', '십오토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor16', '12345678', 'cjlogikkr@gmail.com', '십육토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor17', '12345678', 'cjlogikkr@gmail.com', '십칠토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor18', '12345678', 'cjlogikkr@gmail.com', '십팔토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor19', '12345678', 'cjlogikkr@gmail.com', '십구토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentor20', '12345678', 'cjlogikkr@gmail.com', '이십토', '1982-12-31', '서울 모동', '010-1234-5678', '남성', 1, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentee1', '12345678', 'cjlogikkr@gmail.com', '일멘티', '1990-03-03', '서울 모동', '010-1234-5678', '여성', DEFAULT, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentee2', '12345678', 'cjlogikkr@gmail.com', '이멘티', '1991-05-16', '서울 모동', '010-1234-5678', '남성', DEFAULT, null, DEFAULT);
+INSERT INTO MEMBER VALUES('Mentee3', '12345678', 'cjlogikkr@gmail.com', '삼멘티', '1992-08-21', '서울 모동', '010-1234-5678', '여성', DEFAULT, null, DEFAULT);
 
 INSERT INTO SCHEDULE VALUES('Mentor1', 'Mentee1', '2020-04-20');
 INSERT INTO SCHEDULE VALUES('Mentor1', NULL, '2020-04-22');
@@ -224,7 +202,8 @@ INSERT INTO SCHEDULE VALUES('Mentor3', NULL, '2020-04-20');
 INSERT INTO SCHEDULE VALUES('Mentor3', NULL, '2020-04-21');
 INSERT INTO SCHEDULE VALUES('Mentor3', NULL, '2020-04-26');
 INSERT INTO SCHEDULE VALUES('Mentor3', 'Mentee1', '2020-04-27');
-INSERT INTO SCHEDULE VALUES('Mentor3', NULL, '2020-04-28');
+INSERT INTO SCHEDULE VALUES('Mentor3', 'Mentee3', '2020-04-28');
+INSERT INTO SCHEDULE VALUES('Mentor3', 'Mentee3', '2020-04-29');
 INSERT INTO SCHEDULE VALUES('Mentor3', NULL, '2020-05-03');
 INSERT INTO SCHEDULE VALUES('Mentor3', NULL, '2020-05-04');
 INSERT INTO SCHEDULE VALUES('Mentor3', 'Mentee2', '2020-05-05');
@@ -267,9 +246,9 @@ INSERT INTO RESUME VALUES(resume_seq.NEXTVAL, 'Mentee3', '취미, 특기', '자�
 INSERT INTO RESUME VALUES(resume_seq.NEXTVAL, 'Mentee3', '취미, 특기', '자기소개', NULL, '이력서19', '2020-04-29', DEFAULT);
 INSERT INTO RESUME VALUES(resume_seq.NEXTVAL, 'Mentee3', '취미, 특기', '자기소개', NULL, '이력서20', '2020-04-29', DEFAULT);
 
-INSERT INTO RESUME_MEMBER VALUES(1, 'zipangu@zipangu', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
-INSERT INTO RESUME_MEMBER VALUES(2, 'zipangu@zipangu', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
-INSERT INTO RESUME_MEMBER VALUES(3, 'zipangu@zipangu', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
+INSERT INTO RESUME_MEMBER VALUES(1, 'cjlogikkr@gmail.com', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
+INSERT INTO RESUME_MEMBER VALUES(2, 'cjlogikkr@gmail.com', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
+INSERT INTO RESUME_MEMBER VALUES(3, 'cjlogikkr@gmail.com', '삼멘티', '1995-08-21', '서울 모동', '010-1234-5678', '여성');
 
 INSERT INTO CAREER VALUES(3, '1998-03-02', '2004-02-13', '학력1');
 INSERT INTO CAREER VALUES(3, '2005-04-05', '2008-12-25', '경력1');

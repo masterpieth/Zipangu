@@ -26,7 +26,9 @@
     </section>
 
 <div class="sidenav fixed-right">
-	<button type="button" class="btn btn-warning btn-lg" onclick="TogetherJS(this); return false;" id="startMentoring">멘토링</button><br><br>
+	<c:if test="${mentorID ne null}">
+		<button type="button" class="btn btn-warning btn-lg" onclick="TogetherJS(this); return false;" id="startMentoring">멘토링</button><br><br>
+	</c:if>
 	<button type="button" class="btn btn-secondary btn-lg" id="border">테두리 없애기</button><br><br>
 	<button type="button" class="btn btn-info btn-lg" id="language">日本語</button><br><br>
 	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" id="checkResume">이력서 저장</button>
@@ -83,10 +85,8 @@
 	</div>
 </form>
 </body>
-<script src="https://togetherjs.com/togetherjs-min.js"></script>
+<script src="<c:url value='/resources/js/togetherjs-min.js' />"></script>
 <script>
-TogetherJSConfig_hubBase = "https://togetherjs-hub.glitch.me/";
-
 $(function() {
 	var today = new Date();
 	var year = today.getFullYear();

@@ -63,7 +63,8 @@
     // are considered to be at completely different URLs
     includeHashInUrl: false,
     // When true, the WebRTC-based mic/chat will be disabled
-    disableWebRTC: false,
+//    disableWebRTC: false,
+    disableWebRTC: true,
     // When true, youTube videos will synchronize
     youtube: true,
     // Ignores the following console messages, disables all messages if set to true
@@ -487,7 +488,8 @@
     return "TogetherJS";
   };
 
-  var defaultHubBase = "https://hub.togetherjs.com";
+//  var defaultHubBase = "https://hub.togetherjs.com";
+  var defaultHubBase = "https://togetherjs-hub.glitch.me/";
   if (defaultHubBase == "__" + "hubUrl"+ "__") {
     // Substitution wasn't made
     defaultHubBase = "https://hub.togetherjs.mozillalabs.com";
